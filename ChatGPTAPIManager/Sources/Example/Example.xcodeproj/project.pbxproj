@@ -16,7 +16,7 @@
 		A89CB7532A385397009ECACE /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89CB7522A385397009ECACE /* ExampleTests.swift */; };
 		A89CB75D2A385397009ECACE /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89CB75C2A385397009ECACE /* ExampleUITests.swift */; };
 		A89CB75F2A385397009ECACE /* ExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89CB75E2A385397009ECACE /* ExampleUITestsLaunchTests.swift */; };
-		A89CB76C2A3853B2009ECACE /* ChatGPTAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89CB76B2A3853B2009ECACE /* ChatGPTAPIManager.swift */; };
+		A8A50B512A39E5B300B10297 /* ChatGPTAPIManager in Frameworks */ = {isa = PBXBuildFile; productRef = A8A50B502A39E5B300B10297 /* ChatGPTAPIManager */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,7 @@
 		A89CB7582A385397009ECACE /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A89CB75C2A385397009ECACE /* ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITests.swift; sourceTree = "<group>"; };
 		A89CB75E2A385397009ECACE /* ExampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		A89CB76B2A3853B2009ECACE /* ChatGPTAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTAPIManager.swift; sourceTree = "<group>"; };
+		A8A50B4E2A39E57100B10297 /* ChatGPTAPIManager */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ChatGPTAPIManager; path = ../..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8A50B512A39E5B300B10297 /* ChatGPTAPIManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,10 +82,12 @@
 		A89CB72F2A385394009ECACE = {
 			isa = PBXGroup;
 			children = (
+				A8A50B4E2A39E57100B10297 /* ChatGPTAPIManager */,
 				A89CB73A2A385394009ECACE /* Example */,
 				A89CB7512A385397009ECACE /* ExampleTests */,
 				A89CB75B2A385397009ECACE /* ExampleUITests */,
 				A89CB7392A385394009ECACE /* Products */,
+				A8A50B4F2A39E58E00B10297 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,7 +111,6 @@
 				A89CB7442A385397009ECACE /* Assets.xcassets */,
 				A89CB7462A385397009ECACE /* LaunchScreen.storyboard */,
 				A89CB7492A385397009ECACE /* Info.plist */,
-				A89CB76B2A3853B2009ECACE /* ChatGPTAPIManager.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -130,6 +132,13 @@
 			path = ExampleUITests;
 			sourceTree = "<group>";
 		};
+		A8A50B4F2A39E58E00B10297 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -146,6 +155,9 @@
 			dependencies = (
 			);
 			name = Example;
+			packageProductDependencies = (
+				A8A50B502A39E5B300B10297 /* ChatGPTAPIManager */,
+			);
 			productName = Example;
 			productReference = A89CB7382A385394009ECACE /* Example.app */;
 			productType = "com.apple.product-type.application";
@@ -263,7 +275,6 @@
 			files = (
 				A89CB7402A385394009ECACE /* ViewController.swift in Sources */,
 				A89CB73C2A385394009ECACE /* AppDelegate.swift in Sources */,
-				A89CB76C2A3853B2009ECACE /* ChatGPTAPIManager.swift in Sources */,
 				A89CB73E2A385394009ECACE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -600,6 +611,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A8A50B502A39E5B300B10297 /* ChatGPTAPIManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatGPTAPIManager;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A89CB7302A385394009ECACE /* Project object */;
 }

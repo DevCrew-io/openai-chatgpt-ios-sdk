@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ChatGPTAPIManager
 
 class ViewController: UIViewController {
     let chatGPTAPI = ChatGPTAPIManager(apiKey: "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")
