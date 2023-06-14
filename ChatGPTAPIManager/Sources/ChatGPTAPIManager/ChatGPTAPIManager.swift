@@ -15,17 +15,17 @@ public struct APPURL {
     private struct Routes {
         static let api = "/v1"
     }
-    private static let Domain = Domains.dev
-    private static let Route =   Routes.api
-    private static let baseURL = Domain + Route
+    private static let domain = Domains.dev
+    private static let route =   Routes.api
+    private static let baseURL = domain + route
     
     // MARK: Base URLs
     /// The base URL for Chat API.
-    public  static var Chat: URL {
+    public  static var chat: URL {
         return URL(string: baseURL + "/chat/completions")!
     }
     /// The base URL for Image Generation API.
-    public static var GenerateImage: URL {
+    public static var generateImage: URL {
         return URL(string: baseURL + "/images/generations")!
     }
 }
@@ -43,14 +43,14 @@ public enum NetworkError: Error {
 
 /// Enum representing different ChatGPT models.
 public enum ChatGPTModels: String {
-    case gpt_3_5_turbo = "gpt-3.5-turbo"
+    case gptThreePointFiveTurbo = "gpt-3.5-turbo"
     case engine =  "davinci"
 }
 /// Enum representing different  ImageSizes supported by imagegeneration API.
 public enum ChatGPTImageSize : String {
     
-    case five_twelve = "512x512"
-    case ten_twenty = "1024x1024"
+    case fiveTwelve = "512x512"
+    case tenTwenty = "1024x1024"
 }
 
 //

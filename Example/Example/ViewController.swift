@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     
     func sendQueryToChatGPT()  {
         
-          chatGPTAPI.sendRequest(prompt: "hello, how are you?",model: .gpt_3_5_turbo,endPoint: APPURL.Chat) { result in
+          chatGPTAPI.sendRequest(prompt: "hello, how are you?",model: .gptThreePointFiveTurbo,endPoint: APPURL.chat) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         }
     }
     func generateImageWithText()  {
-         chatGPTAPI.generateImage(prompt: "Generate an image of a cat", model: .gpt_3_5_turbo, imageSize: .five_twelve,endPoint: APPURL.GenerateImage) { result in
+         chatGPTAPI.generateImage(prompt: "Generate an image of a cat", model: .gptThreePointFiveTurbo, imageSize: .fiveTwelve,endPoint: APPURL.generateImage) { result in
             switch result {
             case .success(let imageURL):
                 print("Generated image URL:", imageURL)
