@@ -36,7 +36,7 @@ Now that you have obtained your API key, you can use it to initialize the `ChatG
 
 ### Swift Package Manager
 
-The [Swift Package Manager] (https://www.swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
+The (Swift Package Manager) [https://www.swift.org/package-manager/] is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
 ```
 dependencies: [
