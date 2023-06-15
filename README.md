@@ -68,19 +68,6 @@ apiManager.generateImage(prompt: "Your prompt", model: .engine, imageSize: .five
 }
 ```
 
-## ChatGPT API Response Parser
-The code includes response parser classes for parsing the API responses.
-
-### ChatCompletionResponseParser
-The `ChatCompletionResponseParser` class parses the response data for generating text. It extracts the completion text from the JSON response.
-
-### ImageGenerationResponseParser
-The `ImageGenerationResponseParser` class parses the response data for generating an image. It extracts the image URL from the JSON response.
-
-Both parser classes implement the `APIResponseParcer` protocol, which defines a method `parseResponse` that takes the response data and a completion block as parameters. The completion block provides the parsed result or an error.
-
-These parser classes can be extended or modified to handle different response structures or extract additional information if required.
-
 
 Note: The code snippets provided in this README assume that you have replaced `"YOUR_API_KEY"` with your actual API key.
 
