@@ -102,7 +102,7 @@ This code should serve as a starting point for integrating ChatGPT API requests 
 
 [DevCrew.IO](https://devcrew.io/)
 
-If you have any questions or comments about Nested Collection View, please feel free to contact us at info@devcrew.io.
+If you have any questions or comments about **ChatGPTAPIManager** , please feel free to contact us at info@devcrew.io.
 
 <h3 align="left">Connect with Us:</h3>
 <p align="left">
