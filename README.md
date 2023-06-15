@@ -15,6 +15,32 @@ The `ChatGPTImageSize` enum represents different image sizes supported by the im
 ## ChatGPT API Class (ChatGPTAPIManager)
 The `ChatGPTAPIManager` class is responsible for making API requests to ChatGPT. It requires an API key for authentication and provides methods for sending text generation and image generation requests.
 
+
+## Obtaining an API Key
+
+To use the ChatGPT API, you need to obtain an API key from OpenAI. Follow these steps to get your API key:
+
+1. Visit the OpenAI website (https://openai.com) and sign in to your account.
+
+2. Navigate to the API section or go directly to the API page.
+
+3. Follow the instructions provided to sign up for the ChatGPT API access. This might involve joining a waitlist or subscribing to a plan, depending on the availability and pricing options.
+
+4. Once you have access to the API, locate your API key in your OpenAI account dashboard or API settings.
+
+5. Copy the API key, as you will need it to authenticate your API requests.
+
+Now that you have obtained your API key, you can use it to initialize the `ChatGPTAPIManager` in your iOS application as mentioned in the below section.
+
+```swift
+let apiManager = ChatGPTAPIManager(apiKey: "YOUR_API_KEY")
+```
+
+Make sure to replace `"YOUR_API_KEY"` with the actual API key you obtained from OpenAI.
+
+With the API key in place, you can proceed to send text generation or image generation requests using the provided methods.
+
+
 ### Initialization
 To initialize the `ChatGPTAPIManager`, you need to provide the API key as a parameter.
 
@@ -63,7 +89,9 @@ Both parser classes implement the `APIResponseParcer` protocol, which defines a 
 
 These parser classes can be extended or modified to handle different response structures or extract additional information if required.
 
+
 Note: The code snippets provided in this README assume that you have replaced `"YOUR_API_KEY"` with your actual API key.
+
 
 This code should serve as a starting point for integrating ChatGPT API requests into your Swift application. Feel free to modify and extend it according
 
