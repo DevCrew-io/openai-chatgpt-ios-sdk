@@ -38,10 +38,12 @@ Now that you have obtained your API key, you can use it to initialize the `ChatG
 
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
-
+```
 dependencies: [
     .package(url: "https://github.com/DevCrew-io/chatgpt-ios-sdk.git", .upToNextMajor(from: "1.0.0"))
 ]
+```
+
 ### Manually
 
 If you prefer not to use any of the aforementioned dependency managers, you can integrate **ChatGPTAPIManager** into your project manually.
