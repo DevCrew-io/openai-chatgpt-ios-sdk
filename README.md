@@ -48,8 +48,8 @@ dependencies: [
 
 If you prefer not to use any of the aforementioned dependency managers, you can integrate **ChatGPTAPIManager** into your project manually.
 
-1 Download zip file
-2 Open ChatGPTAPIManager/Sources/ChatGPTAPIManager
+1 Download zip file\
+2 Open ChatGPTAPIManager/Sources/ChatGPTAPIManager\
 3 Drag and drop ChatGPTAPIManager.swift file into project
 
 
