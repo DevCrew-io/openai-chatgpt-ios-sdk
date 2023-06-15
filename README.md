@@ -20,7 +20,7 @@ The `ChatGPTAPIManager` class is responsible for making API requests to ChatGPT.
 
 To use the ChatGPT API, you need to obtain an API key from OpenAI. Follow these steps to get your API key:
 
-1. Visit the OpenAI website (https://openai.com) and sign in to your account.
+1. Visit the [OpenAI website](https://openai.com) and sign in to your account.
 
 2. Navigate to the API section or go directly to the API page.
 
@@ -36,7 +36,7 @@ Now that you have obtained your API key, you can use it to initialize the `ChatG
 
 ### Swift Package Manager
 
-The (Swift Package Manager) [https://www.swift.org/package-manager/] is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
+The [Swift Package Manager](https://www.swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
 ```
 dependencies: [
