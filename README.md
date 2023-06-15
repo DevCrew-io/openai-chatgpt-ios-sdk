@@ -47,6 +47,16 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 2. Open ChatGPTAPIManager/Sources/ChatGPTAPIManager
 3. Drag and drop ChatGPTAPIManager.swift file into project
 
+### Usage
+
+To use the **ChatGPTAPIManager** library, follow these steps:
+
+ Import the **ChatGPTAPIManager** module in the file where you want to use it:
+ 
+ ```
+ import ChatGPTAPIManager
+ 
+ ```
 
 ### Initialization
 To initialize the `ChatGPTAPIManager`, you need to provide the API key as a parameter.
