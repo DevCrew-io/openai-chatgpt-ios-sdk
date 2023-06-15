@@ -32,6 +32,24 @@ To use the ChatGPT API, you need to obtain an API key from OpenAI. Follow these 
 
 Now that you have obtained your API key, you can use it to initialize the `ChatGPTAPIManager` in your iOS application as mentioned in the below section.
 
+### Installation
+
+### Swift Package Manager
+
+The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
+
+
+dependencies: [
+    .package(url: "https://github.com/DevCrew-io/chatgpt-ios-sdk.git", .upToNextMajor(from: "1.0.0"))
+]
+### Manually
+
+If you prefer not to use any of the aforementioned dependency managers, you can integrate **ChatGPTAPIManager** into your project manually.
+
+1 Download zip file
+2 Open ChatGPTAPIManager/Sources/ChatGPTAPIManager
+3 Drag and drop ChatGPTAPIManager.swift file into project
+
 
 ### Initialization
 To initialize the `ChatGPTAPIManager`, you need to provide the API key as a parameter.
@@ -75,3 +93,28 @@ Note: The code snippets provided in this README assume that you have replaced `"
 This code should serve as a starting point for integrating ChatGPT API requests into your Swift application. Feel free to modify and extend it according
 
  to your specific requirements.
+ 
+## Author
+
+[DevCrew.IO](https://devcrew.io/)
+
+If you have any questions or comments about Nested Collection View, please feel free to contact us at info@devcrew.io.
+
+<h3 align="left">Connect with Us:</h3>
+<p align="left">
+<a href="https://devcrew.io" target="blank"><img align="center" src="https://devcrew.io/wp-content/uploads/2022/09/logo.svg" alt="devcrew.io" height="35" width="35" /></a>
+<a href="https://www.linkedin.com/company/devcrew-io/mycompany/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="mycompany" height="30" width="40" /></a>
+<a href="https://github.com/DevCrew-io" target="blank"><img align="center" src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="DevCrew-io" height="32" width="32" /></a>
+</p>
+
+
+## Contributing 
+Contributions, issues, and feature requests are welcome! See [Contributors](https://github.com/DevCrew-io/viper-sample-ios) for details.
+
+### Show your Support
+
+Give a star if this project helped you.
+
+### Copyright & License
+
+Code copyright 2023 DevCrew I/O. Code released under the [MIT license](https://github.com/DevCrew-io/expandable-richtext/blob/main/LICENSE).
