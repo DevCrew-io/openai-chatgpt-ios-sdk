@@ -1,34 +1,38 @@
 import Foundation
 
+// MARK: - API Enum
 
-// MARK: - API Struct
+/// Enum defining the base URL for an API.
 
-/// A Struct defining the base URL for an API.
-
-public struct APPURL {
-    private struct Domains {
+public enum APPURL {
+    enum Domains {
         static let dev = "https://api.openai.com"
         static let production = "https://api.openai.com"
         static let qa = "https://api.openai.com"
     }
     
-    private struct Routes {
+    enum Routes {
         static let api = "/v1"
     }
+    
     private static let domain = Domains.dev
-    private static let route =   Routes.api
+    private static let route = Routes.api
     private static let baseURL = domain + route
     
     // MARK: Base URLs
-    /// The base URL for Chat API.
-    public  static var chat: URL {
-        return URL(string: baseURL + "/chat/completions")!
-    }
-    /// The base URL for Image Generation API.
-    public static var generateImage: URL {
-        return URL(string: baseURL + "/images/generations")!
+    case chat
+    case generateImage
+    
+    var url: URL {
+        switch self {
+        case .chat:
+            return URL(string: APPURL.baseURL + "/chat/completions")!
+        case .generateImage:
+            return URL(string: APPURL.baseURL + "/images/generations")!
+        }
     }
 }
+
 
 // MARK: - NetworkError Enum
 
@@ -75,7 +79,7 @@ final public class ChatGPTAPIManager {
     ///   - model: The ChatGPT model to use for text generation.
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: The completion block called with the result of the request.
-    public func sendRequest(prompt: String, model: ChatGPTModels, endPoint: URL, completion: @escaping (Result<String, Error>) -> Void)  {
+    public func sendRequest(prompt: String, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         self.sendChatRequest(prompt: prompt, model: model, endPoint: endPoint) { result in
             switch result {
             case .success(let successString):
@@ -93,7 +97,7 @@ final public class ChatGPTAPIManager {
     ///   - imageSize: The desired size of the generated image.
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: The completion block called with the result of the request.
-    public func generateImage(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: URL, completion: @escaping (Result<String, Error>) -> Void)  {
+    public func generateImage(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         self.generateImageFromText(prompt: prompt, model: model, imageSize: imageSize, endPoint: endPoint) { result in
             switch result {
             case .success(let successString):
@@ -104,7 +108,7 @@ final public class ChatGPTAPIManager {
         }
     }
     
-    private func sendChatRequest(prompt: String, model: ChatGPTModels, endPoint: URL, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func sendChatRequest(prompt: String, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         let parameters: [String: Any] = [
             "messages": [
                 ["role": "system", "content": "You are a helpful assistant."],
@@ -159,7 +163,7 @@ final public class ChatGPTAPIManager {
     }
     
     
-    private func generateImageFromText(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: URL, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func generateImageFromText(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         let parameters: [String: Any] = [
             "prompt": prompt,
             "n": 1,
@@ -196,8 +200,8 @@ final public class ChatGPTAPIManager {
         })
     }
     
-    private func createUrlRequest(params: [String: Any], endPoint: URL) -> URLRequest? {
-        var request = URLRequest(url: endPoint)
+    private func createUrlRequest(params: [String: Any], endPoint: APPURL) -> URLRequest? {
+        var request = URLRequest(url: endPoint.url)
         request.httpMethod = "POST"
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
