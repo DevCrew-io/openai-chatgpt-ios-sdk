@@ -1,11 +1,6 @@
 # chatgpt-ios-sdk
 A comprehensive SDK for integrating Chat GPT APIs into iOS applications.It provides a convenient and easy-to-use interface for making API requests and handling responses.
 
-## API Struct (APPURL)
-The `APPURL` struct defines the base URL for the API. It includes different domains for development, production, and QA environments. The base URLs for specific API endpoints like Chat and Image Generation are also defined.
-
-## NetworkError Enum
-The `NetworkError` enum represents possible network errors that can occur during API requests. It includes cases for invalid URL, request failure, and invalid response.
 
 ## Model Enums (ChatGPTModels, ChatGPTImageSize)
 The `ChatGPTModels` enum represents different ChatGPT models available for text generation. It includes cases for "gpt-3.5-turbo" and "davinci".
@@ -64,7 +59,7 @@ let apiManager = ChatGPTAPIManager(apiKey: "YOUR_API_KEY")
 You can send a request to generate text based on a prompt using the `sendRequest` method. It takes the prompt, ChatGPT model, endpoint URL, and a completion block as parameters.
 
 ```swift
-apiManager.sendRequest(prompt: "Your prompt", model: .gptThreePointFiveTurbo, endPoint: APPURL.chat) { result in
+apiManager.sendRequest(prompt: "Your prompt", model: .gptThreePointFiveTurbo, endPoint: .chat) { result in
     switch result {
     case .success(let generatedText):
         // Handle the generated text
@@ -78,7 +73,7 @@ apiManager.sendRequest(prompt: "Your prompt", model: .gptThreePointFiveTurbo, en
 You can generate an image based on a prompt using the `generateImage` method. It takes the prompt, ChatGPT model, desired image size, endpoint URL, and a completion block as parameters.
 
 ```swift
-apiManager.generateImage(prompt: "Your prompt", model: .engine, imageSize: .fiveTwelve, endPoint: APPURL.generateImage) { result in
+apiManager.generateImage(prompt: "Your prompt", model: .engine, imageSize: .fiveTwelve, endPoint: .generateImage) { result in
     switch result {
     case .success(let imageURL):
         // Handle the generated image URL
