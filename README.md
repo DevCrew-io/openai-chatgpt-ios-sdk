@@ -87,9 +87,7 @@ apiManager.generateImage(prompt: "Your prompt", model: .engine, imageSize: .five
 Note: The code snippets provided in this README assume that you have replaced `"YOUR_API_KEY"` with your actual API key.
 
 
-This code should serve as a starting point for integrating ChatGPT API requests into your Swift application. Feel free to modify and extend it according
-
- to your specific requirements.
+This code should serve as a starting point for integrating ChatGPT API requests into your Swift application. Feel free to modify and extend it according to your specific requirements.
  
 ## Author
 
