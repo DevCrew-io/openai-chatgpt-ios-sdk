@@ -32,14 +32,6 @@ To use the ChatGPT API, you need to obtain an API key from OpenAI. Follow these 
 
 Now that you have obtained your API key, you can use it to initialize the `ChatGPTAPIManager` in your iOS application as mentioned in the below section.
 
-```swift
-let apiManager = ChatGPTAPIManager(apiKey: "YOUR_API_KEY")
-```
-
-Make sure to replace `"YOUR_API_KEY"` with the actual API key you obtained from OpenAI.
-
-With the API key in place, you can proceed to send text generation or image generation requests using the provided methods.
-
 
 ### Initialization
 To initialize the `ChatGPTAPIManager`, you need to provide the API key as a parameter.
