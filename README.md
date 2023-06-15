@@ -55,8 +55,7 @@ To use the **ChatGPTAPIManager** library, follow these steps:
  
  ```
  import ChatGPTAPIManager
- 
- ```
+  ```
 
 ### Initialization
 To initialize the `ChatGPTAPIManager`, you need to provide the API key as a parameter.
