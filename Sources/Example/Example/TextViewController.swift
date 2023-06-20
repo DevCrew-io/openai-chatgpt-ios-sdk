@@ -1,19 +1,20 @@
 //
-//  ChatViewController.swift
+//  TextViewController.swift
 //  Example
 //
-//  Created by Ghullam Abbas on 16/06/2023.
+//  Created by Ghullam Abbas on 19/06/2023.
 //
 
 import UIKit
 import ChatGPTAPIManager
-class ChatViewController: UIViewController {
+class TextViewController: UIViewController {
     
     // MARK: - IBOutlets
+    @IBOutlet weak var textFieldBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet private weak var tableView: UITableView!
     private var chatMessages: [ChatMessage] = []
-    @IBOutlet weak var textFieldBottomConstraint: NSLayoutConstraint!
+    var currentSolution = ""
     
     // MARK: - Variables
     
@@ -22,7 +23,7 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+       
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
@@ -30,6 +31,7 @@ class ChatViewController: UIViewController {
         messageTextField.delegate = self
         tableView.register(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "UserCell")
         tableView.register(UINib(nibName: "AssistantCell", bundle: nil), forCellReuseIdentifier: "AssistantCell")
+        
         // Register for keyboard notifications
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -37,11 +39,9 @@ class ChatViewController: UIViewController {
         // Add a tap gesture recognizer to dismiss the keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
-        
+
     }
-    
     // MARK: - Keyboard
-    
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
@@ -71,18 +71,18 @@ class ChatViewController: UIViewController {
         // Unregister for keyboard notifications
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     // MARK: - IBAction
     @IBAction func sendMessage(_ sender: UIButton) {
         if let message = messageTextField.text, !message.isEmpty {
             // Send user message to ChatGPT
             self.messageTextField.resignFirstResponder()
-            sendMessageToChatGPT(message)
+            self.sendTextCompletionChatGPT(message)
         }
     }
     // MARK: - NetworkCall
     
-    func sendMessageToChatGPT(_ message: String) {
+    func sendTextCompletionChatGPT(_ message: String) {
         
         let userMessage = ChatMessage(content: message, role: Role.user.rawValue)
         chatMessages.append(userMessage)
@@ -91,14 +91,14 @@ class ChatViewController: UIViewController {
         messageTextField.text = ""
         
         EZLoadingActivity.show("Loading...", disableUI: true)
-        chatGPTAPI.sendChatRequest(prompt: message,model: .gptThreePointFiveTurbo,endPoint: .chat) { result in
+        chatGPTAPI.sendTextRequest(prompt: self.currentSolution + message,model: .textDavinci003,endPoint: .completion) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")
                 // Handle the response as needed
                 
                 DispatchQueue.main.async {
-                    
+                    self.currentSolution = response
                     let assistantMessage = ChatMessage(content: response, role: Role.assistant.rawValue)
                     self.chatMessages.append(assistantMessage)
                     self.tableView.reloadData()
@@ -122,7 +122,7 @@ class ChatViewController: UIViewController {
     }
 }
 
-extension ChatViewController: UITableViewDataSource {
+extension TextViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatMessages.count
     }
@@ -147,40 +147,22 @@ extension ChatViewController: UITableViewDataSource {
     }
 }
 
-extension ChatViewController: UITableViewDelegate {
+extension TextViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let message = chatMessages[indexPath.row]
-        let labelWidth = tableView.frame.width - 20 // Adjust as needed
+        let labelWidth = tableView.frame.width - 40 // Adjust as needed
         let labelFont = UIFont.systemFont(ofSize: 17) // Adjust font size if necessary
         let labelHeight = message.content.height(withConstrainedWidth: labelWidth, font: labelFont)
         return labelHeight + 20 // Add padding
     }
 }
 
-extension ChatViewController: UITextFieldDelegate {
+extension TextViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == "\n" {
-            sendMessageToChatGPT(textField.text ?? "")
+            sendTextCompletionChatGPT(textField.text ?? "")
             return false
         }
         return true
-    }
-}
-
-struct ChatMessage: Codable {
-    let content: String
-    let role: String
-}
-
-enum Role: String, Codable {
-    case user = "user"
-    case assistant = "assistant"
-}
-
-extension String {
-    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
-        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
-        return ceil(boundingBox.height)
     }
 }

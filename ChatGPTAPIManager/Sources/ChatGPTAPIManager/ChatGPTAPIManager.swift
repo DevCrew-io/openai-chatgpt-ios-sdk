@@ -1,5 +1,4 @@
 import Foundation
-
 // MARK: - API Enum
 
 /// Enum defining the base URL for an API.
@@ -20,11 +19,14 @@ public enum APPURL {
     private static let baseURL = domain + route
     
     // MARK: Base URLs
+    case completion
     case chat
     case generateImage
     
     var url: URL {
         switch self {
+        case.completion:
+           return URL(string: APPURL.baseURL + "/completions")!
         case .chat:
             return URL(string: APPURL.baseURL + "/chat/completions")!
         case .generateImage:
@@ -32,7 +34,27 @@ public enum APPURL {
         }
     }
 }
-
+/// Private instance of JSONDecoder used for decoding JSON data.
+private let jsonDecoder: JSONDecoder = {
+    let jsonDecoder = JSONDecoder()
+    jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+    return jsonDecoder
+}()
+/// Represents a chat message.
+struct ChatMessage: Codable {
+    let content: String
+    let role: Role
+}
+/// Represents the role of a chat message sender.
+enum Role: Codable {
+    case user
+    case assistant
+}
+/// Extension on Array to provide additional functionality related to ChatMessage.
+extension Array where Element == ChatMessage {
+    
+    var contentCount: Int { reduce(0, { $0 + $1.content.count })}
+}
 
 // MARK: - NetworkError Enum
 
@@ -49,6 +71,28 @@ public enum NetworkError: Error {
 public enum ChatGPTModels: String {
     case gptThreePointFiveTurbo = "gpt-3.5-turbo"
     case engine =  "davinci"
+    
+    // Completions
+    
+    /// Can do any language task with better quality, longer output, and consistent instruction-following than the curie, babbage, or ada models. Also supports inserting completions within text.
+    case  textDavinci003 = "text-davinci-003"
+    /// Similar capabilities to text-davinci-003 but trained with supervised fine-tuning instead of reinforcement learning.
+    case  textDavinci002 = "text-davinci-002"
+    /// Very capable, faster and lower cost than Davinci.
+    case  textCurie = "text-curie-001"
+    /// Capable of straightforward tasks, very fast, and lower cost.
+    case  textBabbage = "text-babbage-001"
+    /// Capable of very simple tasks, usually the fastest model in the GPT-3 series, and lowest cost.
+    case  textAda = "text-ada-001"
+    
+    // Edits
+    
+    case  textDavinci001 = "text-davinci-001"
+    case  codeDavinciEdit001 = "code-davinci-edit-001"
+    
+    // Transcriptions / Translations
+    
+    case  whisper1 = "whisper-1"
 }
 /// Enum representing different  ImageSizes supported by imagegeneration API.
 public enum ChatGPTImageSize : String {
@@ -63,6 +107,9 @@ public enum ChatGPTImageSize : String {
 /// A class responsible for making API requests to ChatGPT.
 final public class ChatGPTAPIManager {
     
+    private let systemMessage = NSMutableDictionary()
+   
+    private var historyList = [NSDictionary]()
     private let apiKey: String
     //    private let responseParser: ChatGPTAPIResponseParser
     
@@ -71,17 +118,48 @@ final public class ChatGPTAPIManager {
     ///   - apiKey: The API key to authenticate the requests.
    public init(apiKey: String) {
         self.apiKey = apiKey
+       self.systemMessage.setValue("assistant", forKey: "role")
+       self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
+           
     }
     
-    /// Sends a request to generate text based on the prompt.
+    /// Sends a chat request to the ChatGPT API.
+    ///
+    /// - Parameters:
+    ///   - prompt: The input prompt for the chat request.
+    ///   - model: The ChatGPT model to use for generating the response.
+    ///   - maxTokens: The maximum number of tokens in the generated response. Defaults to 500.
+    ///   - endPoint: The API endpoint to send the request to.
+    ///   - completion: A closure to be called with the result of the request. The result is either a success containing the generated response string or a failure containing an error.
+    
+    
+    public func sendChatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+        self.chatRequest(prompt: prompt, model: model, maxTokens: maxTokens, endPoint: endPoint) { result in
+            switch result {
+                
+            case .success(let successString):
+                completion(.success(successString))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    
+    /// Sends a request to generate text based on the provided prompt using the generateText function.
+    ///
     /// - Parameters:
     ///   - prompt: The prompt to generate text from.
     ///   - model: The ChatGPT model to use for text generation.
+    ///   - maxTokens: The maximum number of tokens in the generated text. Defaults to 500.
+    ///   - n: The number of text samples to generate. Defaults to 1.
     ///   - endPoint: The endpoint URL for the API request.
-    ///   - completion: The completion block called with the result of the request.
-    public func sendRequest(prompt: String, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
-        self.sendChatRequest(prompt: prompt, model: model, endPoint: endPoint) { result in
+    ///   - completion: A completion block that is called with the result of the request. The block receives a Result object containing either the generated text as a String in case of success, or an Error in case of failure.
+
+    public func sendTextRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+        self.sendTextCompletionRequest(prompt: prompt, model: model, maxTokens: maxTokens,n: n,endPoint: endPoint) { result in
             switch result {
+                
             case .success(let successString):
                 completion(.success(successString))
             case .failure(let error):
@@ -91,14 +169,17 @@ final public class ChatGPTAPIManager {
     }
     
     /// Generates an image based on the prompt.
+    ///
     /// - Parameters:
     ///   - prompt: The prompt for image generation.
     ///   - model: The ChatGPT model to use for image generation.
     ///   - imageSize: The desired size of the generated image.
+    ///   - n: The number of images to generate (default is 1).
     ///   - endPoint: The endpoint URL for the API request.
-    ///   - completion: The completion block called with the result of the request.
-    public func generateImage(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
-        self.generateImageFromText(prompt: prompt, model: model, imageSize: imageSize, endPoint: endPoint) { result in
+    ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the generated image as a String in case of success, or an Error in case of failure.
+    
+    public func generateImage(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+        self.generateImageFromText(prompt: prompt, model: model, imageSize: imageSize, endPoint: endPoint, n: n) { result in
             switch result {
             case .success(let successString):
                 completion(.success(successString))
@@ -108,14 +189,52 @@ final public class ChatGPTAPIManager {
         }
     }
     
-    private func sendChatRequest(prompt: String, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func chatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int ,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+        
+        let messages = generateMessages(from: prompt)
+        print(messages)
         let parameters: [String: Any] = [
-            "messages": [
-                ["role": "system", "content": "You are a helpful assistant."],
-                ["role": "user", "content": prompt]
-            ],
-            "max_tokens": 50,
+            "messages":messages
+            ,
+            "max_tokens": maxTokens,
             "model": model.rawValue
+        ]
+        
+        print(parameters)
+        guard let request = self.createUrlRequest(params: parameters, endPoint: endPoint) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                let parser = ChatCompletionResponseParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let succesString):
+                        self.appendToHistoryList(userText: prompt, responseText: succesString)
+                        completion(.success(succesString))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
+        
+    }
+    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels,maxTokens:Int,n: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+        let parameters: [String: Any] = [
+            "prompt": prompt,
+            "max_tokens": maxTokens,
+            "model":model.rawValue,
+            "n": n
         ]
         
         guard let request = self.createUrlRequest(params: parameters, endPoint: endPoint) else {
@@ -127,7 +246,7 @@ final public class ChatGPTAPIManager {
             
             switch result {
             case.success(let data):
-                let parser = ChatCompletionResponseParser()
+                let parser = TextCompletionResponseParser()
                 parser.parseResponse(data: data, completion: { result in
                     
                     switch result {
@@ -145,10 +264,10 @@ final public class ChatGPTAPIManager {
         
         
     }
-    
     private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         
         URLSession.shared.dataTask(with: request) { (data,response,error) in
+            
             if let error = error {
                 completion(.failure(error))
                 return
@@ -163,10 +282,10 @@ final public class ChatGPTAPIManager {
     }
     
     
-    private func generateImageFromText(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func generateImageFromText(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL,n: Int, completion: @escaping (Result<String, Error>) -> Void)  {
         let parameters: [String: Any] = [
             "prompt": prompt,
-            "n": 1,
+            "n": n,
             "size": imageSize.rawValue,
             "user": ""
         ]
@@ -214,6 +333,28 @@ final public class ChatGPTAPIManager {
         
         return request
     }
+    private func generateMessages(from text: String) -> [NSDictionary] {
+        let userMessage = NSMutableDictionary()
+        userMessage.setValue("user", forKey: "role")
+        userMessage.setValue(text, forKey: "content")
+        var messages = [systemMessage] + historyList + [userMessage]
+        if messages.count > 150 {
+            _ = historyList.removeLast()
+            messages = generateMessages(from: text)
+        }
+        return messages
+    }
+    
+    private func appendToHistoryList(userText: String, responseText: String) {
+        let userMessage = NSMutableDictionary()
+        userMessage.setValue("user", forKey: "role")
+        userMessage.setValue(userText, forKey: "content")
+        let assistantMessage = NSMutableDictionary()
+        assistantMessage.setValue("assistant", forKey: "role")
+        assistantMessage.setValue(responseText, forKey: "content")
+        self.historyList.append(userMessage)
+        self.historyList.append(assistantMessage)
+    }
 }
 
 // MARK: - ChatGPT API Response Parser
@@ -223,13 +364,15 @@ final public class ChatGPTAPIManager {
 protocol APIResponseParcer {
     func parseResponse(data: Data, completion: @escaping(Result<String,Error>)->Void)
 }
-class ChatCompletionResponseParser: APIResponseParcer {
+class TextCompletionResponseParser: APIResponseParcer {
+    // Parsing logic for text completion API response...
     
     /// Parse the response data for generating text.
     /// - Parameter data: The response data from the API.
     /// - Returns: The parsed completion text.
     /// - Throws: An error if the response cannot be parsed.
     func parseResponse(data: Data,completion: @escaping(Result<String,Error>)->Void) {
+        
         do {
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
             
@@ -238,15 +381,43 @@ class ChatCompletionResponseParser: APIResponseParcer {
                 return
             }
             
-            debugPrint(output)
+            for item in output {
+                guard let completionText = item["text"] as? String else {
+                    completion(.failure(NetworkError.invalidResponse))
+                    return
+                }
+                completion(.success(completionText))
+            }
             
-            guard let completionText = output.first?["message"] as? [String: Any],
-                  let content = completionText["content"] as? String else {
+        } catch (let error){
+            completion(.failure(error))
+        }
+    }
+}
+
+class ChatCompletionResponseParser: APIResponseParcer {
+    
+    /// Parse the response data for generating text.
+    /// - Parameter data: The response data from the API.
+    /// - Returns: The parsed completion text.
+    /// - Throws: An error if the response cannot be parsed.
+    func parseResponse(data: Data,completion: @escaping(Result<String,Error>)->Void) {
+        
+        do {
+            let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            
+            guard let output = responseJSON?["choices"] as? [[String: Any]] else {
                 completion(.failure(NetworkError.invalidResponse))
                 return
             }
+            for item in output {
+                guard let completionText = item["message"] as? [String: Any] ,let content = completionText["content"] as? String else {
+                    completion(.failure(NetworkError.invalidResponse))
+                    return
+                }
+                completion(.success(content))
+            }
             
-            completion(.success(content))
         } catch (let error){
             completion(.failure(error))
         }
@@ -266,17 +437,17 @@ class ImageGenerationResponseParser: APIResponseParcer {
                 completion(.failure(NetworkError.invalidResponse))
                 return
             }
-            
-            debugPrint(output)
-            
-            guard let completionText = output.first?["url"] as? String else {
-                completion(.failure(NetworkError.invalidResponse))
-                return
+            for item in output {
+                guard let completionText = item["url"] as? String else {
+                    completion(.failure(NetworkError.invalidResponse))
+                    return
+                }
+                completion(.success(completionText))
             }
-            
-            completion(.success(completionText))
         } catch (let error) {
             completion(.failure(error))
         }
     }
 }
+
+
