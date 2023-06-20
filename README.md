@@ -65,10 +65,10 @@ let apiManager = ChatGPTAPIManager(apiKey: "YOUR_API_KEY")
 ```
 
 ### Sending Text Generation Request
-You can send a request to generate text based on a prompt using the `sendRequest` method. It takes the prompt, ChatGPT model, endpoint URL, and a completion block as parameters.
+You can send a request to generate text based on a prompt using the `sendChatRequest` method. It takes the prompt, ChatGPT model, endpoint URL, and a completion block as parameters.
 
 ```swift
-apiManager.sendRequest(prompt: "Your prompt", model: .gptThreePointFiveTurbo, endPoint: .chat) { result in
+apiManager.sendChatRequest(prompt: "Your prompt", model: .gptThreePointFiveTurbo, endPoint: .chat) { result in
     switch result {
     case .success(let generatedText):
         // Handle the generated text
