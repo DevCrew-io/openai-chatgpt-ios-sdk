@@ -64,11 +64,25 @@ To initialize the `ChatGPTAPIManager`, you need to provide the API key as a para
 let apiManager = ChatGPTAPIManager(apiKey: "YOUR_API_KEY")
 ```
 
-### Sending Text Generation Request
-You can send a request to generate text based on a prompt using the `sendChatRequest` method. It takes the prompt, ChatGPT model, endpoint URL, and a completion block as parameters.
+### Sending Chat Request
+You can send a chat request to generate text based on a prompt using the `sendChatRequest` method. It takes the prompt, ChatGPT model, endpoint URL, and a completion block as parameters.
 
 ```swift
 apiManager.sendChatRequest(prompt: "Your prompt", model: .gptThreePointFiveTurbo, endPoint: .chat) { result in
+    switch result {
+    case .success(let generatedChat):
+        // Handle the generated chat
+    case .failure(let error):
+        // Handle the error
+    }
+}
+```
+
+### Sending Text Generation Request
+You can send a request to generate text based on a prompt using the `sendTextRequest` method. It takes the prompt, ChatGPT model, endpoint URL, and a completion block as parameters.
+
+```swift
+apiManager.sendTextRequest(prompt: "Your prompt", model: .textDavinci003, endPoint: .completion) { result in
     switch result {
     case .success(let generatedText):
         // Handle the generated text
