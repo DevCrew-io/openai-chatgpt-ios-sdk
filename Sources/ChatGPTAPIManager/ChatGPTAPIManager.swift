@@ -63,8 +63,24 @@ public enum NetworkError: Error {
     case invalidURL
     case requestFailed(Error)
     case invalidResponse
+    case apiKeyNotFound
+    
+   
 }
-
+public extension NetworkError {
+    var description: String? {
+         switch self {
+         case.apiKeyNotFound:
+             return "Please check your api key"
+         case .invalidURL:
+             return "Invalid url"
+         case .requestFailed(_):
+             return "Request failed"
+         case .invalidResponse:
+             return "Invalid api response"
+         }
+     }
+}
 // MARK: - ChatGPTModels Enum
 
 /// Enum representing different ChatGPT models.
@@ -107,17 +123,17 @@ public enum ChatGPTImageSize : String {
 /// A class responsible for making API requests to ChatGPT.
 final public class ChatGPTAPIManager {
     
+   public static let shared = ChatGPTAPIManager()
+    
     private let systemMessage = NSMutableDictionary()
    
     private var historyList = [NSDictionary]()
-    private let apiKey: String
-    //    private let responseParser: ChatGPTAPIResponseParser
+    public  var apiKey: String = ""
+    
     
     /// Initializes the ChatGPTAPIManager.
-    /// - Parameters:
-    ///   - apiKey: The API key to authenticate the requests.
-   public init(apiKey: String) {
-        self.apiKey = apiKey
+    
+   private init() {
        self.systemMessage.setValue("assistant", forKey: "role")
        self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
            
@@ -133,7 +149,7 @@ final public class ChatGPTAPIManager {
     ///   - completion: A closure to be called with the result of the request. The result is either a success containing the generated response string or a failure containing an error.
     
     
-    public func sendChatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+    public func sendChatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
         self.chatRequest(prompt: prompt, model: model, maxTokens: maxTokens, endPoint: endPoint) { result in
             switch result {
                 
@@ -156,7 +172,7 @@ final public class ChatGPTAPIManager {
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: A completion block that is called with the result of the request. The block receives a Result object containing either the generated text as a String in case of success, or an Error in case of failure.
 
-    public func sendTextRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+    public func sendTextRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
         self.sendTextCompletionRequest(prompt: prompt, model: model, maxTokens: maxTokens,n: n,endPoint: endPoint) { result in
             switch result {
                 
@@ -178,7 +194,7 @@ final public class ChatGPTAPIManager {
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the generated image as a String in case of success, or an Error in case of failure.
     
-    public func generateImage(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+    public func generateImage(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
         self.generateImageFromText(prompt: prompt, model: model, imageSize: imageSize, endPoint: endPoint, n: n) { result in
             switch result {
             case .success(let successString):
@@ -189,8 +205,11 @@ final public class ChatGPTAPIManager {
         }
     }
     
-    private func chatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int ,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
-        
+    private func chatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int ,endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
+        guard apiKey != "" else {
+            completion(.failure(NetworkError.apiKeyNotFound))
+            return
+        }
         let messages = generateMessages(from: prompt)
         print(messages)
         let parameters: [String: Any] = [
@@ -218,8 +237,8 @@ final public class ChatGPTAPIManager {
                         self.appendToHistoryList(userText: prompt, responseText: succesString)
                         completion(.success(succesString))
                         
-                    case.failure(let error):
-                        completion(.failure(error))
+                    case.failure(_):
+                        completion(.failure(NetworkError.invalidResponse))
                     }
                 })
             case.failure(let error):
@@ -229,7 +248,11 @@ final public class ChatGPTAPIManager {
         
         
     }
-    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels,maxTokens:Int,n: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels,maxTokens:Int,n: Int, endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
+        guard apiKey != "" else {
+            completion(.failure(NetworkError.apiKeyNotFound))
+            return
+        }
         let parameters: [String: Any] = [
             "prompt": prompt,
             "max_tokens": maxTokens,
@@ -253,8 +276,8 @@ final public class ChatGPTAPIManager {
                     case.success(let succesString):
                         completion(.success(succesString))
                         
-                    case.failure(let error):
-                        completion(.failure(error))
+                    case.failure(_):
+                        completion(.failure(NetworkError.invalidResponse))
                     }
                 })
             case.failure(let error):
@@ -264,12 +287,12 @@ final public class ChatGPTAPIManager {
         
         
     }
-    private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
+    private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         
         URLSession.shared.dataTask(with: request) { (data,response,error) in
             
             if let error = error {
-                completion(.failure(error))
+                completion(.failure(NetworkError.requestFailed(error)))
                 return
             }
             
@@ -282,7 +305,11 @@ final public class ChatGPTAPIManager {
     }
     
     
-    private func generateImageFromText(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL,n: Int, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func generateImageFromText(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL,n: Int, completion: @escaping (Result<String, NetworkError>) -> Void)  {
+        guard apiKey != "" else {
+            completion(.failure(NetworkError.apiKeyNotFound))
+            return
+        }
         let parameters: [String: Any] = [
             "prompt": prompt,
             "n": n,
@@ -308,8 +335,8 @@ final public class ChatGPTAPIManager {
                     case.success(let succesString):
                         completion(.success(succesString))
                         
-                    case.failure(let error):
-                        completion(.failure(error))
+                    case.failure(_):
+                        completion(.failure(NetworkError.invalidResponse))
                     }
                 })
             case.failure(let error):
