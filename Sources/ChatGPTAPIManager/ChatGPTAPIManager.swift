@@ -59,25 +59,28 @@ extension Array where Element == ChatMessage {
 // MARK: - NetworkError Enum
 
 /// Enum representing possible network errors.
-public enum NetworkError: Error {
+public enum NetworkError: LocalizedError {
     case invalidURL
     case requestFailed(Error)
     case invalidResponse
     case apiKeyNotFound
+    case invalidApiKey(Error)
     
    
 }
 public extension NetworkError {
-    var description: String? {
+    var errorDescription: String? {
          switch self {
          case.apiKeyNotFound:
-             return "Please check your api key"
+             return "Please check your api key is not set.Do set it in app delegate"
          case .invalidURL:
              return "Invalid url"
          case .requestFailed(_):
              return "Request failed"
          case .invalidResponse:
              return "Invalid api response"
+         default:
+             return nil
          }
      }
 }
@@ -136,7 +139,7 @@ final public class ChatGPTAPIManager {
    private init() {
        self.systemMessage.setValue("assistant", forKey: "role")
        self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
-           
+       
     }
     
     /// Sends a chat request to the ChatGPT API.
@@ -149,7 +152,7 @@ final public class ChatGPTAPIManager {
     ///   - completion: A closure to be called with the result of the request. The result is either a success containing the generated response string or a failure containing an error.
     
     
-    public func sendChatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
+    public func sendChatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         self.chatRequest(prompt: prompt, model: model, maxTokens: maxTokens, endPoint: endPoint) { result in
             switch result {
                 
@@ -172,7 +175,7 @@ final public class ChatGPTAPIManager {
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: A completion block that is called with the result of the request. The block receives a Result object containing either the generated text as a String in case of success, or an Error in case of failure.
 
-    public func sendTextRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
+    public func sendTextRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         self.sendTextCompletionRequest(prompt: prompt, model: model, maxTokens: maxTokens,n: n,endPoint: endPoint) { result in
             switch result {
                 
@@ -194,7 +197,7 @@ final public class ChatGPTAPIManager {
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the generated image as a String in case of success, or an Error in case of failure.
     
-    public func generateImage(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
+    public func generateImage(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         self.generateImageFromText(prompt: prompt, model: model, imageSize: imageSize, endPoint: endPoint, n: n) { result in
             switch result {
             case .success(let successString):
@@ -205,13 +208,10 @@ final public class ChatGPTAPIManager {
         }
     }
     
-    private func chatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int ,endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
-        guard apiKey != "" else {
-            completion(.failure(NetworkError.apiKeyNotFound))
-            return
-        }
+    private func chatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int ,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+
         let messages = generateMessages(from: prompt)
-        print(messages)
+        
         let parameters: [String: Any] = [
             "messages":messages
             ,
@@ -219,7 +219,7 @@ final public class ChatGPTAPIManager {
             "model": model.rawValue
         ]
         
-        print(parameters)
+        
         guard let request = self.createUrlRequest(params: parameters, endPoint: endPoint) else {
             completion(.failure(NetworkError.invalidURL))
             return
@@ -237,8 +237,8 @@ final public class ChatGPTAPIManager {
                         self.appendToHistoryList(userText: prompt, responseText: succesString)
                         completion(.success(succesString))
                         
-                    case.failure(_):
-                        completion(.failure(NetworkError.invalidResponse))
+                    case.failure(let error):
+                        completion(.failure(error))
                     }
                 })
             case.failure(let error):
@@ -248,11 +248,8 @@ final public class ChatGPTAPIManager {
         
         
     }
-    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels,maxTokens:Int,n: Int, endPoint: APPURL, completion: @escaping (Result<String, NetworkError>) -> Void)  {
-        guard apiKey != "" else {
-            completion(.failure(NetworkError.apiKeyNotFound))
-            return
-        }
+    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels,maxTokens:Int,n: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+        
         let parameters: [String: Any] = [
             "prompt": prompt,
             "max_tokens": maxTokens,
@@ -276,8 +273,8 @@ final public class ChatGPTAPIManager {
                     case.success(let succesString):
                         completion(.success(succesString))
                         
-                    case.failure(_):
-                        completion(.failure(NetworkError.invalidResponse))
+                    case.failure(let error):
+                        completion(.failure(error))
                     }
                 })
             case.failure(let error):
@@ -287,12 +284,12 @@ final public class ChatGPTAPIManager {
         
         
     }
-    private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+    private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         
         URLSession.shared.dataTask(with: request) { (data,response,error) in
             
             if let error = error {
-                completion(.failure(NetworkError.requestFailed(error)))
+                completion(.failure(error))
                 return
             }
             
@@ -305,11 +302,8 @@ final public class ChatGPTAPIManager {
     }
     
     
-    private func generateImageFromText(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL,n: Int, completion: @escaping (Result<String, NetworkError>) -> Void)  {
-        guard apiKey != "" else {
-            completion(.failure(NetworkError.apiKeyNotFound))
-            return
-        }
+    private func generateImageFromText(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL,n: Int, completion: @escaping (Result<String, Error>) -> Void)  {
+        
         let parameters: [String: Any] = [
             "prompt": prompt,
             "n": n,
@@ -335,8 +329,8 @@ final public class ChatGPTAPIManager {
                     case.success(let succesString):
                         completion(.success(succesString))
                         
-                    case.failure(_):
-                        completion(.failure(NetworkError.invalidResponse))
+                    case.failure(let error):
+                        completion(.failure(error))
                     }
                 })
             case.failure(let error):
@@ -434,8 +428,16 @@ class ChatCompletionResponseParser: APIResponseParcer {
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
             
             guard let output = responseJSON?["choices"] as? [[String: Any]] else {
-                completion(.failure(NetworkError.invalidResponse))
-                return
+                
+                if let error = responseJSON?["error"] as? [String:Any],let message = error["message"]  as? String {
+                    let error = NSError(domain: message, code: 401, userInfo: [ NSLocalizedDescriptionKey: message])
+
+                    completion(.failure(error))
+                   return
+                } else {
+                    completion(.failure(NetworkError.invalidResponse))
+                    return
+                }
             }
             for item in output {
                 guard let completionText = item["message"] as? [String: Any] ,let content = completionText["content"] as? String else {
