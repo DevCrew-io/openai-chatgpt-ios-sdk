@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "chatgpt-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DevCrew-io/chatgpt-ios-sdk.git",
+      "state" : {
+        "revision" : "a418649bbe3de4c90d02d1975cb1280d3366b144",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}
