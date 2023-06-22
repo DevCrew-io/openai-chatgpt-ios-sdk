@@ -16,16 +16,19 @@
 		A8B85FE42A43131A005FBEDE /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B85FE32A43131A005FBEDE /* ExampleTests.swift */; };
 		A8B85FEE2A43131A005FBEDE /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B85FED2A43131A005FBEDE /* ExampleUITests.swift */; };
 		A8B85FF02A43131A005FBEDE /* ExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B85FEF2A43131A005FBEDE /* ExampleUITestsLaunchTests.swift */; };
-		A8B860012A431904005FBEDE /* ChatGPTAPIManager in Frameworks */ = {isa = PBXBuildFile; productRef = A8B860002A431904005FBEDE /* ChatGPTAPIManager */; };
 		A8B8600A2A431AA6005FBEDE /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8B860022A431AA5005FBEDE /* UserCell.xib */; };
 		A8B8600B2A431AA6005FBEDE /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860032A431AA5005FBEDE /* UserCell.swift */; };
 		A8B8600C2A431AA6005FBEDE /* AssistantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860042A431AA5005FBEDE /* AssistantCell.swift */; };
-		A8B8600D2A431AA6005FBEDE /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860052A431AA5005FBEDE /* TextViewController.swift */; };
 		A8B8600E2A431AA6005FBEDE /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860062A431AA5005FBEDE /* ChatViewController.swift */; };
 		A8B8600F2A431AA6005FBEDE /* AssistantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8B860072A431AA5005FBEDE /* AssistantCell.xib */; };
 		A8B860102A431AA6005FBEDE /* EZLoadingActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860082A431AA6005FBEDE /* EZLoadingActivity.swift */; };
 		A8B860112A431AA6005FBEDE /* ImageWithTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860092A431AA6005FBEDE /* ImageWithTextViewController.swift */; };
 		A8B860132A432135005FBEDE /* openai.svg in Resources */ = {isa = PBXBuildFile; fileRef = A8B860122A432135005FBEDE /* openai.svg */; };
+		A8B860192A432841005FBEDE /* ChatGPTAPIManager in Frameworks */ = {isa = PBXBuildFile; productRef = A8B860182A432841005FBEDE /* ChatGPTAPIManager */; };
+		A8B860252A440C52005FBEDE /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860242A440C52005FBEDE /* MessageModel.swift */; };
+		A8B8602D2A4413F2005FBEDE /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8602C2A4413F2005FBEDE /* ChatViewModel.swift */; };
+		A8B8602F2A44140A005FBEDE /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8602E2A441409005FBEDE /* ImageViewModel.swift */; };
+		A8B860342A44431C005FBEDE /* TextGenerationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860332A44431C005FBEDE /* TextGenerationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,12 +65,15 @@
 		A8B860022A431AA5005FBEDE /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		A8B860032A431AA5005FBEDE /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		A8B860042A431AA5005FBEDE /* AssistantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistantCell.swift; sourceTree = "<group>"; };
-		A8B860052A431AA5005FBEDE /* TextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		A8B860062A431AA5005FBEDE /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		A8B860072A431AA5005FBEDE /* AssistantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AssistantCell.xib; sourceTree = "<group>"; };
 		A8B860082A431AA6005FBEDE /* EZLoadingActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EZLoadingActivity.swift; sourceTree = "<group>"; };
 		A8B860092A431AA6005FBEDE /* ImageWithTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageWithTextViewController.swift; sourceTree = "<group>"; };
 		A8B860122A432135005FBEDE /* openai.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = openai.svg; sourceTree = "<group>"; };
+		A8B860242A440C52005FBEDE /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		A8B8602C2A4413F2005FBEDE /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		A8B8602E2A441409005FBEDE /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
+		A8B860332A44431C005FBEDE /* TextGenerationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGenerationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8B860012A431904005FBEDE /* ChatGPTAPIManager in Frameworks */,
+				A8B860192A432841005FBEDE /* ChatGPTAPIManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,22 +125,12 @@
 		A8B85FCB2A431318005FBEDE /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				A8B860042A431AA5005FBEDE /* AssistantCell.swift */,
-				A8B860072A431AA5005FBEDE /* AssistantCell.xib */,
-				A8B860062A431AA5005FBEDE /* ChatViewController.swift */,
-				A8B860082A431AA6005FBEDE /* EZLoadingActivity.swift */,
-				A8B860092A431AA6005FBEDE /* ImageWithTextViewController.swift */,
-				A8B860052A431AA5005FBEDE /* TextViewController.swift */,
-				A8B860032A431AA5005FBEDE /* UserCell.swift */,
-				A8B860022A431AA5005FBEDE /* UserCell.xib */,
-				A8B85FCC2A431318005FBEDE /* AppDelegate.swift */,
-				A8B85FCE2A431318005FBEDE /* SceneDelegate.swift */,
-				A8B85FD02A431318005FBEDE /* ViewController.swift */,
-				A8B85FD22A431318005FBEDE /* Main.storyboard */,
-				A8B85FD52A43131A005FBEDE /* Assets.xcassets */,
-				A8B860122A432135005FBEDE /* openai.svg */,
-				A8B85FD72A43131A005FBEDE /* LaunchScreen.storyboard */,
-				A8B85FDA2A43131A005FBEDE /* Info.plist */,
+				A8B860232A440C0F005FBEDE /* Models */,
+				A8B860202A440BB9005FBEDE /* Views */,
+				A8B860212A440BE6005FBEDE /* ViewModles */,
+				A8B860272A440C95005FBEDE /* App */,
+				A8B860282A440CAD005FBEDE /* Storyboards */,
+				A8B860292A440CC0005FBEDE /* Supporting */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -156,6 +152,91 @@
 			path = ExampleUITests;
 			sourceTree = "<group>";
 		};
+		A8B860202A440BB9005FBEDE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A8B860322A444295005FBEDE /* TextToImage */,
+				A8B860302A444288005FBEDE /* ChatAndText */,
+				A8B860262A440C79005FBEDE /* Cells */,
+				A8B85FD02A431318005FBEDE /* ViewController.swift */,
+				A8B860082A431AA6005FBEDE /* EZLoadingActivity.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A8B860212A440BE6005FBEDE /* ViewModles */ = {
+			isa = PBXGroup;
+			children = (
+				A8B8602C2A4413F2005FBEDE /* ChatViewModel.swift */,
+				A8B8602E2A441409005FBEDE /* ImageViewModel.swift */,
+				A8B860332A44431C005FBEDE /* TextGenerationViewModel.swift */,
+			);
+			path = ViewModles;
+			sourceTree = "<group>";
+		};
+		A8B860232A440C0F005FBEDE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A8B860242A440C52005FBEDE /* MessageModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A8B860262A440C79005FBEDE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A8B860042A431AA5005FBEDE /* AssistantCell.swift */,
+				A8B860072A431AA5005FBEDE /* AssistantCell.xib */,
+				A8B860032A431AA5005FBEDE /* UserCell.swift */,
+				A8B860022A431AA5005FBEDE /* UserCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A8B860272A440C95005FBEDE /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A8B85FCC2A431318005FBEDE /* AppDelegate.swift */,
+				A8B85FCE2A431318005FBEDE /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A8B860282A440CAD005FBEDE /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				A8B85FD22A431318005FBEDE /* Main.storyboard */,
+				A8B85FD72A43131A005FBEDE /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		A8B860292A440CC0005FBEDE /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				A8B85FD52A43131A005FBEDE /* Assets.xcassets */,
+				A8B860122A432135005FBEDE /* openai.svg */,
+				A8B85FDA2A43131A005FBEDE /* Info.plist */,
+			);
+			path = Supporting;
+			sourceTree = "<group>";
+		};
+		A8B860302A444288005FBEDE /* ChatAndText */ = {
+			isa = PBXGroup;
+			children = (
+				A8B860062A431AA5005FBEDE /* ChatViewController.swift */,
+			);
+			path = ChatAndText;
+			sourceTree = "<group>";
+		};
+		A8B860322A444295005FBEDE /* TextToImage */ = {
+			isa = PBXGroup;
+			children = (
+				A8B860092A431AA6005FBEDE /* ImageWithTextViewController.swift */,
+			);
+			path = TextToImage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -173,7 +254,7 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				A8B860002A431904005FBEDE /* ChatGPTAPIManager */,
+				A8B860182A432841005FBEDE /* ChatGPTAPIManager */,
 			);
 			productName = Example;
 			productReference = A8B85FC92A431318005FBEDE /* Example.app */;
@@ -248,7 +329,7 @@
 			);
 			mainGroup = A8B85FC02A431318005FBEDE;
 			packageReferences = (
-				A8B85FFF2A431904005FBEDE /* XCRemoteSwiftPackageReference "chatgpt-ios-sdk" */,
+				A8B860172A432841005FBEDE /* XCRemoteSwiftPackageReference "chatgpt-ios-sdk" */,
 			);
 			productRefGroup = A8B85FCA2A431318005FBEDE /* Products */;
 			projectDirPath = "";
@@ -297,14 +378,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8B8600C2A431AA6005FBEDE /* AssistantCell.swift in Sources */,
+				A8B860342A44431C005FBEDE /* TextGenerationViewModel.swift in Sources */,
 				A8B8600B2A431AA6005FBEDE /* UserCell.swift in Sources */,
 				A8B860112A431AA6005FBEDE /* ImageWithTextViewController.swift in Sources */,
 				A8B85FD12A431318005FBEDE /* ViewController.swift in Sources */,
 				A8B8600E2A431AA6005FBEDE /* ChatViewController.swift in Sources */,
+				A8B860252A440C52005FBEDE /* MessageModel.swift in Sources */,
 				A8B860102A431AA6005FBEDE /* EZLoadingActivity.swift in Sources */,
 				A8B85FCD2A431318005FBEDE /* AppDelegate.swift in Sources */,
 				A8B85FCF2A431318005FBEDE /* SceneDelegate.swift in Sources */,
-				A8B8600D2A431AA6005FBEDE /* TextViewController.swift in Sources */,
+				A8B8602D2A4413F2005FBEDE /* ChatViewModel.swift in Sources */,
+				A8B8602F2A44140A005FBEDE /* ImageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,7 +566,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_FILE = Example/Supporting/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -509,7 +593,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_FILE = Example/Supporting/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -642,7 +726,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A8B85FFF2A431904005FBEDE /* XCRemoteSwiftPackageReference "chatgpt-ios-sdk" */ = {
+		A8B860172A432841005FBEDE /* XCRemoteSwiftPackageReference "chatgpt-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DevCrew-io/chatgpt-ios-sdk.git";
 			requirement = {
@@ -653,9 +737,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A8B860002A431904005FBEDE /* ChatGPTAPIManager */ = {
+		A8B860182A432841005FBEDE /* ChatGPTAPIManager */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A8B85FFF2A431904005FBEDE /* XCRemoteSwiftPackageReference "chatgpt-ios-sdk" */;
+			package = A8B860172A432841005FBEDE /* XCRemoteSwiftPackageReference "chatgpt-ios-sdk" */;
 			productName = ChatGPTAPIManager;
 		};
 /* End XCSwiftPackageProductDependency section */

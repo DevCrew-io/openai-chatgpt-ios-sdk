@@ -16,10 +16,14 @@ class ViewController: UIViewController {
 // MARK: - IBAction
     @IBAction func chatVC(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
+        let vm = ChatViewModel()
+        vc.vm = vm
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func textVC(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "TextViewController") as! TextViewController
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
+        let vm = TextGenerationViewModel()
+        vc.vm = vm
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func txtToImageVC(_ sender: UIButton) {

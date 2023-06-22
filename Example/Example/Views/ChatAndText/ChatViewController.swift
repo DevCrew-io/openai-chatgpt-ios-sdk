@@ -7,18 +7,19 @@
 
 import UIKit
 import ChatGPTAPIManager
+
 class ChatViewController: UIViewController {
     
     // MARK: - IBOutlets
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet private weak var tableView: UITableView!
-    private var chatMessages: [ChatMessage] = []
     @IBOutlet weak var textFieldBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Variables
     
-    let chatGPTAPI = ChatGPTAPIManager(apiKey: "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")
+    var vm: ChatViewModelProtocols!
     
+    // MARK: - ViewController Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -84,51 +85,35 @@ class ChatViewController: UIViewController {
     
     func sendMessageToChatGPT(_ message: String) {
         
-        let userMessage = ChatMessage(content: message, role: Role.user.rawValue)
-        chatMessages.append(userMessage)
-        tableView.reloadData()
-        
+        vm.reloadTableView = {
+            self.tableView.reloadData() // reload tableview to show user message
+        }
         messageTextField.text = ""
-        
-        EZLoadingActivity.show("Loading...", disableUI: true)
-        chatGPTAPI.sendChatRequest(prompt: message,model: .gptThreePointFiveTurbo,endPoint: .chat) { result in
-            switch result {
-            case .success(let response):
-                print("API response: \(response)")
-                // Handle the response as needed
-                
-                DispatchQueue.main.async {
-                    
-                    let assistantMessage = ChatMessage(content: response, role: Role.assistant.rawValue)
-                    self.chatMessages.append(assistantMessage)
-                    self.tableView.reloadData()
-                    
-                    // Scroll to the last message
-                    let lastRow = (self.chatMessages.count) - 1
-                    let indexPath = IndexPath(row: lastRow, section: 0)
-                    self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                    EZLoadingActivity.hide(true,animated: true)
-                }
-                
-            case .failure(let error):
-                print("API error: \(error.localizedDescription)")
-                // Handle the error gracefully
-                DispatchQueue.main.async {
-                    EZLoadingActivity.hide(false,animated: true)
-                }
+        vm.sendMessage(message: message)
+        vm.onSuccess = {
+            self.tableView.reloadData()
+            
+            // Scroll to the last message
+            let lastRow = (self.vm.chatMessages.count) - 1
+            let indexPath = IndexPath(row: lastRow, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            EZLoadingActivity.hide(true,animated: true)
+        }
+        vm.onFailure = {
+            DispatchQueue.main.async {
+                EZLoadingActivity.hide(false,animated: true)
             }
         }
-        
     }
 }
-
+// MARK: - UITableViewDataSource
 extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatMessages.count
+        return self.vm.chatMessages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let message = chatMessages[indexPath.row]
+        let message = self.vm.chatMessages[indexPath.row]
         
         let cellIdentifier = message.role == "user" ? "UserCell" : "AssistantCell"
         
@@ -146,17 +131,17 @@ extension ChatViewController: UITableViewDataSource {
         
     }
 }
-
+// MARK: - UITableViewDelegate
 extension ChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let message = chatMessages[indexPath.row]
+        let message = self.vm.chatMessages[indexPath.row]
         let labelWidth = tableView.frame.width - 20 // Adjust as needed
         let labelFont = UIFont.systemFont(ofSize: 17) // Adjust font size if necessary
         let labelHeight = message.content.height(withConstrainedWidth: labelWidth, font: labelFont)
         return labelHeight + 20 // Add padding
     }
 }
-
+// MARK: - UITextFieldDelegate
 extension ChatViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == "\n" {
@@ -167,15 +152,7 @@ extension ChatViewController: UITextFieldDelegate {
     }
 }
 
-struct ChatMessage: Codable {
-    let content: String
-    let role: String
-}
 
-enum Role: String, Codable {
-    case user = "user"
-    case assistant = "assistant"
-}
 
 extension String {
     func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {

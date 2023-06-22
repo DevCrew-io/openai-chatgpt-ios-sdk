@@ -11,8 +11,7 @@ class ImageWithTextViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textField: UITextField!
-    
-    let chatGPTAPI = ChatGPTAPIManager(apiKey: "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")
+    let vm = ImageGenerationViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,32 +27,28 @@ class ImageWithTextViewController: UIViewController {
         }
     }
     func generateImageWithText(_ text: String)  {
-        EZLoadingActivity.show("Loading...", disableUI: true)
-         chatGPTAPI.generateImage(prompt: text, model: .gptThreePointFiveTurbo, imageSize: .fiveTwelve,endPoint: .generateImage) { result in
-            switch result {
-            case .success(let imageURL):
-                print("Generated image URL:", imageURL)
-                if let url = URL(string: imageURL) {
+        vm.sendImageRequest(text)
+        vm.onSuccess = {
+            DispatchQueue.main.async { [weak self] in
+                print("Generated image URL:", self!.vm.imageURLString)
+                if let url = URL(string: self!.vm.imageURLString!) {
                     let task = URLSession.shared.dataTask(with: url) { data, response, error in
                         guard let data = data, error == nil else { return }
                         
                         DispatchQueue.main.async { /// execute on main thread
                             EZLoadingActivity.hide(true,animated: true)
-                            self.imageView.image = UIImage(data: data)
+                            self?.imageView.image = UIImage(data: data)
                         }
                     }
                     
                     task.resume()
                 }
-                // Handle the generated image URL as desired
-            case .failure(let error):
-                print("Error:", error)
-                DispatchQueue.main.async {
-                    EZLoadingActivity.hide(false,animated: true)
-                }
-                // Handle the error appropriately
             }
         }
+        vm.onFailure = {
+            EZLoadingActivity.hide(false,animated: true)
+        }
+
     }
     
     /*
