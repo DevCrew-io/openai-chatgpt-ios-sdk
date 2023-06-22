@@ -15,7 +15,7 @@ class TextGenerationViewModel: ChatViewModelProtocols {
      var reloadTableView:(()-> Void)? = nil
      var chatMessages: [ChatMessage] = []
     
-    let chatGPTAPI = ChatGPTAPIManager(apiKey: "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")
+    let chatGPTAPI = ChatGPTAPIManager(apiKey: "xxxx")
     var rows:Int {
         return self.chatMessages.count
     }

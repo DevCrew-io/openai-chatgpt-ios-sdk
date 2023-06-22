@@ -14,7 +14,7 @@ class ImageGenerationViewModel {
      var onFailure:(()-> Void)? = nil
      var imageURLString: String?
     
-    let chatGPTAPI = ChatGPTAPIManager(apiKey: "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")
+    let chatGPTAPI = ChatGPTAPIManager(apiKey: "xxxxx")
    
     
     func sendImageRequest(_ text: String ) {
