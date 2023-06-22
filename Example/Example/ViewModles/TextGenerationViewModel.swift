@@ -15,7 +15,7 @@ class TextGenerationViewModel: ChatViewModelProtocols {
      var reloadTableView:(()-> Void)? = nil
      var chatMessages: [ChatMessage] = []
     
-    let chatGPTAPI = ChatGPTAPIManager(apiKey: "xxxx")
+    
     var rows:Int {
         return self.chatMessages.count
     }
@@ -29,7 +29,7 @@ class TextGenerationViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        chatGPTAPI.sendTextRequest(prompt: message,model: .textDavinci003,endPoint: .completion) { result in
+        ChatGPTAPIManager.shared.sendTextRequest(prompt: message,model: .textDavinci003,endPoint: .completion) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

@@ -24,7 +24,7 @@ class ChatViewModel: ChatViewModelProtocols {
      var reloadTableView:(()-> Void)? = nil
      var chatMessages: [ChatMessage] = []
     
-    let chatGPTAPI = ChatGPTAPIManager(apiKey: "xxxxxx")
+    
    
     
     func sendMessage(message: String ) {
@@ -36,7 +36,7 @@ class ChatViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        chatGPTAPI.sendChatRequest(prompt: message,model: .gptThreePointFiveTurbo,endPoint: .chat) { result in
+        ChatGPTAPIManager.shared.sendChatRequest(prompt: message,model: .gptThreePointFiveTurbo,endPoint: .chat) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")
