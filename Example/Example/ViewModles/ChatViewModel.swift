@@ -14,18 +14,14 @@ protocol ChatViewModelProtocols {
     var onFailure:(()-> Void)? { get set }
     var reloadTableView:(()-> Void)? { get set }
     var chatMessages: [ChatMessage] { get set }
-    
 }
 
 class ChatViewModel: ChatViewModelProtocols {
     
-     var onSuccess:(()-> Void)? = nil
-     var onFailure:(()-> Void)? = nil
-     var reloadTableView:(()-> Void)? = nil
-     var chatMessages: [ChatMessage] = []
-    
-    let chatGPTAPI = ChatGPTAPIManager(apiKey: "xxxxxx")
-   
+    var onSuccess:(()-> Void)? = nil
+    var onFailure:(()-> Void)? = nil
+    var reloadTableView:(()-> Void)? = nil
+    var chatMessages: [ChatMessage] = []
     
     func sendMessage(message: String ) {
         
@@ -36,7 +32,7 @@ class ChatViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        chatGPTAPI.sendChatRequest(prompt: message,model: .gptThreePointFiveTurbo,endPoint: .chat) { result in
+        ChatGPTAPIManager.shared.sendChatRequest(prompt: message,model: .gptThreePointFiveTurbo,endPoint: .chat) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")
@@ -57,4 +53,5 @@ class ChatViewModel: ChatViewModelProtocols {
             }
         }
     }
+    
 }
