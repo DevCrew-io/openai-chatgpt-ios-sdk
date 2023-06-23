@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 You can send a chat request to generate text based on a prompt using the `sendChatRequest` method. It takes the prompt, ChatGPT model, endpoint URL, and a completion block as parameters.
 
 ```swift
-        ChatGPTAPIManager.shared.sendChatRequest(prompt: "Your prompt", model: .gptThreePointFiveTurbo, endPoint: .chat) { result in
+ChatGPTAPIManager.shared.sendChatRequest(prompt: "Your prompt", model: .gptThreePointFiveTurbo, endPoint: .chat) { result in
     switch result {
     case .success(let generatedChat):
         // Handle the generated chat
@@ -94,7 +94,7 @@ You can send a chat request to generate text based on a prompt using the `sendCh
 You can send a request to generate text based on a prompt using the `sendTextRequest` method. It takes the prompt, ChatGPT model, endpoint URL, and a completion block as parameters.
 
 ```swift
-        ChatGPTAPIManager.shared.sendTextRequest(prompt: "Your prompt", model: .textDavinci003, endPoint: .completion) { result in
+ChatGPTAPIManager.shared.sendTextRequest(prompt: "Your prompt", model: .textDavinci003, endPoint: .completion) { result in
     switch result {
     case .success(let generatedText):
         // Handle the generated text
@@ -108,7 +108,7 @@ You can send a request to generate text based on a prompt using the `sendTextReq
 You can generate an image based on a prompt using the `generateImage` method. It takes the prompt, ChatGPT model, desired image size, endpoint URL, and a completion block as parameters.
 
 ```swift
-        ChatGPTAPIManager.shared.generateImage(prompt: "Your prompt", model: .engine, imageSize: .fiveTwelve, endPoint: .generateImage) { result in
+ChatGPTAPIManager.shared.generateImage(prompt: "Your prompt", model: .engine, imageSize: .fiveTwelve, endPoint: .generateImage) { result in
     switch result {
     case .success(let imageURL):
         // Handle the generated image URL
