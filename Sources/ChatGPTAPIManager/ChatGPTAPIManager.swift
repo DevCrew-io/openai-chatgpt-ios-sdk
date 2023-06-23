@@ -26,7 +26,7 @@ public enum APPURL {
     var url: URL {
         switch self {
         case.completion:
-           return URL(string: APPURL.baseURL + "/completions")!
+            return URL(string: APPURL.baseURL + "/completions")!
         case .chat:
             return URL(string: APPURL.baseURL + "/chat/completions")!
         case .generateImage:
@@ -66,23 +66,23 @@ public enum NetworkError: LocalizedError {
     case apiKeyNotFound
     case invalidApiKey(Error)
     
-   
+    
 }
 public extension NetworkError {
     var errorDescription: String? {
-         switch self {
-         case.apiKeyNotFound:
-             return "Please check your api key is not set.Do set it in app delegate"
-         case .invalidURL:
-             return "Invalid url"
-         case .requestFailed(_):
-             return "Request failed"
-         case .invalidResponse:
-             return "Invalid api response"
-         default:
-             return nil
-         }
-     }
+        switch self {
+        case.apiKeyNotFound:
+            return "Please check your api key is not set.Do set it in app delegate"
+        case .invalidURL:
+            return "Invalid url"
+        case .requestFailed(_):
+            return "Request failed"
+        case .invalidResponse:
+            return "Invalid api response"
+        default:
+            return nil
+        }
+    }
 }
 // MARK: - ChatGPTModels Enum
 
@@ -126,20 +126,18 @@ public enum ChatGPTImageSize : String {
 /// A class responsible for making API requests to ChatGPT.
 final public class ChatGPTAPIManager {
     
-   public static let shared = ChatGPTAPIManager()
+    public static let shared = ChatGPTAPIManager()
     
     private let systemMessage = NSMutableDictionary()
-   
     private var historyList = [NSDictionary]()
     public  var apiKey: String = ""
     
     
     /// Initializes the ChatGPTAPIManager.
     
-   private init() {
-       self.systemMessage.setValue("assistant", forKey: "role")
-       self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
-       
+    private init() {
+        self.systemMessage.setValue("assistant", forKey: "role")
+        self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
     }
     
     /// Sends a chat request to the ChatGPT API.
@@ -174,7 +172,7 @@ final public class ChatGPTAPIManager {
     ///   - n: The number of text samples to generate. Defaults to 1.
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: A completion block that is called with the result of the request. The block receives a Result object containing either the generated text as a String in case of success, or an Error in case of failure.
-
+    
     public func sendTextRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         self.sendTextCompletionRequest(prompt: prompt, model: model, maxTokens: maxTokens,n: n,endPoint: endPoint) { result in
             switch result {
@@ -209,7 +207,7 @@ final public class ChatGPTAPIManager {
     }
     
     private func chatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int ,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
-
+        
         let messages = generateMessages(from: prompt)
         
         let parameters: [String: Any] = [
@@ -245,9 +243,8 @@ final public class ChatGPTAPIManager {
                 completion(.failure(error))
             }
         }
-        
-        
     }
+    
     private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels,maxTokens:Int,n: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         
         let parameters: [String: Any] = [
@@ -282,8 +279,8 @@ final public class ChatGPTAPIManager {
             }
         }
         
-        
     }
+    
     private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         
         URLSession.shared.dataTask(with: request) { (data,response,error) in
@@ -315,8 +312,6 @@ final public class ChatGPTAPIManager {
             completion(.failure(NetworkError.invalidURL))
             return
         }
-        
-        
         
         self.performDataTask(with: request, completion: { result in
             
@@ -431,9 +426,9 @@ class ChatCompletionResponseParser: APIResponseParcer {
                 
                 if let error = responseJSON?["error"] as? [String:Any],let message = error["message"]  as? String {
                     let error = NSError(domain: message, code: 401, userInfo: [ NSLocalizedDescriptionKey: message])
-
+                    
                     completion(.failure(error))
-                   return
+                    return
                 } else {
                     completion(.failure(NetworkError.invalidResponse))
                     return
