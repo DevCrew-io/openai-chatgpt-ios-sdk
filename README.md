@@ -1,6 +1,7 @@
 # chatgpt-ios-sdk
 [![license](https://img.shields.io/badge/license-MIT-green)](https://github.com/DevCrew-io/chatgpt-ios-sdk/blob/main/LICENSE)
 ![](https://img.shields.io/badge/Code-Swift-informational?style=flat&logo=swift&color=FFA500)
+[![Github tag](https://img.shields.io/github/v/tag/DevCrew-io/chatgpt-ios-sdk.svg)]()
 
 A comprehensive SDK for integrating Chat GPT APIs into iOS applications. It provides a convenient and easy-to-use interface for making API requests and handling responses.
 
