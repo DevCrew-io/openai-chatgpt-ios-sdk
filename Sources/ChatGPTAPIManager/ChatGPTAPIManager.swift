@@ -208,6 +208,33 @@ final public class ChatGPTAPIManager {
         }
     }
     
+    /// Requests audio transcription based on the provided parameters.
+    ///
+    /// - Parameters:
+    ///   - fileUrl: The URL of the audio file to be transcribed.
+    ///   - prompt: The prompt or context for the transcription.
+    ///   - temperature: (Optional) The temperature value for generating diverse transcriptions. Defaults to nil.
+    ///   - language: (Optional) The language of the transcription. Defaults to nil.
+    ///   - model: (Optional) The model to be used for transcription. Defaults to ChatGPTModels.
+    ///   - endPoint: The URL endpoint for the transcription service.
+    ///   - completion: A completion handler to be called with the result of the transcription request.
+    ///                 The handler takes a Result object, which contains either the transcribed text or an error.
+    ///                 Use the `.success` case to access the transcribed text and the `.failure` case to handle errors.
+    public func audioTranscriptionRequest(fileUrl: URL, prompt: String, temperature: Double? = nil, language: String? = nil, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        self.audioTranscription(fileUrl: fileUrl, prompt: prompt,temperature: temperature,language: language, model: model, endPoint: endPoint, completion: { result in
+            
+            switch result {
+            case.success(let success):
+                completion(.success(success))
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        })
+        
+    }
+    
     private func chatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int ,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
 
         let messages = generateMessages(from: prompt)
@@ -339,7 +366,41 @@ final public class ChatGPTAPIManager {
             
         })
     }
-    
+    private func audioTranscription(fileUrl: URL, prompt: String, temperature: Double? = nil, language: String? = nil, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        // Define the key-value pairs
+        let parameters: [String: Any] = [
+            "model": model.rawValue,
+            "prompt": prompt,
+            "temperature": temperature ?? 0.8,
+            "language": language ?? "en"
+        ]
+        guard let request = self.createMultiPartUrlRequest(audioURL: fileUrl, params: parameters, endPoint: endPoint) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                let parser = AudioParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let succesString):
+                        
+                        completion(.success(succesString))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
     private func createUrlRequest(params: [String: Any], endPoint: APPURL) -> URLRequest? {
         var request = URLRequest(url: endPoint.url)
         request.httpMethod = "POST"
@@ -352,6 +413,52 @@ final public class ChatGPTAPIManager {
             return nil
         }
         
+        return request
+    }
+    private func createMultiPartUrlRequest(audioURL:URL, params: [String: Any], endPoint: APPURL)-> URLRequest? {
+        
+        var request = URLRequest(url: endPoint.url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Construct the multipart form data
+        let boundary = UUID().uuidString
+        let contentType = "multipart/form-data; boundary=\(boundary)"
+        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+
+        // Create the body of the request
+        let requestBody = NSMutableData()
+
+    
+        // Append the parameters
+        for (key, value) in params {
+            requestBody.append("--\(boundary)\r\n".data(using: .utf8)!)
+            requestBody.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+            requestBody.append("\(value)\r\n".data(using: .utf8)!)
+        }
+
+        // Append the audio file
+       
+        let audioFilename = audioURL.lastPathComponent
+        let audioData: Data
+        do {
+            audioData = try Data(contentsOf: audioURL)
+        } catch {
+            return nil
+        }
+        
+        requestBody.append("--\(boundary)\r\n".data(using: .utf8)!)
+        requestBody.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(audioFilename)\"\r\n".data(using: .utf8)!)
+        requestBody.append("Content-Type: audio/wav\r\n\r\n".data(using: .utf8)!)
+        requestBody.append(audioData)
+        requestBody.append("\r\n".data(using: .utf8)!)
+
+        requestBody.append("--\(boundary)--\r\n".data(using: .utf8)!)
+
+        // Set the request body
+        request.httpBody = requestBody as Data
+
         return request
     }
     private func generateMessages(from text: String) -> [NSDictionary] {
@@ -479,4 +586,35 @@ class ImageGenerationResponseParser: APIResponseParcer {
     }
 }
 
+class AudioParser: APIResponseParcer {
+    
+    /// Parse the response data for generating an image.
+    /// - Parameter data: The response data from the API.
+    /// - Returns: The parsed image URL.
+    /// - Throws: An error if the response cannot be parsed.
+    
+    func parseResponse(data: Data,completion: @escaping(Result<String,Error>)->Void) {
+        do {
+            
+            let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            
+            if let transcription = responseJSON?["text"] as? String {
+               debugPrint(transcription)
+                completion(.success(transcription))
+            } else {
+                if let error = responseJSON?["error"] as? [String:Any],let message = error["message"]  as? String {
+                    let error = NSError(domain: message, code: 401, userInfo: [ NSLocalizedDescriptionKey: message])
 
+                    completion(.failure(error))
+                   return
+                } else {
+                    completion(.failure(NetworkError.invalidResponse))
+                    return
+                }
+            }
+
+        } catch (let error) {
+            completion(.failure(error))
+        }
+    }
+}

@@ -29,6 +29,10 @@
 		A8B8602D2A4413F2005FBEDE /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8602C2A4413F2005FBEDE /* ChatViewModel.swift */; };
 		A8B8602F2A44140A005FBEDE /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8602E2A441409005FBEDE /* ImageViewModel.swift */; };
 		A8B860342A44431C005FBEDE /* TextGenerationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860332A44431C005FBEDE /* TextGenerationViewModel.swift */; };
+		A8B8607C2A45AE40005FBEDE /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8607B2A45AE40005FBEDE /* AudioViewController.swift */; };
+		A8B8607E2A45B474005FBEDE /* sample-15s.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8B8607D2A45B474005FBEDE /* sample-15s.mp3 */; };
+		A8B860802A45BCFE005FBEDE /* passenger-let-her-go-official-video.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8B8607F2A45BCFE005FBEDE /* passenger-let-her-go-official-video.mp3 */; };
+		A8B860822A45C555005FBEDE /* Hindi Songs.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8B860812A45C555005FBEDE /* Hindi Songs.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +78,10 @@
 		A8B8602C2A4413F2005FBEDE /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		A8B8602E2A441409005FBEDE /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
 		A8B860332A44431C005FBEDE /* TextGenerationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGenerationViewModel.swift; sourceTree = "<group>"; };
+		A8B8607B2A45AE40005FBEDE /* AudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
+		A8B8607D2A45B474005FBEDE /* sample-15s.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sample-15s.mp3"; sourceTree = "<group>"; };
+		A8B8607F2A45BCFE005FBEDE /* passenger-let-her-go-official-video.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "passenger-let-her-go-official-video.mp3"; sourceTree = "<group>"; };
+		A8B860812A45C555005FBEDE /* Hindi Songs.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Hindi Songs.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +168,7 @@
 				A8B860262A440C79005FBEDE /* Cells */,
 				A8B85FD02A431318005FBEDE /* ViewController.swift */,
 				A8B860082A431AA6005FBEDE /* EZLoadingActivity.swift */,
+				A8B8607B2A45AE40005FBEDE /* AudioViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -214,6 +223,9 @@
 		A8B860292A440CC0005FBEDE /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				A8B8607D2A45B474005FBEDE /* sample-15s.mp3 */,
+				A8B8607F2A45BCFE005FBEDE /* passenger-let-her-go-official-video.mp3 */,
+				A8B860812A45C555005FBEDE /* Hindi Songs.mp3 */,
 				A8B85FD52A43131A005FBEDE /* Assets.xcassets */,
 				A8B860122A432135005FBEDE /* openai.svg */,
 				A8B85FDA2A43131A005FBEDE /* Info.plist */,
@@ -348,8 +360,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8B8600A2A431AA6005FBEDE /* UserCell.xib in Resources */,
+				A8B8607E2A45B474005FBEDE /* sample-15s.mp3 in Resources */,
 				A8B85FD92A43131A005FBEDE /* LaunchScreen.storyboard in Resources */,
 				A8B860132A432135005FBEDE /* openai.svg in Resources */,
+				A8B860822A45C555005FBEDE /* Hindi Songs.mp3 in Resources */,
+				A8B860802A45BCFE005FBEDE /* passenger-let-her-go-official-video.mp3 in Resources */,
 				A8B85FD62A43131A005FBEDE /* Assets.xcassets in Resources */,
 				A8B8600F2A431AA6005FBEDE /* AssistantCell.xib in Resources */,
 				A8B85FD42A431318005FBEDE /* Main.storyboard in Resources */,
@@ -389,6 +404,7 @@
 				A8B85FCF2A431318005FBEDE /* SceneDelegate.swift in Sources */,
 				A8B8602D2A4413F2005FBEDE /* ChatViewModel.swift in Sources */,
 				A8B8602F2A44140A005FBEDE /* ImageViewModel.swift in Sources */,
+				A8B8607C2A45AE40005FBEDE /* AudioViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,7 +747,7 @@
 			repositoryURL = "https://github.com/DevCrew-io/chatgpt-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
