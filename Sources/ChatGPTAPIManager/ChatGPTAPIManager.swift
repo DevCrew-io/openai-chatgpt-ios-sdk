@@ -26,7 +26,7 @@ public enum APPURL {
     var url: URL {
         switch self {
         case.completion:
-           return URL(string: APPURL.baseURL + "/completions")!
+            return URL(string: APPURL.baseURL + "/completions")!
         case .chat:
             return URL(string: APPURL.baseURL + "/chat/completions")!
         case .generateImage:
@@ -66,23 +66,23 @@ public enum NetworkError: LocalizedError {
     case apiKeyNotFound
     case invalidApiKey(Error)
     
-   
+    
 }
 public extension NetworkError {
     var errorDescription: String? {
-         switch self {
-         case.apiKeyNotFound:
-             return "Please check your api key is not set.Do set it in app delegate"
-         case .invalidURL:
-             return "Invalid url"
-         case .requestFailed(_):
-             return "Request failed"
-         case .invalidResponse:
-             return "Invalid api response"
-         default:
-             return nil
-         }
-     }
+        switch self {
+        case.apiKeyNotFound:
+            return "Please check your api key is not set.Do set it in app delegate"
+        case .invalidURL:
+            return "Invalid url"
+        case .requestFailed(_):
+            return "Request failed"
+        case .invalidResponse:
+            return "Invalid api response"
+        default:
+            return nil
+        }
+    }
 }
 // MARK: - ChatGPTModels Enum
 
@@ -126,21 +126,23 @@ public enum ChatGPTImageSize : String {
 /// A class responsible for making API requests to ChatGPT.
 final public class ChatGPTAPIManager {
     
-   public static let shared = ChatGPTAPIManager()
+    public static let shared = ChatGPTAPIManager()
     
     private let systemMessage = NSMutableDictionary()
-   
+    
     private var historyList = [NSDictionary]()
     public  var apiKey: String = ""
     
     
     /// Initializes the ChatGPTAPIManager.
     
-   private init() {
-       self.systemMessage.setValue("assistant", forKey: "role")
-       self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
-       
+    private init() {
+        self.systemMessage.setValue("assistant", forKey: "role")
+        self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
+        
     }
+    
+    // MARK: - Public Functions
     
     /// Sends a chat request to the ChatGPT API.
     ///
@@ -174,7 +176,7 @@ final public class ChatGPTAPIManager {
     ///   - n: The number of text samples to generate. Defaults to 1.
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: A completion block that is called with the result of the request. The block receives a Result object containing either the generated text as a String in case of success, or an Error in case of failure.
-
+    
     public func sendTextRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         self.sendTextCompletionRequest(prompt: prompt, model: model, maxTokens: maxTokens,n: n,endPoint: endPoint) { result in
             switch result {
@@ -234,9 +236,33 @@ final public class ChatGPTAPIManager {
         })
         
     }
+    /// Requests audio translation based on the provided parameters.
+    ///
+    /// - Parameters:
+    ///   - fileUrl: The URL of the audio file to be translated.
+    ///   - prompt: (Optional) The prompt or context for the translation. Defaults to nil.
+    ///   - temperature: (Optional) The temperature value for generating diverse translations. Defaults to nil.
+    ///   - model: The ChatGPT model to use for translation.
+    ///   - endPoint: The endpoint URL for the API request.
+    ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the translated text as a String in case of success, or an Error in case of failure.
+    public func audioTranslationRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+        // Implementation of audio translation request goes here
+        self.audioTranslation(fileUrl: fileUrl,prompt: prompt,temperature: temperature, model: model, endPoint: endPoint, completion: { result in
+            
+            switch result {
+            case.success(let success):
+                completion(.success(success))
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        })
+    }
+    
+    // MARK: - Private Functions
     
     private func chatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int ,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
-
+        
         let messages = generateMessages(from: prompt)
         
         let parameters: [String: Any] = [
@@ -401,6 +427,39 @@ final public class ChatGPTAPIManager {
             }
         }
     }
+    private func audioTranslation(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+        // Define the key-value pairs
+        let parameters: [String: Any] = [
+            "model": model.rawValue,
+            "prompt": prompt ?? "",
+            "temperature": temperature ?? 0.8,
+        ]
+        guard let request = self.createMultiPartUrlRequest(audioURL: fileUrl, params: parameters, endPoint: endPoint) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                let parser = AudioParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let succesString):
+                        completion(.success(succesString))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
+    }
     private func createUrlRequest(params: [String: Any], endPoint: APPURL) -> URLRequest? {
         var request = URLRequest(url: endPoint.url)
         request.httpMethod = "POST"
@@ -426,20 +485,20 @@ final public class ChatGPTAPIManager {
         let boundary = UUID().uuidString
         let contentType = "multipart/form-data; boundary=\(boundary)"
         request.setValue(contentType, forHTTPHeaderField: "Content-Type")
-
+        
         // Create the body of the request
         let requestBody = NSMutableData()
-
-    
+        
+        
         // Append the parameters
         for (key, value) in params {
             requestBody.append("--\(boundary)\r\n".data(using: .utf8)!)
             requestBody.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
             requestBody.append("\(value)\r\n".data(using: .utf8)!)
         }
-
+        
         // Append the audio file
-       
+        
         let audioFilename = audioURL.lastPathComponent
         let audioData: Data
         do {
@@ -453,12 +512,12 @@ final public class ChatGPTAPIManager {
         requestBody.append("Content-Type: audio/wav\r\n\r\n".data(using: .utf8)!)
         requestBody.append(audioData)
         requestBody.append("\r\n".data(using: .utf8)!)
-
+        
         requestBody.append("--\(boundary)--\r\n".data(using: .utf8)!)
-
+        
         // Set the request body
         request.httpBody = requestBody as Data
-
+        
         return request
     }
     private func generateMessages(from text: String) -> [NSDictionary] {
@@ -538,9 +597,9 @@ class ChatCompletionResponseParser: APIResponseParcer {
                 
                 if let error = responseJSON?["error"] as? [String:Any],let message = error["message"]  as? String {
                     let error = NSError(domain: message, code: 401, userInfo: [ NSLocalizedDescriptionKey: message])
-
+                    
                     completion(.failure(error))
-                   return
+                    return
                 } else {
                     completion(.failure(NetworkError.invalidResponse))
                     return
@@ -599,20 +658,20 @@ class AudioParser: APIResponseParcer {
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
             
             if let transcription = responseJSON?["text"] as? String {
-               debugPrint(transcription)
+                debugPrint(transcription)
                 completion(.success(transcription))
             } else {
                 if let error = responseJSON?["error"] as? [String:Any],let message = error["message"]  as? String {
                     let error = NSError(domain: message, code: 401, userInfo: [ NSLocalizedDescriptionKey: message])
-
+                    
                     completion(.failure(error))
-                   return
+                    return
                 } else {
                     completion(.failure(NetworkError.invalidResponse))
                     return
                 }
             }
-
+            
         } catch (let error) {
             completion(.failure(error))
         }
