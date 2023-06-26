@@ -14,18 +14,14 @@ protocol ChatViewModelProtocols {
     var onFailure:(()-> Void)? { get set }
     var reloadTableView:(()-> Void)? { get set }
     var chatMessages: [ChatMessage] { get set }
-    
 }
 
 class ChatViewModel: ChatViewModelProtocols {
     
-     var onSuccess:(()-> Void)? = nil
-     var onFailure:(()-> Void)? = nil
-     var reloadTableView:(()-> Void)? = nil
-     var chatMessages: [ChatMessage] = []
-    
-    
-   
+    var onSuccess:(()-> Void)? = nil
+    var onFailure:(()-> Void)? = nil
+    var reloadTableView:(()-> Void)? = nil
+    var chatMessages: [ChatMessage] = []
     
     func sendMessage(message: String ) {
         
@@ -57,4 +53,5 @@ class ChatViewModel: ChatViewModelProtocols {
             }
         }
     }
+    
 }

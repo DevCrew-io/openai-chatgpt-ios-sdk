@@ -129,7 +129,6 @@ final public class ChatGPTAPIManager {
     public static let shared = ChatGPTAPIManager()
     
     private let systemMessage = NSMutableDictionary()
-    
     private var historyList = [NSDictionary]()
     public  var apiKey: String = ""
     
@@ -139,7 +138,6 @@ final public class ChatGPTAPIManager {
     private init() {
         self.systemMessage.setValue("assistant", forKey: "role")
         self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
-        
     }
     
     // MARK: - Public Functions
@@ -298,9 +296,8 @@ final public class ChatGPTAPIManager {
                 completion(.failure(error))
             }
         }
-        
-        
     }
+    
     private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels,maxTokens:Int,n: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         
         let parameters: [String: Any] = [
@@ -335,8 +332,8 @@ final public class ChatGPTAPIManager {
             }
         }
         
-        
     }
+    
     private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         
         URLSession.shared.dataTask(with: request) { (data,response,error) in
@@ -368,8 +365,6 @@ final public class ChatGPTAPIManager {
             completion(.failure(NetworkError.invalidURL))
             return
         }
-        
-        
         
         self.performDataTask(with: request, completion: { result in
             

@@ -16,7 +16,6 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var textFieldBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Variables
-    
     var vm: ChatViewModelProtocols!
     
     // MARK: - ViewController Life Cycle
@@ -42,7 +41,6 @@ class ChatViewController: UIViewController {
     }
     
     // MARK: - Keyboard
-    
     @objc func keyboardWillShow(_ notification: Notification) {
         
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -82,8 +80,8 @@ class ChatViewController: UIViewController {
             sendMessageToChatGPT(message)
         }
     }
-    // MARK: - NetworkCall
     
+    // MARK: - NetworkCall
     func sendMessageToChatGPT(_ message: String) {
         
         vm.reloadTableView = {
@@ -106,7 +104,9 @@ class ChatViewController: UIViewController {
             }
         }
     }
+    
 }
+
 // MARK: - UITableViewDataSource
 extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -132,6 +132,7 @@ extension ChatViewController: UITableViewDataSource {
         
     }
 }
+
 // MARK: - UITableViewDelegate
 extension ChatViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -142,6 +143,7 @@ extension ChatViewController: UITableViewDelegate {
         return labelHeight + 20 // Add padding
     }
 }
+
 // MARK: - UITextFieldDelegate
 extension ChatViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -152,8 +154,6 @@ extension ChatViewController: UITextFieldDelegate {
         return true
     }
 }
-
-
 
 extension String {
     func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {

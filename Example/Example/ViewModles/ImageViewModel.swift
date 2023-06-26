@@ -10,10 +10,9 @@ import ChatGPTAPIManager
 
 class ImageGenerationViewModel {
     
-     var onSuccess:(()-> Void)? = nil
-     var onFailure:(()-> Void)? = nil
-     var imageURLString: String?
-    
+    var onSuccess:(()-> Void)? = nil
+    var onFailure:(()-> Void)? = nil
+    var imageURLString: String?
     
     func sendImageRequest(_ text: String ) {
         
@@ -39,4 +38,5 @@ class ImageGenerationViewModel {
             }
         }
     }
+    
 }

@@ -10,10 +10,10 @@ import ChatGPTAPIManager
 
 class TextGenerationViewModel: ChatViewModelProtocols {
     
-     var onSuccess:(()-> Void)? = nil
-     var onFailure:(()-> Void)? = nil
-     var reloadTableView:(()-> Void)? = nil
-     var chatMessages: [ChatMessage] = []
+    var onSuccess:(()-> Void)? = nil
+    var onFailure:(()-> Void)? = nil
+    var reloadTableView:(()-> Void)? = nil
+    var chatMessages: [ChatMessage] = []
     
     
     var rows:Int {
