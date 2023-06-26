@@ -13,7 +13,6 @@ class ImageGenerationResponseParser: APIResponseParcer {
     /// - Parameter data: The response data from the API.
     /// - Returns: The parsed image URL.
     /// - Throws: An error if the response cannot be parsed.
-    
     func parseResponse(data: Data,completion: @escaping(Result<String,Error>)->Void) {
         do {
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]

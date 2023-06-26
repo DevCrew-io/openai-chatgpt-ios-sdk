@@ -1,8 +1,7 @@
 import Foundation
+
 // MARK: - API Enum
-
 /// Enum defining the base URL for an API.
-
 public enum APPURL {
     enum Domains {
         static let dev = "https://api.openai.com"
@@ -34,30 +33,32 @@ public enum APPURL {
         }
     }
 }
+
 /// Private instance of JSONDecoder used for decoding JSON data.
 private let jsonDecoder: JSONDecoder = {
     let jsonDecoder = JSONDecoder()
     jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
     return jsonDecoder
 }()
+
 /// Represents a chat message.
 struct ChatMessage: Codable {
     let content: String
     let role: Role
 }
+
 /// Represents the role of a chat message sender.
 enum Role: Codable {
     case user
     case assistant
 }
+
 /// Extension on Array to provide additional functionality related to ChatMessage.
 extension Array where Element == ChatMessage {
-    
     var contentCount: Int { reduce(0, { $0 + $1.content.count })}
 }
 
 // MARK: - NetworkError Enum
-
 /// Enum representing possible network errors.
 public enum NetworkError: LocalizedError {
     case invalidURL
@@ -65,9 +66,8 @@ public enum NetworkError: LocalizedError {
     case invalidResponse
     case apiKeyNotFound
     case invalidApiKey(Error)
-    
-    
 }
+
 public extension NetworkError {
     var errorDescription: String? {
         switch self {
@@ -84,15 +84,14 @@ public extension NetworkError {
         }
     }
 }
-// MARK: - ChatGPTModels Enum
 
+// MARK: - ChatGPTModels Enum
 /// Enum representing different ChatGPT models.
 public enum ChatGPTModels: String {
     case gptThreePointFiveTurbo = "gpt-3.5-turbo"
     case engine =  "davinci"
     
     // Completions
-    
     /// Can do any language task with better quality, longer output, and consistent instruction-following than the curie, babbage, or ada models. Also supports inserting completions within text.
     case  textDavinci003 = "text-davinci-003"
     /// Similar capabilities to text-davinci-003 but trained with supervised fine-tuning instead of reinforcement learning.
@@ -105,24 +104,20 @@ public enum ChatGPTModels: String {
     case  textAda = "text-ada-001"
     
     // Edits
-    
     case  textDavinci001 = "text-davinci-001"
     case  codeDavinciEdit001 = "code-davinci-edit-001"
     
     // Transcriptions / Translations
-    
     case  whisper1 = "whisper-1"
 }
+
 /// Enum representing different  ImageSizes supported by imagegeneration API.
 public enum ChatGPTImageSize : String {
-    
     case fiveTwelve = "512x512"
     case tenTwenty = "1024x1024"
 }
 
-//
 // MARK: - ChatGPT API Class
-
 /// A class responsible for making API requests to ChatGPT.
 final public class ChatGPTAPIManager {
     
@@ -132,16 +127,13 @@ final public class ChatGPTAPIManager {
     private var historyList = [NSDictionary]()
     public  var apiKey: String = ""
     
-    
     /// Initializes the ChatGPTAPIManager.
-    
     private init() {
         self.systemMessage.setValue("assistant", forKey: "role")
         self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
     }
     
     // MARK: - Public Functions
-    
     /// Sends a chat request to the ChatGPT API.
     ///
     /// - Parameters:
@@ -150,10 +142,8 @@ final public class ChatGPTAPIManager {
     ///   - maxTokens: The maximum number of tokens in the generated response. Defaults to 500.
     ///   - endPoint: The API endpoint to send the request to.
     ///   - completion: A closure to be called with the result of the request. The result is either a success containing the generated response string or a failure containing an error.
-    
-    
-    public func sendChatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
-        self.chatRequest(prompt: prompt, model: model, maxTokens: maxTokens, endPoint: endPoint,completion: completion)
+    public func sendChatRequest(prompt: String, model: ChatGPTModels, maxTokens: Int = 500, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+        self.chatRequest(prompt: prompt, model: model, maxTokens: maxTokens, endPoint: endPoint, completion: completion)
     }
     
     
@@ -163,12 +153,11 @@ final public class ChatGPTAPIManager {
     ///   - prompt: The prompt to generate text from.
     ///   - model: The ChatGPT model to use for text generation.
     ///   - maxTokens: The maximum number of tokens in the generated text. Defaults to 500.
-    ///   - n: The number of text samples to generate. Defaults to 1.
+    ///   - numberOfResponse: The number of text samples to generate. Defaults to 1.
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: A completion block that is called with the result of the request. The block receives a Result object containing either the generated text as a String in case of success, or an Error in case of failure.
-    
-    public func sendTextRequest(prompt: String, model: ChatGPTModels,maxTokens:Int = 500,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
-        self.sendTextCompletionRequest(prompt: prompt, model: model, maxTokens: maxTokens,n: n,endPoint: endPoint,completion: completion)
+    public func sendTextRequest(prompt: String, model: ChatGPTModels, maxTokens: Int = 500, numberOfResponse: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+        self.sendTextCompletionRequest(prompt: prompt, model: model, maxTokens: maxTokens, n: numberOfResponse, endPoint: endPoint, completion: completion)
     }
     
     /// Generates an image based on the prompt.
@@ -177,12 +166,11 @@ final public class ChatGPTAPIManager {
     ///   - prompt: The prompt for image generation.
     ///   - model: The ChatGPT model to use for image generation.
     ///   - imageSize: The desired size of the generated image.
-    ///   - n: The number of images to generate (default is 1).
+    ///   - numberOfResponse: The number of images to generate (default is 1).
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the generated image as a String in case of success, or an Error in case of failure.
-    
-    public func generateImage(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize,n: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
-        self.generateImageFromText(prompt: prompt, model: model, imageSize: imageSize, endPoint: endPoint, n: n,completion: completion)
+    public func generateImage(prompt: String, model: ChatGPTModels, imageSize: ChatGPTImageSize, numberOfResponse: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+        self.generateImageFromText(prompt: prompt, model: model, imageSize: imageSize, endPoint: endPoint, n: numberOfResponse, completion: completion)
     }
     
     /// Requests audio transcription based on the provided parameters.
@@ -198,9 +186,7 @@ final public class ChatGPTAPIManager {
     ///                 The handler takes a Result object, which contains either the transcribed text or an error.
     ///                 Use the `.success` case to access the transcribed text and the `.failure` case to handle errors.
     public func audioTranscriptionRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: ChatGPTModels = .whisper1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
-        
-        self.audioTranscription(fileUrl: fileUrl, prompt: prompt,temperature: temperature,language: language, model: model, endPoint: endPoint, completion:completion)
-        
+        self.audioTranscription(fileUrl: fileUrl, prompt: prompt, temperature: temperature, language: language, model: model, endPoint: endPoint, completion:completion)
     }
     /// Requests audio translation based on the provided parameters.
     ///
@@ -212,13 +198,11 @@ final public class ChatGPTAPIManager {
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the translated text as a String in case of success, or an Error in case of failure.
     public func audioTranslationRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: ChatGPTModels = .whisper1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
-        // Implementation of audio translation request goes here
-        self.audioTranslation(fileUrl: fileUrl,prompt: prompt,temperature: temperature, model: model, endPoint: endPoint, completion: completion)
+        self.audioTranslation(fileUrl: fileUrl,prompt: prompt, temperature: temperature, model: model, endPoint: endPoint, completion: completion)
     }
     
     // MARK: - Private Functions
-    
-    private func chatRequest(prompt: String, model: ChatGPTModels,maxTokens:Int ,endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func chatRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         
         let messages = generateMessages(from: prompt)
         
@@ -255,9 +239,10 @@ final public class ChatGPTAPIManager {
                 completion(.failure(error))
             }
         }
+        
     }
     
-    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels,maxTokens:Int,n: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, n: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         
         let parameters: [String: Any] = [
             "prompt": prompt,
@@ -285,6 +270,7 @@ final public class ChatGPTAPIManager {
                     case.failure(let error):
                         completion(.failure(error))
                     }
+                    
                 })
             case.failure(let error):
                 completion(.failure(error))
@@ -296,7 +282,6 @@ final public class ChatGPTAPIManager {
     private func performDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         
         URLSession.shared.dataTask(with: request) { (data,response,error) in
-            
             if let error = error {
                 completion(.failure(error))
                 return
@@ -311,7 +296,7 @@ final public class ChatGPTAPIManager {
     }
     
     
-    private func generateImageFromText(prompt: String, model: ChatGPTModels,imageSize: ChatGPTImageSize, endPoint: APPURL,n: Int, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func generateImageFromText(prompt: String, model: ChatGPTModels, imageSize: ChatGPTImageSize, endPoint: APPURL, n: Int, completion: @escaping (Result<String, Error>) -> Void)  {
         
         let parameters: [String: Any] = [
             "prompt": prompt,
@@ -345,7 +330,9 @@ final public class ChatGPTAPIManager {
             }
             
         })
+        
     }
+    
     private func audioTranscription(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
         
         // Define the key-value pairs
@@ -384,14 +371,16 @@ final public class ChatGPTAPIManager {
                     case.failure(let error):
                         completion(.failure(error))
                     }
+                    
                 })
             case.failure(let error):
                 completion(.failure(error))
             }
         }
+        
     }
+    
     private func audioTranslation(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
-        // Define the key-value pairs
         
         var parameters: [String: Any] = [
             "model": model.rawValue
@@ -424,6 +413,7 @@ final public class ChatGPTAPIManager {
                     case.failure(let error):
                         completion(.failure(error))
                     }
+                    
                 })
             case.failure(let error):
                 completion(.failure(error))
@@ -431,6 +421,7 @@ final public class ChatGPTAPIManager {
         }
         
     }
+    
     private func createUrlRequest(params: [String: Any], endPoint: APPURL) -> URLRequest? {
         var request = URLRequest(url: endPoint.url)
         request.httpMethod = "POST"
@@ -445,8 +436,8 @@ final public class ChatGPTAPIManager {
         
         return request
     }
+    
     private func createMultiPartUrlRequest(audioURL:URL, params: [String: Any], endPoint: APPURL)-> URLRequest? {
-        
         var request = URLRequest(url: endPoint.url)
         request.httpMethod = "POST"
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -491,6 +482,7 @@ final public class ChatGPTAPIManager {
         
         return request
     }
+    
     private func generateMessages(from text: String) -> [NSDictionary] {
         let userMessage = NSMutableDictionary()
         userMessage.setValue("user", forKey: "role")
@@ -513,5 +505,6 @@ final public class ChatGPTAPIManager {
         self.historyList.append(userMessage)
         self.historyList.append(assistantMessage)
     }
+    
 }
 

@@ -9,10 +9,10 @@ import Foundation
 // MARK: - ChatGPT API Response Parser
 
 /// A parser for ChatGPT API responses.
-
 protocol APIResponseParcer {
     func parseResponse(data: Data, completion: @escaping(Result<String,Error>)->Void)
 }
+
 class TextCompletionResponseParser: APIResponseParcer {
     // Parsing logic for text completion API response...
     
