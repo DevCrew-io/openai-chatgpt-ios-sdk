@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch..
-        ChatGPTAPIManager.shared.apiKey = "plece your api key here"
+        ChatGPTAPIManager.shared.apiKey = "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"
         return true
     }
 
