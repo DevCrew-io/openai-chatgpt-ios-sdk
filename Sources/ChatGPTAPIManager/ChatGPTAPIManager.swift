@@ -21,6 +21,8 @@ public enum APPURL {
     case completion
     case chat
     case generateImage
+    case translations
+    case transcriptions
     
     var url: URL {
         switch self {
@@ -30,6 +32,10 @@ public enum APPURL {
             return URL(string: APPURL.baseURL + "/chat/completions")!
         case .generateImage:
             return URL(string: APPURL.baseURL + "/images/generations")!
+        case.transcriptions:
+            return URL(string: APPURL.baseURL + "/audio/transcriptions")!
+        case.translations:
+            return URL(string: APPURL.baseURL + "/audio/translations")!
         }
     }
 }
