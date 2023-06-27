@@ -23,6 +23,7 @@ public enum APPURL {
     case generateImage
     case translations
     case transcriptions
+    case files
     
     var url: URL {
         switch self {
@@ -36,6 +37,8 @@ public enum APPURL {
             return URL(string: APPURL.baseURL + "/audio/transcriptions")!
         case.translations:
             return URL(string: APPURL.baseURL + "/audio/translations")!
+        case.files:
+            return URL(string: APPURL.baseURL + "/files")!
         }
     }
 }
@@ -207,6 +210,21 @@ final public class ChatGPTAPIManager {
         self.audioTranslation(fileUrl: fileUrl,prompt: prompt, temperature: temperature, model: model, endPoint: endPoint, completion: completion)
     }
     
+    
+    ///    This function is used to make a file request using the provided parameters.
+    
+    ///    - Parameters:
+    ///      - fileUrl: The URL of the file to be requested.
+    ///     - purpose: The purpose or description of the file request.
+    ///      - endPoint: The endpoint or URL where the file request should be sent.
+    ///     - completion: A closure that takes a Result type as input, indicating the success or failure of the file request operation.
+    
+    
+    public func fileRequest(fileUrl: URL, purpose: String, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+        self.sendFileRequest(fileUrl: fileUrl, purpose: purpose, endPoint: endPoint, completion: completion)
+    }
+
+    
     // MARK: - Private Functions
     private func chatRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         
@@ -338,7 +356,41 @@ final public class ChatGPTAPIManager {
         })
         
     }
-    
+    private func sendFileRequest(fileUrl: URL, purpose: String, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        // Define the key-value pairs
+        let parameters: [String: Any] = [
+            "purpose": purpose
+        ]
+
+        guard let request = self.createMultiPartUrlRequest(audioURL: fileUrl, params: parameters, endPoint: endPoint) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                let parser = AudioParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let succesString):
+                        
+                        completion(.success(succesString))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                    
+                })
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
+    }
     private func audioTranscription(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
         
         // Define the key-value pairs
