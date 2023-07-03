@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A89687802A52E07600AC0F09 /* Boswell Interview - Ted 2023-05-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A896877F2A52E07600AC0F09 /* Boswell Interview - Ted 2023-05-16.m4a */; };
 		A8B85FCD2A431318005FBEDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B85FCC2A431318005FBEDE /* AppDelegate.swift */; };
 		A8B85FCF2A431318005FBEDE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B85FCE2A431318005FBEDE /* SceneDelegate.swift */; };
 		A8B85FD12A431318005FBEDE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B85FD02A431318005FBEDE /* ViewController.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A896877F2A52E07600AC0F09 /* Boswell Interview - Ted 2023-05-16.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Boswell Interview - Ted 2023-05-16.m4a"; path = "../../../../../../Downloads/Boswell.ai-main/Boswell Interview - Ted 2023-05-16.m4a"; sourceTree = "<group>"; };
 		A8B85FC92A431318005FBEDE /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8B85FCC2A431318005FBEDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8B85FCE2A431318005FBEDE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				A8B8607D2A45B474005FBEDE /* sample-15s.mp3 */,
+				A896877F2A52E07600AC0F09 /* Boswell Interview - Ted 2023-05-16.m4a */,
 				A8B8607F2A45BCFE005FBEDE /* passenger-let-her-go-official-video.mp3 */,
 				A8B860812A45C555005FBEDE /* Hindi Songs.mp3 */,
 				A8B85FD52A43131A005FBEDE /* Assets.xcassets */,
@@ -363,6 +366,7 @@
 				A8B8607E2A45B474005FBEDE /* sample-15s.mp3 in Resources */,
 				A8B85FD92A43131A005FBEDE /* LaunchScreen.storyboard in Resources */,
 				A8B860132A432135005FBEDE /* openai.svg in Resources */,
+				A89687802A52E07600AC0F09 /* Boswell Interview - Ted 2023-05-16.m4a in Resources */,
 				A8B860822A45C555005FBEDE /* Hindi Songs.mp3 in Resources */,
 				A8B860802A45BCFE005FBEDE /* passenger-let-her-go-official-video.mp3 in Resources */,
 				A8B85FD62A43131A005FBEDE /* Assets.xcassets in Resources */,

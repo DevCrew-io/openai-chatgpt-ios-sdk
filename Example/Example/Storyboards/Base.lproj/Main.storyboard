@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NLF-Zg-uhw">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -262,9 +263,60 @@
                     <view key="view" contentMode="scaleToFill" id="hSX-dj-Wt8">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Mv-Ab-Pa3">
+                                <rect key="frame" x="0.0" y="59" width="393" height="100"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="UGC-97-28f"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPH-2H-UdE">
+                                <rect key="frame" x="20" y="179" width="353" height="35"/>
+                                <color key="backgroundColor" red="0.0" green="0.49803921569999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Translation">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="audioTranslationWithSender:" destination="y6b-w5-a5f" eventType="touchUpInside" id="eXV-KT-SCf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OT2-ZZ-jY1">
+                                <rect key="frame" x="20" y="234" width="353" height="34.333333333333314"/>
+                                <color key="backgroundColor" red="0.0" green="0.49803921569999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Transcription">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <buttonConfiguration key="configuration" style="plain" title="Transcription">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="audioTranscriptionWithSender:" destination="y6b-w5-a5f" eventType="touchUpInside" id="H2K-ZP-zlB"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Tmd-kn-nFh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8Mv-Ab-Pa3" firstAttribute="top" secondItem="Tmd-kn-nFh" secondAttribute="top" id="81e-pz-0BC"/>
+                            <constraint firstItem="Tmd-kn-nFh" firstAttribute="trailing" secondItem="tPH-2H-UdE" secondAttribute="trailing" constant="20" id="BlH-vN-NNv"/>
+                            <constraint firstItem="Tmd-kn-nFh" firstAttribute="trailing" secondItem="8Mv-Ab-Pa3" secondAttribute="trailing" id="EGT-cI-btL"/>
+                            <constraint firstItem="tPH-2H-UdE" firstAttribute="top" secondItem="8Mv-Ab-Pa3" secondAttribute="bottom" constant="20" id="GBT-1B-NqY"/>
+                            <constraint firstItem="OT2-ZZ-jY1" firstAttribute="top" secondItem="tPH-2H-UdE" secondAttribute="bottom" constant="20" id="WLY-yL-4kZ"/>
+                            <constraint firstItem="tPH-2H-UdE" firstAttribute="leading" secondItem="Tmd-kn-nFh" secondAttribute="leading" constant="20" id="iJD-R0-6m6"/>
+                            <constraint firstItem="8Mv-Ab-Pa3" firstAttribute="leading" secondItem="Tmd-kn-nFh" secondAttribute="leading" id="uHU-Cg-ahu"/>
+                            <constraint firstItem="Tmd-kn-nFh" firstAttribute="trailing" secondItem="OT2-ZZ-jY1" secondAttribute="trailing" constant="20" id="uMf-yG-lqM"/>
+                            <constraint firstItem="OT2-ZZ-jY1" firstAttribute="leading" secondItem="Tmd-kn-nFh" secondAttribute="leading" constant="20" id="wtQ-Ic-1fX"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="8Mv-Ab-Pa3" id="yoq-FG-y1y"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oqL-E7-1wB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -272,6 +324,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
