@@ -120,7 +120,7 @@ public enum ChatGPTModels: String {
 /// Enum representing different  ImageSizes supported by imagegeneration API.
 public enum ChatGPTImageSize : String {
     case fiveTwelve = "512x512"
-    case tenTwenty = "1024x1024"
+    case tenTwentyFour = "1024x1024"
 }
 
 // MARK: - ChatGPT API Class
@@ -213,8 +213,7 @@ final public class ChatGPTAPIManager {
         let messages = generateMessages(from: prompt)
         
         let parameters: [String: Any] = [
-            "messages":messages
-            ,
+            "messages":messages,
             "max_tokens": maxTokens,
             "model": model.rawValue
         ]
