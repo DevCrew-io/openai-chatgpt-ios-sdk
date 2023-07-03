@@ -493,12 +493,11 @@ final public class ChatGPTAPIManager {
         let userMessage = NSMutableDictionary()
         userMessage.setValue("user", forKey: "role")
         userMessage.setValue(text, forKey: "content")
-        var messages = [systemMessage] + historyList + [userMessage]
-        if messages.count > 150 {
-            _ = historyList.removeLast()
-            messages = generateMessages(from: text)
+        if historyList.count > 148 {
+            historyList = historyList.suffix(148)
         }
-        return messages
+        
+        return [systemMessage] + historyList + [userMessage]
     }
     
     private func appendToHistoryList(userText: String, responseText: String) {
