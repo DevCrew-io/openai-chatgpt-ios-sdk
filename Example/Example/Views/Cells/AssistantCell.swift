@@ -24,5 +24,8 @@ class AssistantCell: UITableViewCell {
     func configure(with message: ChatMessage) {
         messageLabel.text = message.content
     }
+    func configure(with model: ChatGPTModel) {
+        messageLabel.text = model.id
+    }
     
 }
