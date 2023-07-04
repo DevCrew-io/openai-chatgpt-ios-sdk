@@ -192,7 +192,7 @@ final public class ChatGPTAPIManager {
     ///                 The handler takes a Result object, which contains either the transcribed text or an error.
     ///                 Use the `.success` case to access the transcribed text and the `.failure` case to handle errors.
     public func audioTranscriptionRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: ChatGPTModels = .whisper1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
-        self.audioTranscription(fileUrl: fileUrl, prompt: prompt, temperature: temperature, language: language, model: model, endPoint: endPoint, completion:completion)
+        self.audioTranscription(fileUrl: fileUrl, prompt: prompt, temperature: temperature, language: language, model: model, endPoint: endPoint, completion: completion)
     }
     /// Requests audio translation based on the provided parameters.
     ///
@@ -442,7 +442,7 @@ final public class ChatGPTAPIManager {
         return request
     }
     
-    private func createMultiPartUrlRequest(audioURL:URL, params: [String: Any], endPoint: APPURL)-> URLRequest? {
+    private func createMultiPartUrlRequest(audioURL: URL, params: [String: Any], endPoint: APPURL)-> URLRequest? {
         var request = URLRequest(url: endPoint.url)
         request.httpMethod = "POST"
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")

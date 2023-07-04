@@ -11,19 +11,20 @@ import ChatGPTAPIManager
 class AudioViewController: UIViewController {
     
     @IBOutlet weak var textView: UITextView!
-    let url = Bundle.main.url(forResource: "Boswell Interview - Ted 2023-05-16", withExtension: "m4a")
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     @IBAction func audioTranslation(sender: UIButton) {
-        let fileURL = URL(fileURLWithPath: url!.path)
-        self.audioTranslation(url: fileURL)
+        if let fileURL = Bundle.main.url(forResource: "translation_file", withExtension: "m4a") {
+            self.audioTranslation(url: fileURL)
+        }
     }
     @IBAction func audioTranscription(sender: UIButton) {
-        let fileURL = URL(fileURLWithPath: url!.path)
-        self.audioTranscriptions(url: fileURL)
+        if let fileURL = Bundle.main.url(forResource: "english_song", withExtension: "m4a") {
+            self.audioTranscriptions(url: fileURL)
+        }
     }
     
     func audioTranslation(url: URL) {
@@ -34,27 +35,31 @@ class AudioViewController: UIViewController {
             case.success(let success):
                 print(success)
                 DispatchQueue.main.async {
-                    self.textView.text =  success
+                    self.textView.text = success
+                    EZLoadingActivity.hide(true, animated: true)
                 }
             case.failure(let error):
                 print(error)
+                self.textView.text = "\(error)"
+                EZLoadingActivity.hide(false, animated: true)
             }
         })
     }
     func audioTranscriptions(url: URL) {
         EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.audioTranscriptionRequest(fileUrl: url, prompt: "Translate this audio", model: .whisper1, endPoint: .transcriptions, completion: { result in
+        ChatGPTAPIManager.shared.audioTranscriptionRequest(fileUrl: url, prompt: "Translate this audio", language: "en", model: .whisper1, endPoint: .transcriptions, completion: { result in
             
             switch result {
             case.success(let success):
                 print(success)
                 DispatchQueue.main.async {
-                    EZLoadingActivity.hide(true,animated: true)
-                    self.textView.text =  success
+                    self.textView.text = success
+                    EZLoadingActivity.hide(true, animated: true)
                 }
             case.failure(let error):
                 print(error)
-                EZLoadingActivity.hide(false,animated: true)
+                self.textView.text = "\(error)"
+                EZLoadingActivity.hide(false, animated: true)
             }
         })
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NLF-Zg-uhw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NLF-Zg-uhw">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -66,7 +66,7 @@
                                     <constraint firstAttribute="height" constant="40" id="C2D-Gd-AnK"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Audio Transcriptions">
+                                <state key="normal" title="Audio">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -265,17 +265,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Mv-Ab-Pa3">
-                                <rect key="frame" x="0.0" y="59" width="393" height="100"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="629.66666666666663"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="UGC-97-28f"/>
-                                </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPH-2H-UdE">
-                                <rect key="frame" x="20" y="179" width="353" height="35"/>
+                                <rect key="frame" x="20" y="708.66666666666663" width="353" height="35"/>
                                 <color key="backgroundColor" red="0.0" green="0.49803921569999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Translation">
@@ -286,7 +283,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OT2-ZZ-jY1">
-                                <rect key="frame" x="20" y="234" width="353" height="34.333333333333314"/>
+                                <rect key="frame" x="20" y="763.66666666666663" width="353" height="34.333333333333371"/>
                                 <color key="backgroundColor" red="0.0" green="0.49803921569999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Transcription">
@@ -308,6 +305,7 @@
                             <constraint firstItem="Tmd-kn-nFh" firstAttribute="trailing" secondItem="8Mv-Ab-Pa3" secondAttribute="trailing" id="EGT-cI-btL"/>
                             <constraint firstItem="tPH-2H-UdE" firstAttribute="top" secondItem="8Mv-Ab-Pa3" secondAttribute="bottom" constant="20" id="GBT-1B-NqY"/>
                             <constraint firstItem="OT2-ZZ-jY1" firstAttribute="top" secondItem="tPH-2H-UdE" secondAttribute="bottom" constant="20" id="WLY-yL-4kZ"/>
+                            <constraint firstItem="Tmd-kn-nFh" firstAttribute="bottom" secondItem="OT2-ZZ-jY1" secondAttribute="bottom" constant="20" id="fdP-qB-Uec"/>
                             <constraint firstItem="tPH-2H-UdE" firstAttribute="leading" secondItem="Tmd-kn-nFh" secondAttribute="leading" constant="20" id="iJD-R0-6m6"/>
                             <constraint firstItem="8Mv-Ab-Pa3" firstAttribute="leading" secondItem="Tmd-kn-nFh" secondAttribute="leading" id="uHU-Cg-ahu"/>
                             <constraint firstItem="Tmd-kn-nFh" firstAttribute="trailing" secondItem="OT2-ZZ-jY1" secondAttribute="trailing" constant="20" id="uMf-yG-lqM"/>
