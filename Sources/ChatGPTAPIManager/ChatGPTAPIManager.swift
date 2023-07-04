@@ -112,9 +112,11 @@ public enum ChatGPTModels: String {
     // Edits
     case  textDavinci001 = "text-davinci-001"
     case  codeDavinciEdit001 = "code-davinci-edit-001"
-    
-    // Transcriptions / Translations
-    case  whisper1 = "whisper-1"
+}
+
+// MARK: - AudioGPTModels Enum
+public enum AudioGPTModels: String {
+    case whisper1 = "whisper-1"
 }
 
 /// Enum representing different  ImageSizes supported by imagegeneration API.
@@ -191,7 +193,7 @@ final public class ChatGPTAPIManager {
     ///   - completion: A completion handler to be called with the result of the transcription request.
     ///                 The handler takes a Result object, which contains either the transcribed text or an error.
     ///                 Use the `.success` case to access the transcribed text and the `.failure` case to handle errors.
-    public func audioTranscriptionRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: ChatGPTModels = .whisper1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+    public func audioTranscriptionRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: AudioGPTModels = .whisper1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
         self.audioTranscription(fileUrl: fileUrl, prompt: prompt, temperature: temperature, language: language, model: model, endPoint: endPoint, completion: completion)
     }
     /// Requests audio translation based on the provided parameters.
@@ -203,7 +205,7 @@ final public class ChatGPTAPIManager {
     ///   - model: The ChatGPT model to use for translation.
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the translated text as a String in case of success, or an Error in case of failure.
-    public func audioTranslationRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: ChatGPTModels = .whisper1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+    public func audioTranslationRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: AudioGPTModels = .whisper1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
         self.audioTranslation(fileUrl: fileUrl,prompt: prompt, temperature: temperature, model: model, endPoint: endPoint, completion: completion)
     }
     
@@ -338,7 +340,7 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private func audioTranscription(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+    private func audioTranscription(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: AudioGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
         
         // Define the key-value pairs
         var parameters: [String: Any] = [
@@ -385,7 +387,7 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private func audioTranslation(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: ChatGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
+    private func audioTranslation(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: AudioGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
         
         var parameters: [String: Any] = [
             "model": model.rawValue

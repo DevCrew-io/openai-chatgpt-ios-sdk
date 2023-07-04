@@ -12,55 +12,49 @@ class AudioViewController: UIViewController {
     
     @IBOutlet weak var textView: UITextView!
 
+    // MARK: - Variables
+    var vm = AudioViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
+    
     @IBAction func audioTranslation(sender: UIButton) {
         if let fileURL = Bundle.main.url(forResource: "translation_file", withExtension: "m4a") {
-            self.audioTranslation(url: fileURL)
-        }
-    }
-    @IBAction func audioTranscription(sender: UIButton) {
-        if let fileURL = Bundle.main.url(forResource: "english_song", withExtension: "m4a") {
-            self.audioTranscriptions(url: fileURL)
+            vm.audioTranslation(url: fileURL) { result in
+                
+                switch result {
+                case .success(let audioText):
+                    DispatchQueue.main.async {
+                        self.textView.text = audioText
+                    }
+                case .failure(let failure):
+                    DispatchQueue.main.async {
+                        self.textView.text = failure.localizedDescription
+                    }
+                }
+                
+            }
         }
     }
     
-    func audioTranslation(url: URL) {
-        EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.audioTranslationRequest(fileUrl: url, temperature: 0.8, model: .whisper1, endPoint: .translations, completion: { result in
-            
-            switch result {
-            case.success(let success):
-                print(success)
-                DispatchQueue.main.async {
-                    self.textView.text = success
-                    EZLoadingActivity.hide(true, animated: true)
+    @IBAction func audioTranscription(sender: UIButton) {
+        if let fileURL = Bundle.main.url(forResource: "english_song", withExtension: "m4a") {
+            vm.audioTranscriptions(url: fileURL) { result in
+                
+                switch result {
+                case .success(let audioText):
+                    DispatchQueue.main.async {
+                        self.textView.text = audioText
+                    }
+                case .failure(let failure):
+                    DispatchQueue.main.async {
+                        self.textView.text = failure.localizedDescription
+                    }
                 }
-            case.failure(let error):
-                print(error)
-                self.textView.text = "\(error)"
-                EZLoadingActivity.hide(false, animated: true)
+                
             }
-        })
+        }
     }
-    func audioTranscriptions(url: URL) {
-        EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.audioTranscriptionRequest(fileUrl: url, prompt: "Translate this audio", language: "en", model: .whisper1, endPoint: .transcriptions, completion: { result in
-            
-            switch result {
-            case.success(let success):
-                print(success)
-                DispatchQueue.main.async {
-                    self.textView.text = success
-                    EZLoadingActivity.hide(true, animated: true)
-                }
-            case.failure(let error):
-                print(error)
-                self.textView.text = "\(error)"
-                EZLoadingActivity.hide(false, animated: true)
-            }
-        })
-    }
+    
 }

@@ -10,6 +10,7 @@
 		777D472B2A53EA9D0050C0E7 /* ChatGPTAPIManager in Frameworks */ = {isa = PBXBuildFile; productRef = 777D472A2A53EA9D0050C0E7 /* ChatGPTAPIManager */; };
 		777D472F2A53F7560050C0E7 /* english_song.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 777D472D2A53F7550050C0E7 /* english_song.m4a */; };
 		777D47302A53F7560050C0E7 /* translation_file.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 777D472E2A53F7550050C0E7 /* translation_file.m4a */; };
+		777D47322A5419150050C0E7 /* AudioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777D47312A5419150050C0E7 /* AudioViewModel.swift */; };
 		A8B85FCD2A431318005FBEDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B85FCC2A431318005FBEDE /* AppDelegate.swift */; };
 		A8B85FCF2A431318005FBEDE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B85FCE2A431318005FBEDE /* SceneDelegate.swift */; };
 		A8B85FD12A431318005FBEDE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B85FD02A431318005FBEDE /* ViewController.swift */; };
@@ -55,6 +56,7 @@
 		777D47282A53EA8F0050C0E7 /* chatgpt-ios-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "chatgpt-ios-sdk"; path = ..; sourceTree = "<group>"; };
 		777D472D2A53F7550050C0E7 /* english_song.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = english_song.m4a; sourceTree = "<group>"; };
 		777D472E2A53F7550050C0E7 /* translation_file.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = translation_file.m4a; sourceTree = "<group>"; };
+		777D47312A5419150050C0E7 /* AudioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewModel.swift; sourceTree = "<group>"; };
 		A8B85FC92A431318005FBEDE /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8B85FCC2A431318005FBEDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8B85FCE2A431318005FBEDE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				A8B8602C2A4413F2005FBEDE /* ChatViewModel.swift */,
 				A8B8602E2A441409005FBEDE /* ImageViewModel.swift */,
 				A8B860332A44431C005FBEDE /* TextGenerationViewModel.swift */,
+				777D47312A5419150050C0E7 /* AudioViewModel.swift */,
 			);
 			path = ViewModles;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				A8B85FD12A431318005FBEDE /* ViewController.swift in Sources */,
 				A8B8600E2A431AA6005FBEDE /* ChatViewController.swift in Sources */,
 				A8B860252A440C52005FBEDE /* MessageModel.swift in Sources */,
+				777D47322A5419150050C0E7 /* AudioViewModel.swift in Sources */,
 				A8B860102A431AA6005FBEDE /* EZLoadingActivity.swift in Sources */,
 				A8B85FCD2A431318005FBEDE /* AppDelegate.swift in Sources */,
 				A8B85FCF2A431318005FBEDE /* SceneDelegate.swift in Sources */,
