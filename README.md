@@ -118,6 +118,37 @@ ChatGPTAPIManager.shared.generateImage(prompt: "Your prompt", model: .engine, im
 }
 ```
 
+### Audio Translation
+To make an audio translation request using the ChatGPT API, you can use the `audioTranslationRequest` function provided by the `ChatGPTAPIManager` class. This function allows you to translate an audio file into text.
+
+```swift
+ChatGPTAPIManager.shared.audioTranslationRequest(fileUrl: url, temperature: 0.8, model: .whisper1, endPoint: .translations, completion: { result in
+    switch result {
+    case .success(let success):
+        // Handle successful translation
+        print(success)
+    case .failure(let error):
+        // Handle error
+        print(error)
+    }
+})
+```
+
+### Audio Transcription
+To transcribe an audio file into text using the ChatGPT API, you can use the `audioTranscriptionRequest` function provided by the `ChatGPTAPIManager` class. This function allows you to convert audio recordings into written transcripts.
+
+```swift
+ChatGPTAPIManager.shared.audioTranscriptionRequest(fileUrl: url, prompt: "Translate this audio", language: "en", model: .whisper1, endPoint: .transcriptions, completion: { result in
+    switch result {
+    case .success(let success):
+        // Handle successful transcription
+        print(success)
+    case .failure(let error):
+        // Handle error
+        print(error)
+    }
+})
+```
 
 Note: The code snippets provided in this README assume that you have replaced `"YOUR_API_KEY"` with your actual API key.
 

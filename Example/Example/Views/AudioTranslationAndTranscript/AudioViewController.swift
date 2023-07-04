@@ -29,7 +29,7 @@ class AudioViewController: UIViewController {
     
     func audioTranslation(url: URL) {
         EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.audioTranslationRequest(fileUrl: url,temperature: 0.8, model: .whisper1, endPoint: .translations, completion: { result in
+        ChatGPTAPIManager.shared.audioTranslationRequest(fileUrl: url, temperature: 0.8, model: .whisper1, endPoint: .translations, completion: { result in
             
             switch result {
             case.success(let success):
