@@ -120,7 +120,7 @@ public enum ChatGPTModels: String {
 /// Enum representing different  ImageSizes supported by imagegeneration API.
 public enum ChatGPTImageSize : String {
     case fiveTwelve = "512x512"
-    case tenTwenty = "1024x1024"
+    case tenTwentyFour = "1024x1024"
 }
 
 // MARK: - ChatGPT API Class
@@ -213,8 +213,7 @@ final public class ChatGPTAPIManager {
         let messages = generateMessages(from: prompt)
         
         let parameters: [String: Any] = [
-            "messages":messages
-            ,
+            "messages":messages,
             "max_tokens": maxTokens,
             "model": model.rawValue
         ]
@@ -493,12 +492,11 @@ final public class ChatGPTAPIManager {
         let userMessage = NSMutableDictionary()
         userMessage.setValue("user", forKey: "role")
         userMessage.setValue(text, forKey: "content")
-        var messages = [systemMessage] + historyList + [userMessage]
-        if messages.count > 150 {
-            _ = historyList.removeLast()
-            messages = generateMessages(from: text)
+        if historyList.count > 148 {
+            historyList = historyList.suffix(148)
         }
-        return messages
+        
+        return [systemMessage] + historyList + [userMessage]
     }
     
     private func appendToHistoryList(userText: String, responseText: String) {
