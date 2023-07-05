@@ -33,7 +33,10 @@ class ViewController: UIViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ImageWithTextViewController") as! ImageWithTextViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
+    @IBAction func getModelsList(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ModelsListVC") as! ModelsListVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     @IBAction func audioTranscriptions(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "AudioViewController") as! AudioViewController
         self.navigationController?.pushViewController(vc, animated: true)

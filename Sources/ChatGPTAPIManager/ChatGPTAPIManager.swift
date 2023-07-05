@@ -23,6 +23,8 @@ public enum APPURL {
     case generateImage
     case translations
     case transcriptions
+    case modelsList
+    case retrievedModel(String)
     
     var url: URL {
         switch self {
@@ -36,6 +38,10 @@ public enum APPURL {
             return URL(string: APPURL.baseURL + "/audio/transcriptions")!
         case.translations:
             return URL(string: APPURL.baseURL + "/audio/translations")!
+        case.modelsList:
+            return URL(string: APPURL.baseURL + "/models")!
+        case.retrievedModel(let modelName):
+            return URL(string: APPURL.baseURL + "/models/\(modelName)")!
         }
     }
 }
@@ -142,6 +148,34 @@ final public class ChatGPTAPIManager {
     }
     
     // MARK: - Public Functions
+    
+    /// Retrieves a list of OpenAI models from the API.
+    ///
+    /// - Parameters:
+    ///   - completion: A completion handler that receives the result of the API request.
+    ///                 The result will either contain an array of models of type `T` on success,
+    ///                 or an error on failure.
+    ///
+    /// - Note: The `T` generic type should conform to `Decodable` to support JSON decoding.
+    
+    public func getOpenAIModels<T: Decodable>(endPoint: APPURL = .modelsList, completion: @escaping (Result<T, Error>) -> Void) {
+        self.getModelsList(endPoint: endPoint, completion: completion)
+    }
+    
+    
+    /// Retrieves  OpenAI model from the API.
+    ///
+    /// - Parameters:
+    ///   - completion: A completion handler that receives the result of the API request.
+    ///                 The result will either contain  model of type `T` on success,
+    ///                 or an error on failure.
+    ///
+    /// - Note: The `T` generic type should conform to `Decodable` to support JSON decoding.
+    
+    public func retrieveAIModel<T: Decodable>(endPoint: APPURL, completion: @escaping (Result<T, Error>) -> Void) {
+        self.retrieveSingleModel(endPoint: endPoint, completion: completion)
+    }
+    
     /// Sends a chat request to the ChatGPT API.
     ///
     /// - Parameters:
@@ -210,6 +244,58 @@ final public class ChatGPTAPIManager {
     }
     
     // MARK: - Private Functions
+    private func retrieveSingleModel<T: Decodable>(endPoint: APPURL, completion: @escaping (Result<T, Error>) -> Void) {
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+
+                do {
+                    // Parse the JSON response into an array of type T
+                    let models = try JSONDecoder().decode(T.self, from: data)
+                    completion(.success(models))
+                } catch {
+                    // Error occurred during decoding, return failure in completion handler
+                    completion(.failure(error))
+                }
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private func getModelsList<T: Decodable>(endPoint: APPURL, completion: @escaping (Result<T, Error>) -> Void) {
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+
+                do {
+                    // Parse the JSON response into an array of type T
+                    let models = try JSONDecoder().decode(T.self, from: data)
+                    completion(.success(models))
+                } catch {
+                    // Error occurred during decoding, return failure in completion handler
+                    completion(.failure(error))
+                }
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     private func chatRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
         
         let messages = generateMessages(from: prompt)
@@ -220,8 +306,8 @@ final public class ChatGPTAPIManager {
             "model": model.rawValue
         ]
         
-        
-        guard let request = self.createUrlRequest(params: parameters, endPoint: endPoint) else {
+        let requestBuilder = DefaultRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }
@@ -258,7 +344,8 @@ final public class ChatGPTAPIManager {
             "n": n
         ]
         
-        guard let request = self.createUrlRequest(params: parameters, endPoint: endPoint) else {
+        let requestBuilder = DefaultRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }
@@ -293,7 +380,6 @@ final public class ChatGPTAPIManager {
                 completion(.failure(error))
                 return
             }
-            
             guard let data = data else {
                 completion(.failure(NetworkError.invalidResponse))
                 return
@@ -312,7 +398,8 @@ final public class ChatGPTAPIManager {
             "user": ""
         ]
         
-        guard let request = self.createUrlRequest(params: parameters, endPoint: endPoint) else {
+        let requestBuilder = DefaultRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }
