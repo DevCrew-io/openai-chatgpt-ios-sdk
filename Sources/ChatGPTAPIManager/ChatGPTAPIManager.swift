@@ -21,6 +21,7 @@ public enum APPURL {
     case completion
     case chat
     case generateImage
+    case imageEdits
     case translations
     case transcriptions
     case modelsList
@@ -34,6 +35,8 @@ public enum APPURL {
             return URL(string: APPURL.baseURL + "/chat/completions")!
         case .generateImage:
             return URL(string: APPURL.baseURL + "/images/generations")!
+        case.imageEdits:
+            return URL(string: APPURL.baseURL + "/images/edits")!
         case.transcriptions:
             return URL(string: APPURL.baseURL + "/audio/transcriptions")!
         case.translations:
@@ -63,6 +66,12 @@ struct ChatMessage: Codable {
 enum Role: Codable {
     case user
     case assistant
+}
+
+/// Represents the response format.
+public enum ResponseFormat: String {
+    case url = "url"
+    case b64_json = "b64_json"
 }
 
 /// Extension on Array to provide additional functionality related to ChatMessage.
@@ -211,9 +220,28 @@ final public class ChatGPTAPIManager {
     ///   - numberOfResponse: The number of images to generate (default is 1).
     ///   - endPoint: The endpoint URL for the API request.
     ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the generated image as a String in case of success, or an Error in case of failure.
-    public func generateImage(prompt: String, model: ChatGPTModels, imageSize: ChatGPTImageSize, numberOfResponse: Int = 1, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void)  {
+    public func generateImage(prompt: String, model: ChatGPTModels, imageSize: ChatGPTImageSize, numberOfResponse: Int = 1, endPoint: APPURL, completion: @escaping (Result<[String], Error>) -> Void)  {
         self.generateImageFromText(prompt: prompt, model: model, imageSize: imageSize, endPoint: endPoint, n: numberOfResponse, completion: completion)
     }
+    
+    /// Edit an image based on the prompt.
+    
+    /// - Parameters:
+    ///  - apiKey: The API key for accessing the OpenAI API.
+    /// - image: The image data to edit. Must be a valid PNG file, less than 4MB, and square. If mask is not provided, the image must have transparency, which will be used as the mask.
+    /// - mask: An additional image whose fully transparent areas indicate where the image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as the image.
+    /// - prompt: A text description of the desired image(s). The maximum length is 1000 characters.
+    /// - n: The number of images to generate. Defaults to 1. Must be between 1 and 10.
+    /// - size: The size of the generated images. Defaults to 1024x1024. Must be one of 256x256, 512x512, or 1024x1024.
+    /// - responseFormat: The format in which the generated images are returned. Defaults to "url". Must be one of "url" or "b64_json".
+    ///  - user: A unique identifier representing your end-user, which can help OpenAI monitor and detect abuse.
+    ///   - callback: A completion handler called when the request is completed. Provides the response data, URL response, and error.
+    
+    public func createImageEditRequest(endPoint: APPURL, image: Data, mask: Data? = nil, prompt: String, n: Int = 1, size: ChatGPTImageSize = .tenTwentyFour, responseFormat: ResponseFormat = .url, user: String? = nil, completion: @escaping (Result<[String],Error>) -> Void) {
+        
+        self.editImageRequest(endPoint:endPoint , image: image, prompt: prompt, n: n, size: size, responseFormat: responseFormat, user: user, completion: completion)
+    }
+    
     
     /// Requests audio transcription based on the provided parameters.
     ///
@@ -254,7 +282,7 @@ final public class ChatGPTAPIManager {
             
             switch result {
             case.success(let data):
-
+                
                 do {
                     // Parse the JSON response into an array of type T
                     let models = try JSONDecoder().decode(T.self, from: data)
@@ -280,7 +308,7 @@ final public class ChatGPTAPIManager {
             
             switch result {
             case.success(let data):
-
+                
                 do {
                     // Parse the JSON response into an array of type T
                     let models = try JSONDecoder().decode(T.self, from: data)
@@ -389,7 +417,7 @@ final public class ChatGPTAPIManager {
     }
     
     
-    private func generateImageFromText(prompt: String, model: ChatGPTModels, imageSize: ChatGPTImageSize, endPoint: APPURL, n: Int, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func generateImageFromText(prompt: String, model: ChatGPTModels, imageSize: ChatGPTImageSize, endPoint: APPURL, n: Int, completion: @escaping (Result<[String], Error>) -> Void)  {
         
         let parameters: [String: Any] = [
             "prompt": prompt,
@@ -427,25 +455,98 @@ final public class ChatGPTAPIManager {
         
     }
     
+    private  func editImageRequest(endPoint: APPURL, image: Data, mask: Data? = nil, prompt: String, n: Int?, size: ChatGPTImageSize?, responseFormat: ResponseFormat?, user: String?, completion: @escaping (Result<[String],Error>) -> Void) {
+        
+        // Define the key-value pairs
+        var parameters: [String: Any] = [
+            "prompt": prompt
+        ]
+        
+        if let numberOfResponse = n {
+            parameters["n"] = numberOfResponse
+        }
+        
+        if let size = size {
+            parameters["size"] = size.rawValue
+        }
+        
+        if let responseFormat = responseFormat {
+            parameters["response_format"] = responseFormat
+        }
+        
+        if let user = user {
+            parameters["user"] = user
+        }
+        
+        var dataArray = [Data]()
+        var fileNamesArray = [String]()
+        
+        dataArray.append(image)
+        fileNamesArray.append("image.png")
+        if let mask = mask {
+            dataArray.append(mask)
+            fileNamesArray.append("mask")
+        }
+        guard let request = self.createMultiPartRequest(data: dataArray, fileNames: fileNamesArray, params: parameters, name: "image", contentType: "image/png", endPoint: endPoint) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                let parser = ImageGenerationResponseParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let succesString):
+                        print(succesString)
+                        completion(.success(succesString))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                    
+                })
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
+        
+    }
+    
+    
     private func audioTranscription(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: AudioGPTModels, endPoint: APPURL, completion: @escaping (Result<String, Error>) -> Void) {
         
         // Define the key-value pairs
         var parameters: [String: Any] = [
             "model": model.rawValue
-        ] 
-
+        ]
+        
         if let prompt = prompt {
             parameters["prompt"] = prompt
         }
-
+        
         if let temperature = temperature {
             parameters["temperature"] = temperature
         }
-
+        
         if let language = language {
             parameters["language"] = language
         }
-        guard let request = self.createMultiPartUrlRequest(audioURL: fileUrl, params: parameters, endPoint: endPoint) else {
+        
+        let audioFilename = fileUrl.lastPathComponent
+        let audioData: Data
+        do {
+            audioData = try Data(contentsOf: fileUrl)
+        } catch {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        guard let request = self.createMultiPartRequest(data: [audioData],fileNames: [audioFilename],params: parameters, name: "file", contentType: "audio/wav", endPoint: endPoint) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }
@@ -479,16 +580,24 @@ final public class ChatGPTAPIManager {
         var parameters: [String: Any] = [
             "model": model.rawValue
         ]
-
+        
         if let prompt = prompt {
             parameters["prompt"] = prompt
         }
-
+        
         if let temperature = temperature {
             parameters["temperature"] = temperature
         }
+        let audioFilename = fileUrl.lastPathComponent
+        let audioData: Data
+        do {
+            audioData = try Data(contentsOf: fileUrl)
+        } catch {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
         
-        guard let request = self.createMultiPartUrlRequest(audioURL: fileUrl, params: parameters, endPoint: endPoint) else {
+        guard let request = self.createMultiPartRequest(data: [audioData],fileNames: [audioFilename],params: parameters, name: "file", contentType: "audio/wav", endPoint: endPoint) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }
@@ -531,7 +640,7 @@ final public class ChatGPTAPIManager {
         return request
     }
     
-    private func createMultiPartUrlRequest(audioURL: URL, params: [String: Any], endPoint: APPURL)-> URLRequest? {
+    private func createMultiPartRequest(data: [Data],fileNames: [String], params: [String: Any],name: String, contentType: String , endPoint: APPURL)-> URLRequest? {
         var request = URLRequest(url: endPoint.url)
         request.httpMethod = "POST"
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -553,21 +662,19 @@ final public class ChatGPTAPIManager {
             requestBody.append("\(value)\r\n".data(using: .utf8)!)
         }
         
-        // Append the audio file
         
-        let audioFilename = audioURL.lastPathComponent
-        let audioData: Data
-        do {
-            audioData = try Data(contentsOf: audioURL)
-        } catch {
-            return nil
+        for i in 0..<data.count {
+            
+            let dataItem = data[i]
+            let fileName = fileNames[i]
+            
+            requestBody.append("--\(boundary)\r\n".data(using: .utf8)!)
+            requestBody.append("Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+            requestBody.append("Content-Type: \(contentType)\r\n\r\n".data(using: .utf8)!)
+            requestBody.append(dataItem)
+            requestBody.append("\r\n".data(using: .utf8)!)
+            
         }
-        
-        requestBody.append("--\(boundary)\r\n".data(using: .utf8)!)
-        requestBody.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(audioFilename)\"\r\n".data(using: .utf8)!)
-        requestBody.append("Content-Type: audio/wav\r\n\r\n".data(using: .utf8)!)
-        requestBody.append(audioData)
-        requestBody.append("\r\n".data(using: .utf8)!)
         
         requestBody.append("--\(boundary)--\r\n".data(using: .utf8)!)
         

@@ -25,8 +25,11 @@ class ImageGenerationViewModel {
                 // Handle the response as needed
                 
                 DispatchQueue.main.async {
-                    self.imageURLString = response
-                    self.onSuccess?()
+                    if response.count>0 {
+                        self.imageURLString = response[0]
+                        self.onSuccess?()
+                    }
+                    
                 }
                 
             case .failure(let error):
@@ -38,5 +41,31 @@ class ImageGenerationViewModel {
             }
         }
     }
-    
+    func editImage(_ prompt: String,imageData: Data) {
+        
+        EZLoadingActivity.show("Loading...", disableUI: true)
+        
+        ChatGPTAPIManager.shared.createImageEditRequest(endPoint: .imageEdits, image: imageData, prompt: prompt) { result in
+            switch result {
+            case .success(let response):
+                print("API response: \(response)")
+                // Handle the response as needed
+                
+                DispatchQueue.main.async {
+                    if response.count>0 {
+                        self.imageURLString = response[0]
+                        self.onSuccess?()
+                    }
+                    
+                }
+                
+            case .failure(let error):
+                print("API error: \(error.localizedDescription)")
+                // Handle the error gracefully
+                DispatchQueue.main.async {
+                    self.onFailure?()
+                }
+            }
+        }
+    }
 }

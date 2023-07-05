@@ -66,7 +66,7 @@
                                     <constraint firstAttribute="height" constant="40" id="Iuj-p1-RxY"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Text to Image">
+                                <state key="normal" title="Image">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -218,60 +218,64 @@
                                     <constraint firstAttribute="height" constant="250" id="k5l-c9-yQL"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6CR-4b-pk8">
-                                <rect key="frame" x="0.0" y="309" width="393" height="40"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwm-nq-Zt6">
-                                        <rect key="frame" x="333" y="0.0" width="60" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="YOv-3o-eEU"/>
-                                            <constraint firstAttribute="width" constant="60" id="uEV-7O-jq6"/>
-                                        </constraints>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Send"/>
-                                        <connections>
-                                            <action selector="sendImageRequestMessage:" destination="V5e-UF-1TB" eventType="touchUpInside" id="PJ3-Qx-Zxm"/>
-                                            <action selector="sendMessage:" destination="pwp-KH-mYS" eventType="touchUpInside" id="LnX-UD-l1p"/>
-                                        </connections>
-                                    </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="84X-33-Zlc">
-                                        <rect key="frame" x="0.0" y="0.0" width="333" height="40"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="rwm-nq-Zt6" secondAttribute="trailing" id="C6d-6k-4vD"/>
-                                    <constraint firstAttribute="bottom" secondItem="rwm-nq-Zt6" secondAttribute="bottom" id="Esz-hK-n7k"/>
-                                    <constraint firstItem="rwm-nq-Zt6" firstAttribute="top" secondItem="6CR-4b-pk8" secondAttribute="top" id="KGs-zC-Fmg"/>
-                                    <constraint firstAttribute="bottom" secondItem="84X-33-Zlc" secondAttribute="bottom" id="aWd-kb-x1K"/>
-                                    <constraint firstAttribute="height" constant="40" id="gtX-G1-EBY"/>
-                                    <constraint firstItem="84X-33-Zlc" firstAttribute="top" secondItem="6CR-4b-pk8" secondAttribute="top" id="nvb-eP-Sow"/>
-                                    <constraint firstItem="rwm-nq-Zt6" firstAttribute="leading" secondItem="84X-33-Zlc" secondAttribute="trailing" id="omv-iX-oht"/>
-                                    <constraint firstItem="84X-33-Zlc" firstAttribute="leading" secondItem="6CR-4b-pk8" secondAttribute="leading" id="xHZ-1l-p91"/>
-                                </constraints>
-                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwm-nq-Zt6">
+                                <rect key="frame" x="20" y="329" width="353" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.49803921569999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Create Image ">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendImageRequestMessage:" destination="V5e-UF-1TB" eventType="touchUpInside" id="2bN-fa-106"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fUP-gr-WtA">
+                                <rect key="frame" x="20" y="369" width="353" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.49803921569999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Edit Image">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="editImage:" destination="V5e-UF-1TB" eventType="touchUpInside" id="F1a-28-SfS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qi9-Tj-0rA">
+                                <rect key="frame" x="20" y="409" width="353" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.49803921569999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Create Image Variations">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="imageVariation:" destination="V5e-UF-1TB" eventType="touchUpInside" id="Jq1-iN-Eos"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="OO0-Vu-kTN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6CR-4b-pk8" firstAttribute="leading" secondItem="TtD-2L-dIr" secondAttribute="leading" id="KkP-wd-fiY"/>
+                            <constraint firstItem="fUP-gr-WtA" firstAttribute="leading" secondItem="OO0-Vu-kTN" secondAttribute="leading" constant="20" id="0pg-0h-KOq"/>
+                            <constraint firstItem="rwm-nq-Zt6" firstAttribute="leading" secondItem="OO0-Vu-kTN" secondAttribute="leading" constant="20" id="DN5-bM-Xag"/>
+                            <constraint firstItem="fUP-gr-WtA" firstAttribute="top" secondItem="rwm-nq-Zt6" secondAttribute="bottom" constant="10" id="LGb-ar-R5n"/>
                             <constraint firstItem="pMX-Pa-Kf1" firstAttribute="leading" secondItem="OO0-Vu-kTN" secondAttribute="leading" id="MbU-ab-8dg"/>
-                            <constraint firstItem="6CR-4b-pk8" firstAttribute="top" secondItem="pMX-Pa-Kf1" secondAttribute="bottom" id="PAC-e0-zEz"/>
+                            <constraint firstItem="OO0-Vu-kTN" firstAttribute="trailing" secondItem="rwm-nq-Zt6" secondAttribute="trailing" constant="20" id="QV7-oR-Hr7"/>
+                            <constraint firstItem="Qi9-Tj-0rA" firstAttribute="leading" secondItem="OO0-Vu-kTN" secondAttribute="leading" constant="20" id="WHJ-gj-t3M"/>
+                            <constraint firstItem="OO0-Vu-kTN" firstAttribute="trailing" secondItem="Qi9-Tj-0rA" secondAttribute="trailing" constant="20" id="aib-3L-H17"/>
+                            <constraint firstItem="rwm-nq-Zt6" firstAttribute="top" secondItem="pMX-Pa-Kf1" secondAttribute="bottom" constant="20" id="kiI-58-Dd4"/>
                             <constraint firstItem="pMX-Pa-Kf1" firstAttribute="top" secondItem="OO0-Vu-kTN" secondAttribute="top" id="lpn-cr-R8F"/>
-                            <constraint firstItem="OO0-Vu-kTN" firstAttribute="trailing" secondItem="6CR-4b-pk8" secondAttribute="trailing" id="rUd-nF-Wnk"/>
+                            <constraint firstItem="OO0-Vu-kTN" firstAttribute="trailing" secondItem="fUP-gr-WtA" secondAttribute="trailing" constant="20" id="qu3-cQ-UaZ"/>
+                            <constraint firstItem="Qi9-Tj-0rA" firstAttribute="top" secondItem="fUP-gr-WtA" secondAttribute="bottom" constant="10" id="rcg-vw-T5b"/>
                             <constraint firstItem="OO0-Vu-kTN" firstAttribute="trailing" secondItem="pMX-Pa-Kf1" secondAttribute="trailing" id="teK-5R-Avk"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="pMX-Pa-Kf1" id="c8V-3G-ya1"/>
-                        <outlet property="textField" destination="84X-33-Zlc" id="49y-eK-OIA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B0g-g2-LJ8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2219" y="4"/>
+            <point key="canvasLocation" x="2216.030534351145" y="3.5211267605633805"/>
         </scene>
         <!--Audio View Controller-->
         <scene sceneID="lSh-cZ-Sro">

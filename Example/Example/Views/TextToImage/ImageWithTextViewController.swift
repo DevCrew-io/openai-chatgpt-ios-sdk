@@ -10,26 +10,11 @@ import ChatGPTAPIManager
 class ImageWithTextViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textField: UITextField!
+    
     let vm = ImageGenerationViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    // MARK: - IBAction
-    @IBAction func sendImageRequestMessage(_ sender: UIButton) {
-        if let textInstruction = textField.text, !textInstruction.isEmpty {
-            textField.text = ""
-            // Send user message to ChatGPT
-            generateImageWithText(textInstruction)
-        }
-    }
-    
-    func generateImageWithText(_ text: String)  {
-        vm.sendImageRequest(text)
         vm.onSuccess = {
             DispatchQueue.main.async { [weak self] in
                 print("Generated image URL:", self!.vm.imageURLString)
@@ -50,7 +35,29 @@ class ImageWithTextViewController: UIViewController {
         vm.onFailure = {
             EZLoadingActivity.hide(false,animated: true)
         }
+        // Do any additional setup after loading the view.
+    }
+    
+    // MARK: - IBAction
+    @IBAction func sendImageRequestMessage(_ sender: UIButton) {
         
+            // Send user message to ChatGPT
+            generateImageWithText("Create an image of cat with awesom background")
+        
+    }
+    @IBAction func editImage(_ sender: UIButton) {
+        guard let image = self.imageView.image else { return }
+        guard let imageData = image.pngData() else { return }
+        vm.editImage("add on tree in this image along with flowers", imageData: imageData)
+    }
+    @IBAction func imageVariation(_ sender: UIButton) {
+        
+            // Send user message to ChatGPT
+            generateImageWithText("Create an image of cat with awesom background")
+        
+    }
+    func generateImageWithText(_ text: String)  {
+        vm.sendImageRequest(text)
     }
     
 }
