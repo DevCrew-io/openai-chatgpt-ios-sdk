@@ -277,7 +277,7 @@ final public class ChatGPTAPIManager {
             switch result {
             case.success(let data):
                 let parser = ImageGenerationResponseParser()
-                parser.parseResponse(data: data, responseFormat: responseFormat, completion: { result in
+                parser.parseResponse(data: data, completion: { result in
                     
                     switch result {
                     case.success(let succesString):
@@ -335,7 +335,7 @@ final public class ChatGPTAPIManager {
             switch result {
             case.success(let data):
                 let parser = ImageGenerationResponseParser()
-                parser.parseResponse(data: data, responseFormat: responseFormat, completion: { result in
+                parser.parseResponse(data: data, completion: { result in
                     
                     switch result {
                     case.success(let succesString):
