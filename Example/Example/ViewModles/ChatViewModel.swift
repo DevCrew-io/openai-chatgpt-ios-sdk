@@ -32,7 +32,7 @@ class ChatViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.sendChatRequest(prompt: message,model: .gptThreePointFiveTurbo,endPoint: .chat) { result in
+        ChatGPTAPIManager.shared.sendChatRequest(prompt: message, model: .gptThreePointFiveTurbo) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

@@ -29,7 +29,7 @@ class TextGenerationViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.sendTextRequest(prompt: message,model: .textDavinci003,endPoint: .completion) { result in
+        ChatGPTAPIManager.shared.sendTextRequest(prompt: message, model: .textDavinci003) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")
