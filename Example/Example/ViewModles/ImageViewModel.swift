@@ -46,7 +46,7 @@ class ImageGenerationViewModel {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.createImageEditRequest(image: imageData, prompt: prompt) { result in
+        ChatGPTAPIManager.shared.createImageEditRequest(image: imageData, prompt: prompt,imageConversionFormat: .rgba) { result in
             switch result {
             case .success(let response):
                 // Handle the response as needed

@@ -41,6 +41,10 @@ class ViewController: UIViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "AudioViewController") as! AudioViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    @IBAction func editText(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "EditTextVC") as! EditTextVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
 }
 

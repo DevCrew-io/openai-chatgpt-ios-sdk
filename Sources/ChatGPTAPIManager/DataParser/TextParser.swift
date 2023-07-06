@@ -13,14 +13,14 @@ protocol APIResponseParcer {
     func parseResponse(data: Data, completion: @escaping(Result<String,Error>)->Void)
 }
 
-class TextCompletionResponseParser: APIResponseParcer {
+class TextCompletionResponseParser {
     // Parsing logic for text completion API response...
     
     /// Parse the response data for generating text.
     /// - Parameter data: The response data from the API.
     /// - Returns: The parsed completion text.
     /// - Throws: An error if the response cannot be parsed.
-    func parseResponse(data: Data,completion: @escaping(Result<String,Error>)->Void) {
+    func parseResponse(data: Data,completion: @escaping(Result<[String],Error>)->Void) {
         
         do {
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
@@ -29,15 +29,16 @@ class TextCompletionResponseParser: APIResponseParcer {
                 completion(.failure(NetworkError.invalidResponse))
                 return
             }
-            
+            var tempArray = [String]()
             for item in output {
                 guard let completionText = item["text"] as? String else {
                     completion(.failure(NetworkError.invalidResponse))
                     return
                 }
-                completion(.success(completionText))
+                tempArray.append(completionText)
+                
             }
-            
+            completion(.success(tempArray))
         } catch (let error){
             completion(.failure(error))
         }

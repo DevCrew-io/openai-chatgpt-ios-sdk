@@ -50,7 +50,7 @@ final public class ChatGPTAPIManager {
     ///   - model: The ChatGPT model to use for generating the response.
     ///   - maxTokens: The maximum number of tokens in the generated response. Defaults to 500.
     ///   - completion: A closure to be called with the result of the request. The result is either a success containing the generated response string or a failure containing an error.
-    public func sendChatRequest(prompt: String, model: ChatGPTModels = .gptThreePointFiveTurbo, maxTokens: Int = 500, completion: @escaping (Result<String, Error>) -> Void)  {
+    public func sendChatRequest(prompt: String, model: ChatGPTModels = .gptThreePointFiveTurbo, maxTokens: Int = 500, completion: @escaping (Result<[String], Error>) -> Void)  {
         self.chatRequest(prompt: prompt, model: model, maxTokens: maxTokens, endPoint: .chat, completion: completion)
     }
     
@@ -63,7 +63,7 @@ final public class ChatGPTAPIManager {
     ///   - maxTokens: The maximum number of tokens in the generated text. Defaults to 500.
     ///   - numberOfResponse: The number of text samples to generate. Defaults to 1.
     ///   - completion: A completion block that is called with the result of the request. The block receives a Result object containing either the generated text as a String in case of success, or an Error in case of failure.
-    public func sendTextRequest(prompt: String, model: ChatGPTModels = .textDavinci003, maxTokens: Int = 500, numberOfResponse: Int = 1, completion: @escaping (Result<String, Error>) -> Void)  {
+    public func sendTextRequest(prompt: String, model: ChatGPTModels = .textDavinci003, maxTokens: Int = 500, numberOfResponse: Int = 1, completion: @escaping (Result<[String], Error>) -> Void)  {
         self.sendTextCompletionRequest(prompt: prompt, model: model, maxTokens: maxTokens, n: numberOfResponse, endPoint: .completion, completion: completion)
     }
     
@@ -91,7 +91,7 @@ final public class ChatGPTAPIManager {
     ///    - user: A unique identifier representing your end-user, which can help OpenAI monitor and detect abuse.
     ///    - completion: A completion handler called when the request is completed. Provides the response data, URL response, and error.
     
-    public func createImageEditRequest(image: Data, mask: Data? = nil, prompt: String, n: Int = 1, size: ChatGPTImageSize = .fiveTwelve, responseFormat: ResponseFormat = .url, user: String? = nil, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
+    public func createImageEditRequest(image: Data, mask: Data? = nil, prompt: String, n: Int = 1, size: ChatGPTImageSize = .fiveTwelve, responseFormat: ResponseFormat = .url, user: String? = nil, imageConversionFormat: ImageConversionFormat? = .rgba, completion: @escaping (Result<[String],Error>) -> Void) {
         
         self.editImageRequest(endPoint: .imageEdits, image: image, prompt: prompt, n: n, size: size, responseFormat: responseFormat, user: user, imageConversionFormat: imageConversionFormat, completion: completion)
     }
@@ -138,10 +138,63 @@ final public class ChatGPTAPIManager {
         self.audioTranslation(fileUrl: fileUrl,prompt: prompt, temperature: temperature, model: model, endPoint: .translations, completion: completion)
     }
     
+   
+    ///  Endpoint for generating edits.
+    
+    /// - Parameters:
+    /// - model: The ID of the model to use for generating edits. Use either "text-davinci-edit-001" or "code-davinci-edit-001" with this endpoint.
+    /// - input: The input text to use as a starting point for the edit. Optional parameter, defaults to an empty string.
+    ///  - instruction: The instruction that tells the model how to edit the prompt.
+    ///  - n: The number of edits to generate for the input and instruction. Optional parameter, defaults to 1.
+    ///   - temperature: The sampling temperature to use, ranging from 0 to 2. Higher values like 0.8 make the output more random, while lower values like 0.2 make it more focused and deterministic. Optional parameter, defaults to 1.0.
+    ///   - topP: An alternative to sampling with temperature, known as nucleus sampling. It considers the results of tokens with top_p probability mass. A value of 0.1 means only tokens comprising the top 10% probability mass are considered. Optional parameter, defaults to 1.0.
+       
+    public func createEditsRequest(model: EditGPTModels = .textDavinciEdit001, input: String? = nil, instruction: String, n: Int = 1, temperature: Double = 1.0, topP: Double = 1.0, completion: @escaping (Result<[String],Error>) -> Void) {
+        self.textEditsRequest(endPoint: .textEdit, model: model, input: input, instruction: instruction, n: n, temperature: temperature, topP: topP, completion: completion)
+    }
+
     
     
     // MARK: - Private Functions -
-    
+    private  func textEditsRequest(endPoint: ChatGPTAPIEndpoint, model: EditGPTModels, input: String?, instruction: String, n: Int, temperature: Double, topP: Double, completion: @escaping (Result<[String],Error>) -> Void) {
+        
+       var parameters: [String: Any] = [
+           "instruction":instruction,
+           "model": model.rawValue,
+           "n":n,
+           "temperature":temperature,
+           "top_p":topP
+       ]
+        if let input = input {
+            parameters["input"] = input
+        }
+       let requestBuilder = DefaultRequestBuilder()
+       guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
+           completion(.failure(NetworkError.invalidURL))
+           return
+       }
+       
+       self.performDataTask(with: request) { result in
+           
+           switch result {
+           case.success(let data):
+               let parser = TextCompletionResponseParser()
+               parser.parseResponse(data: data, completion: { result in
+                   
+                   switch result {
+                   case.success(let succesString):
+                      
+                       completion(.success(succesString))
+                       
+                   case.failure(let error):
+                       completion(.failure(error))
+                   }
+               })
+           case.failure(let error):
+               completion(.failure(error))
+           }
+       }
+    }
     private func retrieveSingleModel(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<ChatGPTModel, Error>) -> Void) {
         let requestBuilder = GetRequestBuilder()
         guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
@@ -194,7 +247,7 @@ final public class ChatGPTAPIManager {
         }
     }
     
-    private func chatRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func chatRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<[String], Error>) -> Void)  {
         
         let messages = generateMessages(from: prompt)
         
@@ -233,7 +286,7 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, n: Int, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<String, Error>) -> Void)  {
+    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, n: Int, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<[String], Error>) -> Void)  {
         
         let parameters: [String: Any] = [
             "prompt": prompt,
@@ -598,7 +651,7 @@ final public class ChatGPTAPIManager {
         return [systemMessage] + historyList + [userMessage]
     }
     
-    private func appendToHistoryList(userText: String, responseText: String) {
+    private func appendToHistoryList(userText: String, responseText: [String]) {
         let userMessage = NSMutableDictionary()
         userMessage.setValue("user", forKey: "role")
         userMessage.setValue(userText, forKey: "content")
