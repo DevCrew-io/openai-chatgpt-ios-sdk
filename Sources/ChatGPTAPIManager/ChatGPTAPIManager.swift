@@ -75,8 +75,8 @@ final public class ChatGPTAPIManager {
     ///   - imageSize: The desired size of the generated image.
     ///   - numberOfResponse: The number of images to generate (default is 1).
     ///   - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated image as a String in case of success, or an Error in case of failure.
-    public func generateImage(prompt: String, imageSize: ChatGPTImageSize, responseFormat: ResponseFormat, numberOfResponse: Int = 1, completion: @escaping (Result<[String], Error>) -> Void)  {
-        self.generateImageFromText(prompt: prompt, imageSize: imageSize, responseFormat: responseFormat, endPoint: .generateImage, n: numberOfResponse, completion: completion)
+    public func generateImage(prompt: String, imageSize: ChatGPTImageSize, responseFormat: ResponseFormat, numberOfResponse: Int = 1,user: String? = nil, completion: @escaping (Result<[String], Error>) -> Void)  {
+        self.generateImageFromText(prompt: prompt, imageSize: imageSize, responseFormat: responseFormat, endPoint: .generateImage, n: numberOfResponse,user: user, completion: completion)
     }
     
     /// Edit an image based on the prompt.
@@ -256,16 +256,17 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private func generateImageFromText(prompt: String, imageSize: ChatGPTImageSize, responseFormat: ResponseFormat = .url, endPoint: ChatGPTAPIEndpoint, n: Int, completion: @escaping (Result<[String], Error>) -> Void)  {
+    private func generateImageFromText(prompt: String, imageSize: ChatGPTImageSize, responseFormat: ResponseFormat = .url, endPoint: ChatGPTAPIEndpoint, n: Int, user: String?, completion: @escaping (Result<[String], Error>) -> Void)  {
         
-        let parameters: [String: Any] = [
+        var parameters: [String: Any] = [
             "prompt": prompt,
             "n": n,
             "size": imageSize.rawValue,
-            "response_format": responseFormat.rawValue,
-            "user": ""
+            "response_format": responseFormat.rawValue
         ]
-        
+        if let user = user {
+            parameters["user"] = user
+        }
         let requestBuilder = DefaultRequestBuilder()
         guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
             completion(.failure(NetworkError.invalidURL))
@@ -318,9 +319,12 @@ final public class ChatGPTAPIManager {
         
         var dataArray = [Data]()
         var fileNamesArray = [String]()
+        let convertedData = ImageFormatConvertor.converImage(with: image, format: .rgab)
+        if let convertedData = convertedData {
+            dataArray.append(convertedData)
+            fileNamesArray.append("image.png")
+        }
         
-        dataArray.append(image)
-        fileNamesArray.append("image.png")
         if let mask = mask {
             dataArray.append(mask)
             fileNamesArray.append("mask")
