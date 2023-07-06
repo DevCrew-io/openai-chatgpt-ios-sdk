@@ -75,7 +75,7 @@ final public class ChatGPTAPIManager {
     ///   - imageSize: The desired size of the generated image.
     ///   - numberOfResponse: The number of images to generate (default is 1).
     ///   - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated image as a String in case of success, or an Error in case of failure.
-    public func generateImage(prompt: String, imageSize: ChatGPTImageSize, responseFormat: ResponseFormat, numberOfResponse: Int = 1,user: String? = nil, completion: @escaping (Result<[String], Error>) -> Void)  {
+    public func generateImage(prompt: String, imageSize: ChatGPTImageSize = .fiveTwelve, responseFormat: ResponseFormat = .url, numberOfResponse: Int = 1,user: String? = nil, completion: @escaping (Result<[String], Error>) -> Void)  {
         self.generateImageFromText(prompt: prompt, imageSize: imageSize, responseFormat: responseFormat, endPoint: .generateImage, n: numberOfResponse,user: user, completion: completion)
     }
     
@@ -91,9 +91,24 @@ final public class ChatGPTAPIManager {
     ///    - user: A unique identifier representing your end-user, which can help OpenAI monitor and detect abuse.
     ///    - completion: A completion handler called when the request is completed. Provides the response data, URL response, and error.
     
-    public func createImageEditRequest(image: Data, mask: Data? = nil, prompt: String, n: Int = 1, size: ChatGPTImageSize = .tenTwentyFour, responseFormat: ResponseFormat = .url, user: String? = nil, completion: @escaping (Result<[String],Error>) -> Void) {
+    public func createImageEditRequest(image: Data, mask: Data? = nil, prompt: String, n: Int = 1, size: ChatGPTImageSize = .fiveTwelve, responseFormat: ResponseFormat = .url, user: String? = nil, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
         
-        self.editImageRequest(endPoint: .imageEdits, image: image, prompt: prompt, n: n, size: size, responseFormat: responseFormat, user: user, completion: completion)
+        self.editImageRequest(endPoint: .imageEdits, image: image, prompt: prompt, n: n, size: size, responseFormat: responseFormat, user: user, imageConversionFormat: imageConversionFormat, completion: completion)
+    }
+    
+    
+    
+    /// Request for generating image variations.
+    
+    ///  - Parameters:
+    ///    - image: The image data to generate variations from. Must be a valid PNG file.
+    ///   - n: The number of image variations to generate. Defaults to 1. Must be between 1 and 10.
+    ///  - prompt: An optional text prompt to guide the image generation process. The maximum length is 1000 characters.
+    ///  - completion: A completion handler called when the request is completed. Provides the response data, URL response, and error.
+    
+    public  func createImageVariationsRequest(image: Data, n: Int = 1,size: ChatGPTImageSize = .fiveTwelve, response_format: ResponseFormat = .url, user: String? = nil, imageConversionFormat: ImageConversionFormat? = nil, completion: @escaping (Result<[String],Error>) -> Void) {
+        
+        self.imageVariationsRequest(endPoint:.imageVariations , image: image, n: n, size: size, responseFormat: response_format, user: user,imageConversionFormat: imageConversionFormat, completion: completion)
     }
     
     
@@ -296,7 +311,7 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private  func editImageRequest(endPoint: ChatGPTAPIEndpoint, image: Data, mask: Data? = nil, prompt: String, n: Int?, size: ChatGPTImageSize?, responseFormat: ResponseFormat = .url, user: String?, completion: @escaping (Result<[String],Error>) -> Void) {
+    private  func editImageRequest(endPoint: ChatGPTAPIEndpoint, image: Data, mask: Data? = nil, prompt: String, n: Int?, size: ChatGPTImageSize?, responseFormat: ResponseFormat = .url, user: String?, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
         
         // Define the key-value pairs
         var parameters: [String: Any] = [
@@ -319,10 +334,15 @@ final public class ChatGPTAPIManager {
         
         var dataArray = [Data]()
         var fileNamesArray = [String]()
-        let convertedData = ImageFormatConvertor.converImage(with: image, format: .rgab)
-        if let convertedData = convertedData {
-            dataArray.append(convertedData)
-            fileNamesArray.append("image.png")
+        fileNamesArray.append("image.png")
+        if let imageConversionFormat = imageConversionFormat {
+            let convertedData = ImageFormatConvertor.converImage(with: image, format: .rgba)
+            if let convertedData = convertedData {
+                dataArray.append(convertedData)
+                
+            }
+        } else {
+            dataArray.append(image)
         }
         
         if let mask = mask {
@@ -358,7 +378,63 @@ final public class ChatGPTAPIManager {
         
         
     }
-    
+    private func imageVariationsRequest(endPoint: ChatGPTAPIEndpoint, image: Data, n: Int?,size: ChatGPTImageSize?, responseFormat: ResponseFormat, user: String?, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
+        // Define the key-value pairs
+        var parameters: [String: Any] = [
+            "response_format": responseFormat.rawValue
+        ]
+        if let numberOfResponse = n {
+            parameters["n"] = numberOfResponse
+        }
+        
+        if let size = size {
+            parameters["size"] = size.rawValue
+        }
+        
+        
+        if let user = user {
+            parameters["user"] = user
+        }
+        
+        var dataArray = [Data]()
+        var fileNamesArray = [String]()
+        fileNamesArray.append("image.png")
+        if let imageConversionFormat = imageConversionFormat {
+            let convertedData = ImageFormatConvertor.converImage(with: image, format: .rgba)
+            if let convertedData = convertedData {
+                dataArray.append(convertedData)
+            }
+        } else {
+            dataArray.append(image)
+        }
+        
+        guard let request = self.createMultiPartRequest(data: dataArray, fileNames: fileNamesArray, params: parameters, name: "image", contentType: "image/png", endPoint: endPoint) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                let parser = ImageGenerationResponseParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let succesString):
+                        print(succesString)
+                        completion(.success(succesString))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                    
+                })
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
     
     private func audioTranscription(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: AudioGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<String, Error>) -> Void) {
         

@@ -35,6 +35,7 @@
 		A8B8602F2A44140A005FBEDE /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8602E2A441409005FBEDE /* ImageViewModel.swift */; };
 		A8B860342A44431C005FBEDE /* TextGenerationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B860332A44431C005FBEDE /* TextGenerationViewModel.swift */; };
 		A8B8607C2A45AE40005FBEDE /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B8607B2A45AE40005FBEDE /* AudioViewController.swift */; };
+		A8EA01682A56AB5D007DFADF /* pngwing.com.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EA01672A56AB5D007DFADF /* pngwing.com.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		A8B8602E2A441409005FBEDE /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
 		A8B860332A44431C005FBEDE /* TextGenerationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGenerationViewModel.swift; sourceTree = "<group>"; };
 		A8B8607B2A45AE40005FBEDE /* AudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
+		A8EA01672A56AB5D007DFADF /* pngwing.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pngwing.com.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 				777D472D2A53F7550050C0E7 /* english_song.m4a */,
 				777D472E2A53F7550050C0E7 /* translation_file.m4a */,
 				A8B85FD52A43131A005FBEDE /* Assets.xcassets */,
+				A8EA01672A56AB5D007DFADF /* pngwing.com.png */,
 				A8B860122A432135005FBEDE /* openai.svg */,
 				A8B85FDA2A43131A005FBEDE /* Info.plist */,
 			);
@@ -392,6 +395,7 @@
 			files = (
 				777D472F2A53F7560050C0E7 /* english_song.m4a in Resources */,
 				A8B8600A2A431AA6005FBEDE /* UserCell.xib in Resources */,
+				A8EA01682A56AB5D007DFADF /* pngwing.com.png in Resources */,
 				777D47302A53F7560050C0E7 /* translation_file.m4a in Resources */,
 				A8B85FD92A43131A005FBEDE /* LaunchScreen.storyboard in Resources */,
 				A8B860132A432135005FBEDE /* openai.svg in Resources */,

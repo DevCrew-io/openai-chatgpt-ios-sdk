@@ -20,5 +20,101 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "593EE8FB-2360-48EE-9321-EEC409239659"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Example/ViewModles/ImageViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "editImage(_:imageData:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F43E1243-0503-45D7-BF44-055CE32C6862"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
+            landmarkName = "editImageRequest(endPoint:image:mask:prompt:n:size:responseFormat:user:imageConversionFormat:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F43E1243-0503-45D7-BF44-055CE32C6862 - 98c84961aede9c87"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ChatGPTAPIManager.ChatGPTAPIManager.editImageRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, image: Foundation.Data, mask: Swift.Optional&lt;Foundation.Data&gt;, prompt: Swift.String, n: Swift.Optional&lt;Swift.Int&gt;, size: Swift.Optional&lt;ChatGPTAPIManager.ChatGPTImageSize&gt;, responseFormat: ChatGPTAPIManager.ResponseFormat, user: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Result&lt;Swift.Array&lt;Swift.String&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghullamabbas/Documents/Abbas/chat-gpt-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "317"
+                  endingLineNumber = "317"
+                  offsetFromSymbolStart = "633">
+               </Location>
+               <Location
+                  uuid = "F43E1243-0503-45D7-BF44-055CE32C6862 - 98c84961aede9c87"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ChatGPTAPIManager.ChatGPTAPIManager.editImageRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, image: Foundation.Data, mask: Swift.Optional&lt;Foundation.Data&gt;, prompt: Swift.String, n: Swift.Optional&lt;Swift.Int&gt;, size: Swift.Optional&lt;ChatGPTAPIManager.ChatGPTImageSize&gt;, responseFormat: ChatGPTAPIManager.ResponseFormat, user: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Result&lt;Swift.Array&lt;Swift.String&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghullamabbas/Documents/Abbas/chat-gpt-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "317"
+                  endingLineNumber = "317"
+                  offsetFromSymbolStart = "626">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2F001E29-2415-4FB5-95C2-80B0D11DBF71"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
+            landmarkName = "editImageRequest(endPoint:image:mask:prompt:n:size:responseFormat:user:imageConversionFormat:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "82115725-ADD0-4C5A-9E07-6B446BAECB39"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/ChatGPTAPIManager/DataParser/ImageParser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "parseResponse(data:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
