@@ -1,22 +1,20 @@
 //
-//  EditTextVC.swift
+//  ModerationVC.swift
 //  Example
 //
-//  Created by Ghullam Abbas on 06/07/2023.
+//  Created by Ghullam Abbas on 07/07/2023.
 //
 
 import UIKit
 
-class EditTextVC: UIViewController {
+class ModerationVC: UIViewController {
     
     @IBOutlet weak var inPutTextField: UITextField!
-    @IBOutlet weak var instructionsTextField: UITextField!
-    @IBOutlet weak var outPutLabel: UITextView!
-    
-    let vm = EditTextViewModelViewModel()
-    
+    @IBOutlet weak var outPutTextView: UITextView!
+    let vm = ModerationsViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         vm.onFailure = {
             DispatchQueue.main.async {
                 EZLoadingActivity.hide(false,animated: true)
@@ -26,12 +24,13 @@ class EditTextVC: UIViewController {
             DispatchQueue.main.async {
                 EZLoadingActivity.hide(true,animated: true)
             }
-            self.outPutLabel.text = self.vm.ouPutText
+            self.outPutTextView.text = "\(String(describing: self.vm.outPut))"
         }
-        // Do any additional setup after loading the view.
+        
     }
-    @IBAction func editText(_ sender: UIButton) {
-        vm.editText(inputText: inPutTextField.text!, instructionText: instructionsTextField.text!)
+    @IBAction func moderationButtonTab(_ sender: UIButton) {
+        guard let text = inPutTextField.text else { return }
+        vm.moderationText(inputText: text)
     }
 
     /*

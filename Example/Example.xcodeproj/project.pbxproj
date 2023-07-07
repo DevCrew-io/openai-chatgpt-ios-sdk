@@ -38,6 +38,10 @@
 		A8EA01682A56AB5D007DFADF /* pngwing.com.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EA01672A56AB5D007DFADF /* pngwing.com.png */; };
 		A8EA016B2A56E3C5007DFADF /* EditTextVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA016A2A56E3C5007DFADF /* EditTextVC.swift */; };
 		A8EA016D2A56E5A5007DFADF /* EditTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA016C2A56E5A5007DFADF /* EditTextViewModel.swift */; };
+		A8EA01712A57EA78007DFADF /* ModerationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA01702A57EA78007DFADF /* ModerationVC.swift */; };
+		A8EA01732A57EB7B007DFADF /* ModerationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA01722A57EB7B007DFADF /* ModerationsViewModel.swift */; };
+		A8EA01752A57EB8F007DFADF /* EmbeddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA01742A57EB8F007DFADF /* EmbeddingViewModel.swift */; };
+		A8EA01772A57EF90007DFADF /* EmbeddingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA01762A57EF90007DFADF /* EmbeddingVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +97,10 @@
 		A8EA01672A56AB5D007DFADF /* pngwing.com.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pngwing.com.png; sourceTree = "<group>"; };
 		A8EA016A2A56E3C5007DFADF /* EditTextVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextVC.swift; sourceTree = "<group>"; };
 		A8EA016C2A56E5A5007DFADF /* EditTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextViewModel.swift; sourceTree = "<group>"; };
+		A8EA01702A57EA78007DFADF /* ModerationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationVC.swift; sourceTree = "<group>"; };
+		A8EA01722A57EB7B007DFADF /* ModerationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerationsViewModel.swift; sourceTree = "<group>"; };
+		A8EA01742A57EB8F007DFADF /* EmbeddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddingViewModel.swift; sourceTree = "<group>"; };
+		A8EA01762A57EF90007DFADF /* EmbeddingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddingVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +207,8 @@
 		A8B860202A440BB9005FBEDE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A8EA016F2A57EA4F007DFADF /* Moderations */,
+				A8EA016E2A57EA36007DFADF /* Embedding */,
 				A8EA01692A56E3AE007DFADF /* Edit */,
 				A89687812A54365D00AC0F09 /* ModelsList */,
 				A8B860262A440C79005FBEDE /* Cells */,
@@ -220,6 +230,8 @@
 				777D47312A5419150050C0E7 /* AudioViewModel.swift */,
 				A89687842A54381000AC0F09 /* ModelsListViewModel.swift */,
 				A8EA016C2A56E5A5007DFADF /* EditTextViewModel.swift */,
+				A8EA01722A57EB7B007DFADF /* ModerationsViewModel.swift */,
+				A8EA01742A57EB8F007DFADF /* EmbeddingViewModel.swift */,
 			);
 			path = ViewModles;
 			sourceTree = "<group>";
@@ -296,6 +308,22 @@
 				A8EA016A2A56E3C5007DFADF /* EditTextVC.swift */,
 			);
 			path = Edit;
+			sourceTree = "<group>";
+		};
+		A8EA016E2A57EA36007DFADF /* Embedding */ = {
+			isa = PBXGroup;
+			children = (
+				A8EA01762A57EF90007DFADF /* EmbeddingVC.swift */,
+			);
+			path = Embedding;
+			sourceTree = "<group>";
+		};
+		A8EA016F2A57EA4F007DFADF /* Moderations */ = {
+			isa = PBXGroup;
+			children = (
+				A8EA01702A57EA78007DFADF /* ModerationVC.swift */,
+			);
+			path = Moderations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,14 +468,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8EA01752A57EB8F007DFADF /* EmbeddingViewModel.swift in Sources */,
 				A89687852A54381000AC0F09 /* ModelsListViewModel.swift in Sources */,
 				A8B8600C2A431AA6005FBEDE /* AssistantCell.swift in Sources */,
+				A8EA01732A57EB7B007DFADF /* ModerationsViewModel.swift in Sources */,
 				A8B860342A44431C005FBEDE /* TextGenerationViewModel.swift in Sources */,
 				A8EA016D2A56E5A5007DFADF /* EditTextViewModel.swift in Sources */,
 				A8B8600B2A431AA6005FBEDE /* UserCell.swift in Sources */,
 				A8B860112A431AA6005FBEDE /* ImageWithTextViewController.swift in Sources */,
 				A8B85FD12A431318005FBEDE /* ViewController.swift in Sources */,
 				A8B8600E2A431AA6005FBEDE /* ChatViewController.swift in Sources */,
+				A8EA01712A57EA78007DFADF /* ModerationVC.swift in Sources */,
 				A8B860252A440C52005FBEDE /* MessageModel.swift in Sources */,
 				777D47322A5419150050C0E7 /* AudioViewModel.swift in Sources */,
 				A8B860102A431AA6005FBEDE /* EZLoadingActivity.swift in Sources */,
@@ -455,6 +486,7 @@
 				A89687832A54367C00AC0F09 /* ModelsListVC.swift in Sources */,
 				A8EA016B2A56E3C5007DFADF /* EditTextVC.swift in Sources */,
 				A8B85FCF2A431318005FBEDE /* SceneDelegate.swift in Sources */,
+				A8EA01772A57EF90007DFADF /* EmbeddingVC.swift in Sources */,
 				A8B8602D2A4413F2005FBEDE /* ChatViewModel.swift in Sources */,
 				A8B8602F2A44140A005FBEDE /* ImageViewModel.swift in Sources */,
 				A8B8607C2A45AE40005FBEDE /* AudioViewController.swift in Sources */,

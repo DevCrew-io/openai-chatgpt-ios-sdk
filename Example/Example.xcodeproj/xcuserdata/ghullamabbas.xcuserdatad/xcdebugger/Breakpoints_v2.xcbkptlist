@@ -46,43 +46,13 @@
             filePath = "../Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
-            landmarkName = "editImageRequest(endPoint:image:mask:prompt:n:size:responseFormat:user:imageConversionFormat:completion:)"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
+            landmarkName = "generateImageFromText(prompt:imageSize:responseFormat:endPoint:n:user:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "F43E1243-0503-45D7-BF44-055CE32C6862 - 98c84961aede9c87"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ChatGPTAPIManager.ChatGPTAPIManager.editImageRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, image: Foundation.Data, mask: Swift.Optional&lt;Foundation.Data&gt;, prompt: Swift.String, n: Swift.Optional&lt;Swift.Int&gt;, size: Swift.Optional&lt;ChatGPTAPIManager.ChatGPTImageSize&gt;, responseFormat: ChatGPTAPIManager.ResponseFormat, user: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Result&lt;Swift.Array&lt;Swift.String&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "Example"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ghullamabbas/Documents/Abbas/chat-gpt-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "317"
-                  endingLineNumber = "317"
-                  offsetFromSymbolStart = "633">
-               </Location>
-               <Location
-                  uuid = "F43E1243-0503-45D7-BF44-055CE32C6862 - 98c84961aede9c87"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ChatGPTAPIManager.ChatGPTAPIManager.editImageRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, image: Foundation.Data, mask: Swift.Optional&lt;Foundation.Data&gt;, prompt: Swift.String, n: Swift.Optional&lt;Swift.Int&gt;, size: Swift.Optional&lt;ChatGPTAPIManager.ChatGPTImageSize&gt;, responseFormat: ChatGPTAPIManager.ResponseFormat, user: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Result&lt;Swift.Array&lt;Swift.String&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "Example"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ghullamabbas/Documents/Abbas/chat-gpt-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "317"
-                  endingLineNumber = "317"
-                  offsetFromSymbolStart = "626">
-               </Location>
-               <Location
-                  uuid = "F43E1243-0503-45D7-BF44-055CE32C6862 - 1dd8fc8351392ac0"
+                  uuid = "F43E1243-0503-45D7-BF44-055CE32C6862 - 1dd8fc83513915be"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -92,9 +62,24 @@
                   urlString = "file:///Users/ghullamabbas/Documents/Abbas/chat-gpt-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "370"
-                  endingLineNumber = "370"
-                  offsetFromSymbolStart = "665">
+                  startingLineNumber = "380"
+                  endingLineNumber = "380"
+                  offsetFromSymbolStart = "658">
+               </Location>
+               <Location
+                  uuid = "F43E1243-0503-45D7-BF44-055CE32C6862 - de3cfd5827479a0e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in ChatGPTAPIManager.ChatGPTAPIManager.generateImageFromText(prompt: Swift.String, imageSize: ChatGPTAPIManager.ChatGPTImageSize, responseFormat: ChatGPTAPIManager.ResponseFormat, endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, n: Swift.Int, user: Swift.Optional&lt;Swift.String&gt;, completion: (Swift.Result&lt;Swift.Array&lt;Swift.String&gt;, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghullamabbas/Documents/Abbas/chat-gpt-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "380"
+                  endingLineNumber = "380"
+                  offsetFromSymbolStart = "433">
                </Location>
             </Locations>
          </BreakpointContent>

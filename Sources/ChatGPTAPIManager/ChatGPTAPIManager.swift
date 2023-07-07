@@ -163,6 +163,17 @@ final public class ChatGPTAPIManager {
         self.moderations(input: input, model: model, endPoint: .moderations, completion: completion)
     }
     
+    /// Requests text embeddings based on the provided parameters .
+    /// - Parameters:
+    ///   - model: The ID of the model to use for creating embeddings. Use the List models API to see all available models or refer to the Model overview for descriptions.
+    ///   - input: The input text to embed, encoded as a string or an array of tokens. To embed multiple inputs in a single request, pass an array of strings or an array of token arrays. Each input must not exceed the max input tokens for the model (8191 tokens for text-embedding-ada-002).
+    ///   - user: A unique identifier representing your end-user, which helps OpenAI monitor and detect abuse. Optional parameter.
+    ///   - completion: A completion handler called when the request is completed. Provides the response data, URL response, and error.
+    
+    public  func createEmbeddingsRequest(input: String, user: String? = nil, model: EmbeddingGPTModels = .textEmbeddingAda002, completion: @escaping (Result<EmbeddingModel,Error>) -> Void) {
+        self.embeddingsRequest(input: input, model: model, endPoint: .embeddings, completion: completion)
+    }
+
     
     // MARK: - Private Functions -
     private  func textEditsRequest(endPoint: ChatGPTAPIEndpoint, model: EditGPTModels, input: String?, instruction: String, n: Int, temperature: Double, topP: Double, completion: @escaping (Result<[String],Error>) -> Void) {
@@ -605,7 +616,41 @@ final public class ChatGPTAPIManager {
         }
         
     }
-    
+   private func embeddingsRequest(input: String, user: String? = nil, model: EmbeddingGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<EmbeddingModel,Error>) -> Void) {
+       
+       var parameters: [String: Any] = [
+           "input": input,
+           "model": model.rawValue
+       ]
+       if let user = user {
+           parameters["user"] = user
+       }
+       let requestBuilder = DefaultRequestBuilder()
+       guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
+           completion(.failure(NetworkError.invalidURL))
+           return
+       }
+       
+       self.performDataTask(with: request) { result in
+           
+           switch result {
+           case.success(let data):
+               
+               do {
+                   // Parse the JSON response into an array of type T
+                   let models = try JSONDecoder().decode(EmbeddingModel.self, from: data)
+                   completion(.success(models))
+               } catch {
+                   // Error occurred during decoding, return failure in completion handler
+                   completion(.failure(error))
+               }
+               
+           case.failure(let error):
+               completion(.failure(error))
+           }
+           
+       }
+    }
     private func moderations(input: String, model: ModerationGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<ModerationsModel, Error>) -> Void)  {
                 
         let parameters: [String: Any] = [

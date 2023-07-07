@@ -45,3 +45,9 @@ public enum ModerationGPTModels: String {
     case textModerationStable = "text-moderation-stable"
     case textModerationLatest = "text-moderation-latest"
 }
+
+// MARK: - EmbeddingGPTModels Enum -
+public enum EmbeddingGPTModels: String {
+    case textEmbeddingAda002 = "text-embedding-ada-002"
+}
+
