@@ -32,16 +32,19 @@ class ChatViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.sendChatRequest(prompt: message,model: .gptThreePointFiveTurbo,endPoint: .chat) { result in
+        ChatGPTAPIManager.shared.sendChatRequest(prompt: message, model: .gptThreePointFiveTurbo) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")
                 // Handle the response as needed
                 
                 DispatchQueue.main.async {
-                    let assistantMessage = ChatMessage(content: response, role: Role.assistant.rawValue)
-                    self.chatMessages.append(assistantMessage)
-                    self.onSuccess?()
+                    if response.count > 0 {
+                        let assistantMessage = ChatMessage(content: response[0], role: Role.assistant.rawValue)
+                        self.chatMessages.append(assistantMessage)
+                        self.onSuccess?()
+                    }
+                    
                 }
                 
             case .failure(let error):

@@ -20,7 +20,7 @@ class ModelsListViewModel: ModelsListProtocol {
     
     func retrieveModel(modelName: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.retrieveAIModel(endPoint: .retrievedModel(modelName)) { [weak self] (result: Result<ChatGPTModel, Error>) in
+        ChatGPTAPIManager.shared.retrieveAIModel(model: modelName) { [weak self] result in
             
             switch result {
             case .success(let model):
@@ -39,7 +39,7 @@ class ModelsListViewModel: ModelsListProtocol {
     
     func getModelsList(completion: @escaping (Result<Bool, Error>) -> Void) {
         EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.getOpenAIModels { [weak self] (result: Result<RootModel, Error>) in
+        ChatGPTAPIManager.shared.getOpenAIModels { [weak self] result in
             
             switch result {
             case .success(let models):

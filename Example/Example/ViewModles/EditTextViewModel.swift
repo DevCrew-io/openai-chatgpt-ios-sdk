@@ -1,35 +1,27 @@
 //
-//  TextGenerationViewModel.swift
+//  EditTextViewModel.swift
 //  Example
 //
-//  Created by Ghullam Abbas on 22/06/2023.
+//  Created by Ghullam Abbas on 06/07/2023.
 //
 
 import Foundation
 import ChatGPTAPIManager
 
-class TextGenerationViewModel: ChatViewModelProtocols {
+class EditTextViewModelViewModel {
     
     var onSuccess:(()-> Void)? = nil
     var onFailure:(()-> Void)? = nil
-    var reloadTableView:(()-> Void)? = nil
-    var chatMessages: [ChatMessage] = []
+    var ouPutText = ""
     
-    
-    var rows:Int {
-        return self.chatMessages.count
-    }
-    
-    func sendMessage(message: String ) {
+
+    func editText(inputText: String,instructionText: String) {
         
-        let userMessage = ChatMessage(content: message, role: Role.user.rawValue)
-        chatMessages.append(userMessage)
         
-        self.reloadTableView?()
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.sendTextRequest(prompt: message, model: .textDavinci003) { result in
+        ChatGPTAPIManager.shared.createEditsRequest(input: inputText,instruction: instructionText) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")
@@ -37,8 +29,7 @@ class TextGenerationViewModel: ChatViewModelProtocols {
                 
                 DispatchQueue.main.async {
                     if (response.count > 0) {
-                        let assistantMessage = ChatMessage(content: response[0], role: Role.assistant.rawValue)
-                        self.chatMessages.append(assistantMessage)
+                        self.ouPutText = response[0]
                         self.onSuccess?()
                     }
                 }

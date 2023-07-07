@@ -41,6 +41,17 @@ class ViewController: UIViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "AudioViewController") as! AudioViewController
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
+    @IBAction func editText(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "EditTextVC") as! EditTextVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    @IBAction func embeddingsTab(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "EmbeddingVC") as! EmbeddingVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    @IBAction func moderationsTab(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ModerationVC") as! ModerationVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
