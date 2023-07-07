@@ -35,13 +35,14 @@ enum ChatGPTAPIEndpoint {
     case transcriptions
     case modelsList
     case retrievedModel(String)
+    case moderations
 }
 
 extension ChatGPTAPIEndpoint {
     
     var method: String {
         switch self {
-        case .completion, .textEdit, .chat, .generateImage, .imageEdits, .imageVariations, .translations, .transcriptions:
+        case .completion, .chat, .generateImage, .imageEdits, .imageVariations, .translations, .transcriptions, .moderations, .textEdit:
             return "POST"
             
         case .modelsList, .retrievedModel:
@@ -71,6 +72,8 @@ extension ChatGPTAPIEndpoint {
             return URL(string: ChatGPTAPIEndpoint.baseURL + "/models")!
         case.retrievedModel(let modelName):
             return URL(string: ChatGPTAPIEndpoint.baseURL + "/models/\(modelName)")!
+        case .moderations:
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/moderations")!
         }
     }
 }

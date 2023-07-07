@@ -29,12 +29,19 @@ public enum ChatGPTModels: String {
     
 }
 
-// MARK: - AudioGPTModels Enum
+// MARK: - AudioGPTModels Enum -
 public enum AudioGPTModels: String {
     case whisper1 = "whisper-1"
 }
-// MARK: - TextEditModel Enum
+
+// MARK: - TextEditModel Enum -
 public enum EditGPTModels: String {
     case textDavinciEdit001 = "text-davinci-edit-001"
     case codeDavinciEdit001 = "code-davinci-edit-001"
+}
+
+// MARK: - AudioGPTModels Enum -
+public enum ModerationGPTModels: String {
+    case textModerationStable = "text-moderation-stable"
+    case textModerationLatest = "text-moderation-latest"
 }

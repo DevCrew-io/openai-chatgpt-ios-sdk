@@ -7,13 +7,13 @@
 
 import Foundation
 
-public struct ChatGPTModel: Decodable {
+public struct ChatGPTModel: Codable, Equatable {
     public let id: String
     public let object: String
     public let owned_by: String
 }
 
-public struct ChatGPTModelList: Decodable {
+public struct ChatGPTModelList: Codable, Equatable {
     public let data: [ChatGPTModel]
     public let object: String
 }

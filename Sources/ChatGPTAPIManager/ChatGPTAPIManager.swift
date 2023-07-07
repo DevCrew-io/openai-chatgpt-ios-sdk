@@ -126,6 +126,7 @@ final public class ChatGPTAPIManager {
     public func audioTranscriptionRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: AudioGPTModels = .whisper1, completion: @escaping (Result<String, Error>) -> Void) {
         self.audioTranscription(fileUrl: fileUrl, prompt: prompt, temperature: temperature, language: language, model: model, endPoint: .transcriptions, completion: completion)
     }
+    
     /// Requests audio translation based on the provided parameters.
     ///
     /// - Parameters:
@@ -137,8 +138,7 @@ final public class ChatGPTAPIManager {
     public func audioTranslationRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: AudioGPTModels = .whisper1, completion: @escaping (Result<String, Error>) -> Void) {
         self.audioTranslation(fileUrl: fileUrl,prompt: prompt, temperature: temperature, model: model, endPoint: .translations, completion: completion)
     }
-    
-   
+       
     ///  Endpoint for generating edits.
     
     /// - Parameters:
@@ -153,6 +153,15 @@ final public class ChatGPTAPIManager {
         self.textEditsRequest(endPoint: .textEdit, model: model, input: input, instruction: instruction, n: n, temperature: temperature, topP: topP, completion: completion)
     }
 
+    /// Requests text moderations based on the provided parameters.
+    ///
+    /// - Parameters:
+    ///   - input: The input text to classify
+    ///   - model: The ChatGPT model to use for moderations.
+    ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the 'ModerationsModel'  in case of success, or an Error in case of failure.
+    public func moderationsRequest(input: String, model: ModerationGPTModels = .textModerationStable, completion: @escaping (Result<ModerationsModel, Error>) -> Void) {
+        self.moderations(input: input, model: model, endPoint: .moderations, completion: completion)
+    }
     
     
     // MARK: - Private Functions -
@@ -244,6 +253,7 @@ final public class ChatGPTAPIManager {
             case.failure(let error):
                 completion(.failure(error))
             }
+            
         }
     }
     
@@ -388,7 +398,7 @@ final public class ChatGPTAPIManager {
         var dataArray = [Data]()
         var fileNamesArray = [String]()
         fileNamesArray.append("image.png")
-        if let imageConversionFormat = imageConversionFormat {
+        if imageConversionFormat != nil {
             let convertedData = ImageFormatConvertor.converImage(with: image, format: .rgba)
             if let convertedData = convertedData {
                 dataArray.append(convertedData)
@@ -452,7 +462,7 @@ final public class ChatGPTAPIManager {
         var dataArray = [Data]()
         var fileNamesArray = [String]()
         fileNamesArray.append("image.png")
-        if let imageConversionFormat = imageConversionFormat {
+        if imageConversionFormat != nil {
             let convertedData = ImageFormatConvertor.converImage(with: image, format: .rgba)
             if let convertedData = convertedData {
                 dataArray.append(convertedData)
@@ -517,7 +527,7 @@ final public class ChatGPTAPIManager {
             return
         }
         
-        guard let request = self.createMultiPartRequest(data: [audioData],fileNames: [audioFilename],params: parameters, name: "file", contentType: "audio/wav", endPoint: endPoint) else {
+        guard let request = self.createMultiPartRequest(data: [audioData], fileNames: [audioFilename], params: parameters, name: "file", contentType: "audio/wav", endPoint: endPoint) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }
@@ -592,6 +602,41 @@ final public class ChatGPTAPIManager {
             case.failure(let error):
                 completion(.failure(error))
             }
+        }
+        
+    }
+    
+    private func moderations(input: String, model: ModerationGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<ModerationsModel, Error>) -> Void)  {
+                
+        let parameters: [String: Any] = [
+            "input": input,
+            "model": model.rawValue
+        ]
+        
+        let requestBuilder = DefaultRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                do {
+                    // Parse the JSON response into an array of type T
+                    let models = try JSONDecoder().decode(ModerationsModel.self, from: data)
+                    completion(.success(models))
+                } catch {
+                    // Error occurred during decoding, return failure in completion handler
+                    completion(.failure(error))
+                }
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
         }
         
     }
