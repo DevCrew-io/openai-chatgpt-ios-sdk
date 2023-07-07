@@ -311,6 +311,8 @@ ChatGPTAPIManager.shared.createEmbeddingsRequest(input: "Your prompt", completio
     }
 })
 ```
+Note: The code snippets provided in this README assume that you have replaced `"YOUR_API_KEY"` with your actual API key.
+
 
 ## Security Disclaimer
 The ChatGPT SDK for iOS provides convenient methods for developers to integrate ChatGPT APIs into their applications. It is essential to ensure the security and confidentiality of your API key while using our SDK. Please note the following disclaimer regarding the management and safekeeping of your API key.
@@ -324,9 +326,6 @@ When using our SDK, ensure that you store your API key in a secure location with
 
 By adhering to these guidelines, you can help maintain the security and integrity of your API key while using the ChatGPT SDK for iOS. Remember, maintaining the confidentiality of your API key is crucial to protect your application and the data it processes. 
 
-Note: The code snippets provided in this README assume that you have replaced `"YOUR_API_KEY"` with your actual API key.
-
-This code should serve as a starting point for integrating ChatGPT API requests into your Swift application. Feel free to modify and extend it according to your specific requirements.
  
 ## Author
 [DevCrew.IO](https://devcrew.io/)
