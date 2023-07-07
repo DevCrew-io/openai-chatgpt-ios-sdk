@@ -344,7 +344,7 @@ If you have any questions or comments about **ChatGPTAPIManager** , please feel 
 ## Contributing 
 Contributions, issues, and feature requests are welcome! See [Contributors](https://github.com/DevCrew-io/chatgpt-ios-sdk/graphs/contributors) for details.
 
-###Contributions
+### Contributions
 Any contribution is more than welcome! You can contribute through pull requests and issues on GitHub.
 
 ### Show your Support
