@@ -312,14 +312,14 @@ ChatGPTAPIManager.shared.createEmbeddingsRequest(input: "Your prompt", completio
 })
 ```
 
-##Security Disclaimer:
+## Security Disclaimer
 The ChatGPT SDK for iOS provides convenient methods for developers to integrate ChatGPT APIs into their applications. It is essential to ensure the security and confidentiality of your API key while using our SDK. Please note the following disclaimer regarding the management and safekeeping of your API key.
 
-###Responsibility for API Key Security: 
+### Responsibility for API Key Security
 As a developer, you are solely responsible for safeguarding your API key. The API key grants access to ChatGPT APIs and must be treated as sensitive information. Any misuse, loss, or unauthorized access to your API key is your responsibility.
-###Confidentiality: 
+### Confidentiality
 You should treat your API key with the utmost confidentiality. Do not share it with unauthorized individuals or store it in insecure locations, such as public repositories or unprotected storage.
-###Secure Storage: 
+### Secure Storage
 When using our SDK, ensure that you store your API key in a secure location within your application. We recommend utilizing secure storage mechanisms, such as Keychain, to encrypt and protect your API key.
 
 By adhering to these guidelines, you can help maintain the security and integrity of your API key while using the ChatGPT SDK for iOS. Remember, maintaining the confidentiality of your API key is crucial to protect your application and the data it processes. 
