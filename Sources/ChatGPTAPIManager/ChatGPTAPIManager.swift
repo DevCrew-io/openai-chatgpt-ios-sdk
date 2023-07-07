@@ -47,7 +47,7 @@ final public class ChatGPTAPIManager {
     ///
     /// - Parameters:
     ///   - prompt: The input prompt for the chat request.
-    ///   - model: The ChatGPT model to use for generating the response.
+    ///   - model: The ChatGPT model to use for generating the response. Defaults is .gptThreePointFiveTurbo
     ///   - maxTokens: The maximum number of tokens in the generated response. Defaults to 500.
     ///   - completion: A closure to be called with the result of the request. The result is either a success containing the generated response string or a failure containing an error.
     public func sendChatRequest(prompt: String, model: ChatGPTModels = .gptThreePointFiveTurbo, maxTokens: Int = 500, completion: @escaping (Result<[String], Error>) -> Void)  {
@@ -59,7 +59,7 @@ final public class ChatGPTAPIManager {
     ///
     /// - Parameters:
     ///   - prompt: The prompt to generate text from.
-    ///   - model: The ChatGPT model to use for text generation.
+    ///   - model: The ChatGPT model to use for text generation. Defaults is .textDavinci003
     ///   - maxTokens: The maximum number of tokens in the generated text. Defaults to 500.
     ///   - numberOfResponse: The number of text samples to generate. Defaults to 1.
     ///   - completion: A completion block that is called with the result of the request. The block receives a Result object containing either the generated text as a String in case of success, or an Error in case of failure.
@@ -71,11 +71,12 @@ final public class ChatGPTAPIManager {
     ///
     /// - Parameters:
     ///   - prompt: The prompt for image generation.
-    ///   - model: The ChatGPT model to use for image generation.
-    ///   - imageSize: The desired size of the generated image.
+    ///   - imageSize: The desired size of the generated image. Defaults is .fiveTwelve
+    ///   - responseFormat: The desired api response format (url or b64_json). Defaults is url.
     ///   - numberOfResponse: The number of images to generate (default is 1).
-    ///   - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated image as a String in case of success, or an Error in case of failure.
-    public func generateImage(prompt: String, imageSize: ChatGPTImageSize = .fiveTwelve, responseFormat: ResponseFormat = .url, numberOfResponse: Int = 1,user: String? = nil, completion: @escaping (Result<[String], Error>) -> Void)  {
+    ///   - user: (Optional) A unique identifier representing your end-user.
+    ///   - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated images Array as a String in case of success, or an Error in case of failure.
+    public func generateImage(prompt: String, imageSize: ChatGPTImageSize = .fiveTwelve, responseFormat: ResponseFormat = .url, numberOfResponse: Int = 1, user: String? = nil, completion: @escaping (Result<[String], Error>) -> Void)  {
         self.generateImageFromText(prompt: prompt, imageSize: imageSize, responseFormat: responseFormat, endPoint: .generateImage, n: numberOfResponse,user: user, completion: completion)
     }
     
@@ -86,11 +87,11 @@ final public class ChatGPTAPIManager {
     ///    - mask:  An additional image whose fully transparent areas indicate where the image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as the image.
     ///    - prompt: A text description of the desired image(s). The maximum length is 1000 characters.
     ///    - n: The number of images to generate. Defaults to 1. Must be between 1 and 10.
-    ///    - size: The size of the generated images. Defaults to 1024x1024. Must be one of 256x256, 512x512, or 1024x1024.
+    ///    - size: The size of the generated images. Defaults to 512x512. Must be one of 256x256, 512x512, or 1024x1024.
     ///    - responseFormat: The format in which the generated images are returned. Defaults to "url". Must be one of "url" or "b64_json".
     ///    - user: A unique identifier representing your end-user, which can help OpenAI monitor and detect abuse.
-    ///    - completion: A completion handler called when the request is completed. Provides the response data, URL response, and error.
-    
+    ///    - imageConversionFormat: (Optional) Convert invalid image type into open ai supported .rgba
+    ///    - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated images Array as a String in case of success, or an Error in case of failure.
     public func createImageEditRequest(image: Data, mask: Data? = nil, prompt: String, n: Int = 1, size: ChatGPTImageSize = .fiveTwelve, responseFormat: ResponseFormat = .url, user: String? = nil, imageConversionFormat: ImageConversionFormat? = .rgba, completion: @escaping (Result<[String],Error>) -> Void) {
         
         self.editImageRequest(endPoint: .imageEdits, image: image, prompt: prompt, n: n, size: size, responseFormat: responseFormat, user: user, imageConversionFormat: imageConversionFormat, completion: completion)
@@ -99,14 +100,16 @@ final public class ChatGPTAPIManager {
     
     
     /// Request for generating image variations.
-    
+    ///
     ///  - Parameters:
     ///    - image: The image data to generate variations from. Must be a valid PNG file.
-    ///   - n: The number of image variations to generate. Defaults to 1. Must be between 1 and 10.
-    ///  - prompt: An optional text prompt to guide the image generation process. The maximum length is 1000 characters.
-    ///  - completion: A completion handler called when the request is completed. Provides the response data, URL response, and error.
-    
-    public  func createImageVariationsRequest(image: Data, n: Int = 1,size: ChatGPTImageSize = .fiveTwelve, response_format: ResponseFormat = .url, user: String? = nil, imageConversionFormat: ImageConversionFormat? = nil, completion: @escaping (Result<[String],Error>) -> Void) {
+    ///    - n: The number of image variations to generate. Defaults to 1. Must be between 1 and 10.
+    ///    - size: The size of the generated images. Defaults to 512x512. Must be one of 256x256, 512x512, or 1024x1024.
+    ///    - responseFormat: The format in which the generated images are returned. Defaults to "url". Must be one of "url" or "b64_json".
+    ///    - user: A unique identifier representing your end-user, which can help OpenAI monitor and detect abuse.
+    ///    - imageConversionFormat: (Optional) Convert invalid image type into open ai supported .rgba
+    ///    - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated images Array as a String in case of success, or an Error in case of failure.
+    public  func createImageVariationsRequest(image: Data, n: Int = 1, size: ChatGPTImageSize = .fiveTwelve, response_format: ResponseFormat = .url, user: String? = nil, imageConversionFormat: ImageConversionFormat? = nil, completion: @escaping (Result<[String],Error>) -> Void) {
         
         self.imageVariationsRequest(endPoint:.imageVariations , image: image, n: n, size: size, responseFormat: response_format, user: user,imageConversionFormat: imageConversionFormat, completion: completion)
     }
@@ -116,13 +119,12 @@ final public class ChatGPTAPIManager {
     ///
     /// - Parameters:
     ///   - fileUrl: The URL of the audio file to be transcribed.
-    ///   - prompt: The prompt or context for the transcription.
+    ///   - prompt: (Optional) The prompt or context for the transcription.
     ///   - temperature: (Optional) The temperature value for generating diverse transcriptions. Defaults to nil.
     ///   - language: (Optional) The language of the transcription. Defaults to nil.
-    ///   - model: (Optional) The model to be used for transcription. Defaults to ChatGPTModels.
+    ///   - model: (Optional) The model to be used for transcription. Defaults is .whisper1
     ///   - completion: A completion handler to be called with the result of the transcription request.
     ///                 The handler takes a Result object, which contains either the transcribed text or an error.
-    ///                 Use the `.success` case to access the transcribed text and the `.failure` case to handle errors.
     public func audioTranscriptionRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: AudioGPTModels = .whisper1, completion: @escaping (Result<String, Error>) -> Void) {
         self.audioTranscription(fileUrl: fileUrl, prompt: prompt, temperature: temperature, language: language, model: model, endPoint: .transcriptions, completion: completion)
     }
@@ -133,22 +135,22 @@ final public class ChatGPTAPIManager {
     ///   - fileUrl: The URL of the audio file to be translated.
     ///   - prompt: (Optional) The prompt or context for the translation. Defaults to nil.
     ///   - temperature: (Optional) The temperature value for generating diverse translations. Defaults to nil.
-    ///   - model: The ChatGPT model to use for translation.
+    ///   - model: The ChatGPT model to use for translation. Defaults is .whisper1
     ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the translated text as a String in case of success, or an Error in case of failure.
     public func audioTranslationRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: AudioGPTModels = .whisper1, completion: @escaping (Result<String, Error>) -> Void) {
         self.audioTranslation(fileUrl: fileUrl,prompt: prompt, temperature: temperature, model: model, endPoint: .translations, completion: completion)
     }
        
     ///  Endpoint for generating edits.
-    
+    ///
     /// - Parameters:
-    /// - model: The ID of the model to use for generating edits. Use either "text-davinci-edit-001" or "code-davinci-edit-001" with this endpoint.
-    /// - input: The input text to use as a starting point for the edit. Optional parameter, defaults to an empty string.
-    ///  - instruction: The instruction that tells the model how to edit the prompt.
-    ///  - n: The number of edits to generate for the input and instruction. Optional parameter, defaults to 1.
+    ///   - model: The ID of the model to use for generating edits. Defaults is .textDavinciEdit001
+    ///   - input: The input text to use as a starting point for the edit. Optional parameter, defaults to an empty string.
+    ///   - instruction: The instruction that tells the model how to edit the prompt.
+    ///   - n: The number of edits to generate for the input and instruction. Optional parameter, defaults to 1.
     ///   - temperature: The sampling temperature to use, ranging from 0 to 2. Higher values like 0.8 make the output more random, while lower values like 0.2 make it more focused and deterministic. Optional parameter, defaults to 1.0.
     ///   - topP: An alternative to sampling with temperature, known as nucleus sampling. It considers the results of tokens with top_p probability mass. A value of 0.1 means only tokens comprising the top 10% probability mass are considered. Optional parameter, defaults to 1.0.
-       
+    ///   - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated Array of Strings in case of success, or an Error in case of failure.
     public func createEditsRequest(model: EditGPTModels = .textDavinciEdit001, input: String? = nil, instruction: String, n: Int = 1, temperature: Double = 1.0, topP: Double = 1.0, completion: @escaping (Result<[String],Error>) -> Void) {
         self.textEditsRequest(endPoint: .textEdit, model: model, input: input, instruction: instruction, n: n, temperature: temperature, topP: topP, completion: completion)
     }
@@ -157,7 +159,7 @@ final public class ChatGPTAPIManager {
     ///
     /// - Parameters:
     ///   - input: The input text to classify
-    ///   - model: The ChatGPT model to use for moderations.
+    ///   - model: The ChatGPT model to use for moderations. Defaults is .textModerationStable
     ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the 'ModerationsModel'  in case of success, or an Error in case of failure.
     public func moderationsRequest(input: String, model: ModerationGPTModels = .textModerationStable, completion: @escaping (Result<ModerationsModel, Error>) -> Void) {
         self.moderations(input: input, model: model, endPoint: .moderations, completion: completion)
@@ -165,11 +167,10 @@ final public class ChatGPTAPIManager {
     
     /// Requests text embeddings based on the provided parameters .
     /// - Parameters:
-    ///   - model: The ID of the model to use for creating embeddings. Use the List models API to see all available models or refer to the Model overview for descriptions.
     ///   - input: The input text to embed, encoded as a string or an array of tokens. To embed multiple inputs in a single request, pass an array of strings or an array of token arrays. Each input must not exceed the max input tokens for the model (8191 tokens for text-embedding-ada-002).
     ///   - user: A unique identifier representing your end-user, which helps OpenAI monitor and detect abuse. Optional parameter.
+    ///   - model: The ID of the model to use for creating embeddings. Defaults is .textEmbeddingAda002
     ///   - completion: A completion handler called when the request is completed. Provides the response data, URL response, and error.
-    
     public  func createEmbeddingsRequest(input: String, user: String? = nil, model: EmbeddingGPTModels = .textEmbeddingAda002, completion: @escaping (Result<EmbeddingModel,Error>) -> Void) {
         self.embeddingsRequest(input: input, model: model, endPoint: .embeddings, completion: completion)
     }
