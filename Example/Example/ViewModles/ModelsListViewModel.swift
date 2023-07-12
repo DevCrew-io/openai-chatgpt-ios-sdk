@@ -45,7 +45,7 @@ class ModelsListViewModel: ModelsListProtocol {
             case .success(let models):
                 // Handle the models list
                 EZLoadingActivity.hide(true, animated: true)
-                self?.modelsArray = models.data
+                self?.modelsArray = models.data ?? []
                 completion(.success(true))
             case .failure(let error):
                 // Handle the error

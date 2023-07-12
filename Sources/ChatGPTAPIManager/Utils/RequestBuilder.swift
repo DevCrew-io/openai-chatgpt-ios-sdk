@@ -48,7 +48,20 @@ struct GetRequestBuilder: RequestBuilder {
         return request
     }
 }
-
+struct DeleteRequestBuilder: RequestBuilder {
+    func buildRequest(params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest? {
+        guard let endPoint = endPoint else {
+            return nil
+        }
+        
+        var request = URLRequest(url: endPoint.url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        return request
+    }
+}
 func createUrlRequest(requestBuilder: RequestBuilder, params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest? {
     return requestBuilder.buildRequest(params: params, endPoint: endPoint, apiKey: apiKey)
 }

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "673E1103-B942-496C-B2AE-DE116532E5B4"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "630A7903-6C8D-4D16-9457-21A67627FB00"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "deleteFileRequest(endPoint:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "630A7903-6C8D-4D16-9457-21A67627FB00 - d87aac8fea7e96ec"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in ChatGPTAPIManager.ChatGPTAPIManager.deleteFileRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, completion: (Swift.Result&lt;Swift.Bool, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghulamabbas/Documents/chatgpt-ios-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "254"
+                  endingLineNumber = "254"
+                  offsetFromSymbolStart = "449">
+               </Location>
+               <Location
+                  uuid = "630A7903-6C8D-4D16-9457-21A67627FB00 - 55680fa56f12c344"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;ChatGPTAPIManager.FilesModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in ChatGPTAPIManager.ChatGPTAPIManager.deleteFileRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, completion: (Swift.Result&lt;Swift.Bool, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghulamabbas/Documents/chatgpt-ios-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "254"
+                  endingLineNumber = "254"
+                  offsetFromSymbolStart = "316">
+               </Location>
+               <Location
+                  uuid = "630A7903-6C8D-4D16-9457-21A67627FB00 - 8fd301e499ebdd67"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;ChatGPTAPIManager.FileModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in ChatGPTAPIManager.ChatGPTAPIManager.deleteFileRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, completion: (Swift.Result&lt;Swift.Bool, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghulamabbas/Documents/chatgpt-ios-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "254"
+                  endingLineNumber = "254"
+                  offsetFromSymbolStart = "192">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C54532FD-1786-4962-B677-E62B9DA96F29"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "deleteFileRequest(endPoint:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C54532FD-1786-4962-B677-E62B9DA96F29 - 55680fa56f12c2c8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;ChatGPTAPIManager.FilesModel, Swift.Error&gt;) -&gt; () in closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in ChatGPTAPIManager.ChatGPTAPIManager.deleteFileRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, completion: (Swift.Result&lt;Swift.Bool, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghulamabbas/Documents/chatgpt-ios-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "250"
+                  endingLineNumber = "250"
+                  offsetFromSymbolStart = "720">
+               </Location>
+               <Location
+                  uuid = "C54532FD-1786-4962-B677-E62B9DA96F29 - d87aac8fea7e9701"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in ChatGPTAPIManager.ChatGPTAPIManager.deleteFileRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, completion: (Swift.Result&lt;Swift.Bool, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghulamabbas/Documents/chatgpt-ios-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "249"
+                  endingLineNumber = "249"
+                  offsetFromSymbolStart = "250">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7B18C4D8-EA3F-4F0F-9AFB-48D7668A010F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/ChatGPTAPIManager/DataParser/AudioParser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "parseResponse(data:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "263F289A-1FF5-46E2-AA9C-A9B5D060032C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/ChatGPTAPIManager/DataParser/FilesParser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "parseResponse(data:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "47ED742B-7990-4E9D-BC09-F841DEE29958"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Example/Views/Files/FilesVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "getFiles()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ED9C9732-8041-4AA8-880C-16B4F9D26A67"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Example/Views/Files/FilesVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "getFiles()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1ABF1FF6-8860-4D17-B329-77D0D63A933A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
+            landmarkName = "retrieveFileRequest(endPoint:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1ABF1FF6-8860-4D17-B329-77D0D63A933A - f66ec0b0df412f58"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in ChatGPTAPIManager.ChatGPTAPIManager.retrieveFileRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, completion: (Swift.Result&lt;ChatGPTAPIManager.FilesModel, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghulamabbas/Documents/chatgpt-ios-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "311"
+                  endingLineNumber = "311"
+                  offsetFromSymbolStart = "250">
+               </Location>
+               <Location
+                  uuid = "1ABF1FF6-8860-4D17-B329-77D0D63A933A - a8b4c14ff5108f59"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in ChatGPTAPIManager.ChatGPTAPIManager.retrieveFileRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, completion: (Swift.Result&lt;ChatGPTAPIManager.FileModel, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghulamabbas/Documents/chatgpt-ios-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "311"
+                  endingLineNumber = "311"
+                  offsetFromSymbolStart = "316">
+               </Location>
+               <Location
+                  uuid = "1ABF1FF6-8860-4D17-B329-77D0D63A933A - a8b4c14ff5108d2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Foundation.Data, Swift.Error&gt;) -&gt; () in ChatGPTAPIManager.ChatGPTAPIManager.retrieveFileRequest(endPoint: ChatGPTAPIManager.ChatGPTAPIEndpoint, completion: (Swift.Result&lt;ChatGPTAPIManager.FileModel, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Example"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ghulamabbas/Documents/chatgpt-ios-sdk/Sources/ChatGPTAPIManager/ChatGPTAPIManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "297"
+                  endingLineNumber = "297"
+                  offsetFromSymbolStart = "316">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8BDF3B62-2628-42E4-8ED7-1419BDB7EFCB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Sources/ChatGPTAPIManager/DataParser/FilesParser.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "parseResponse(data:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

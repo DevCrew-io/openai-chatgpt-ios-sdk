@@ -14,6 +14,6 @@ public struct ChatGPTModel: Codable, Equatable {
 }
 
 public struct ChatGPTModelList: Codable, Equatable {
-    public let data: [ChatGPTModel]
+    public let data: [ChatGPTModel]?
     public let object: String
 }

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A1BB84B2A5E7EC1008664D8 /* FilesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1BB84A2A5E7EC1008664D8 /* FilesVC.swift */; };
+		6A1BB84D2A5E7FB3008664D8 /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1BB84C2A5E7FB3008664D8 /* FilesViewModel.swift */; };
+		6A1BB84F2A5EBFFD008664D8 /* samplefile.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 6A1BB84E2A5EBFFD008664D8 /* samplefile.rtf */; };
+		6A1BB8512A5EC5B4008664D8 /* mj_test_dataset_2.jsonl in Resources */ = {isa = PBXBuildFile; fileRef = 6A1BB8502A5EC5B4008664D8 /* mj_test_dataset_2.jsonl */; };
 		777D472B2A53EA9D0050C0E7 /* ChatGPTAPIManager in Frameworks */ = {isa = PBXBuildFile; productRef = 777D472A2A53EA9D0050C0E7 /* ChatGPTAPIManager */; };
 		777D472F2A53F7560050C0E7 /* english_song.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 777D472D2A53F7550050C0E7 /* english_song.m4a */; };
 		777D47302A53F7560050C0E7 /* translation_file.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 777D472E2A53F7550050C0E7 /* translation_file.m4a */; };
@@ -62,6 +66,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A1BB84A2A5E7EC1008664D8 /* FilesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesVC.swift; sourceTree = "<group>"; };
+		6A1BB84C2A5E7FB3008664D8 /* FilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewModel.swift; sourceTree = "<group>"; };
+		6A1BB84E2A5EBFFD008664D8 /* samplefile.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = samplefile.rtf; sourceTree = "<group>"; };
+		6A1BB8502A5EC5B4008664D8 /* mj_test_dataset_2.jsonl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mj_test_dataset_2.jsonl; sourceTree = "<group>"; };
 		777D47282A53EA8F0050C0E7 /* chatgpt-ios-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "chatgpt-ios-sdk"; path = ..; sourceTree = "<group>"; };
 		777D472D2A53F7550050C0E7 /* english_song.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = english_song.m4a; sourceTree = "<group>"; };
 		777D472E2A53F7550050C0E7 /* translation_file.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = translation_file.m4a; sourceTree = "<group>"; };
@@ -129,6 +137,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A1BB8492A5E7EA7008664D8 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				6A1BB84A2A5E7EC1008664D8 /* FilesVC.swift */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
 		777D47292A53EA9D0050C0E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +223,7 @@
 		A8B860202A440BB9005FBEDE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6A1BB8492A5E7EA7008664D8 /* Files */,
 				A8EA016F2A57EA4F007DFADF /* Moderations */,
 				A8EA016E2A57EA36007DFADF /* Embedding */,
 				A8EA01692A56E3AE007DFADF /* Edit */,
@@ -232,6 +249,7 @@
 				A8EA016C2A56E5A5007DFADF /* EditTextViewModel.swift */,
 				A8EA01722A57EB7B007DFADF /* ModerationsViewModel.swift */,
 				A8EA01742A57EB8F007DFADF /* EmbeddingViewModel.swift */,
+				6A1BB84C2A5E7FB3008664D8 /* FilesViewModel.swift */,
 			);
 			path = ViewModles;
 			sourceTree = "<group>";
@@ -276,6 +294,8 @@
 		A8B860292A440CC0005FBEDE /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				6A1BB8502A5EC5B4008664D8 /* mj_test_dataset_2.jsonl */,
+				6A1BB84E2A5EBFFD008664D8 /* samplefile.rtf */,
 				777D472D2A53F7550050C0E7 /* english_song.m4a */,
 				777D472E2A53F7550050C0E7 /* translation_file.m4a */,
 				A8B85FD52A43131A005FBEDE /* Assets.xcassets */,
@@ -435,12 +455,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A1BB84F2A5EBFFD008664D8 /* samplefile.rtf in Resources */,
 				777D472F2A53F7560050C0E7 /* english_song.m4a in Resources */,
 				A8B8600A2A431AA6005FBEDE /* UserCell.xib in Resources */,
 				A8EA01682A56AB5D007DFADF /* pngwing.com.png in Resources */,
 				777D47302A53F7560050C0E7 /* translation_file.m4a in Resources */,
 				A8B85FD92A43131A005FBEDE /* LaunchScreen.storyboard in Resources */,
 				A8B860132A432135005FBEDE /* openai.svg in Resources */,
+				6A1BB8512A5EC5B4008664D8 /* mj_test_dataset_2.jsonl in Resources */,
 				A8B85FD62A43131A005FBEDE /* Assets.xcassets in Resources */,
 				A8B8600F2A431AA6005FBEDE /* AssistantCell.xib in Resources */,
 				A8B85FD42A431318005FBEDE /* Main.storyboard in Resources */,
@@ -474,6 +496,8 @@
 				A8EA01732A57EB7B007DFADF /* ModerationsViewModel.swift in Sources */,
 				A8B860342A44431C005FBEDE /* TextGenerationViewModel.swift in Sources */,
 				A8EA016D2A56E5A5007DFADF /* EditTextViewModel.swift in Sources */,
+				6A1BB84D2A5E7FB3008664D8 /* FilesViewModel.swift in Sources */,
+				6A1BB84B2A5E7EC1008664D8 /* FilesVC.swift in Sources */,
 				A8B8600B2A431AA6005FBEDE /* UserCell.swift in Sources */,
 				A8B860112A431AA6005FBEDE /* ImageWithTextViewController.swift in Sources */,
 				A8B85FD12A431318005FBEDE /* ViewController.swift in Sources */,
