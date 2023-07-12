@@ -8,34 +8,77 @@
 import UIKit
 
 class FilesVC: UIViewController {
-  let vm = FilesViewModel()
+   let vm = FilesViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        //self.getFiles()
+       // self.uploadFile()
+        
+    }
+    @IBAction func uploadFileButtonDidTab(sender: UIButton) {
+        self.uploadFile()
+    }
+    @IBAction func retrievedFileButtonDidTab(sender: UIButton) {
+        vm.retrievedFile(fileID: vm.fileID ?? "", completion: { [weak self] result in
+            switch result {
+            case.success:
+                print(self?.vm.models?.data.count ?? 0)
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+    @IBAction func retrievedFileContentButtonDidTab(sender: UIButton) {
+        vm.retrievedFileContent(fileID: vm.fileID ?? "", completion: { [weak self] result in
+            switch result {
+            case.success:
+                print(self?.vm.models?.data.count ?? 0)
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+    @IBAction func listFileButtonDidTab(sender: UIButton) {
         self.getFiles()
     }
-    
+    @IBAction func deleteFileButtonDidTab(sender: UIButton) {
+        vm.deleteFile(fileID: vm.fileID ?? "", completion: { [weak self] result in
+            switch result {
+            case.success:
+                print(self?.vm.models?.data.count ?? 0)
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
     func getFiles() {
         vm.getFilesList(completion: { [weak self] result in
             
             switch result {
             case.success:
-                print(self?.vm.model?.data.count ?? 0)
+                print(self?.vm.models?.data.count ?? 0)
             case.failure(let error):
                 print(error.localizedDescription)
             }
             
         })
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func uploadFile() {
+        if let fileURL = Bundle.main.url(forResource: "mj_test_dataset_2", withExtension: "jsonl") {
+            vm.uploadFile(fileURL: fileURL, purpose: "fine-tune", completion: { [weak self] result in
+                switch result {
+                case.success(_):
+                    print("fileName:\(String(describing: self?.vm.model?.filename))fileID:\(self?.vm.model?.id)")
+                    print(self?.vm.fileID ?? "")
+                case.failure(let error):
+                    print(error.localizedDescription)
+                }
+            })
+        }
+        
     }
-    */
+    
 
 }

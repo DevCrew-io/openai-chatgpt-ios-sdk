@@ -38,6 +38,9 @@ enum ChatGPTAPIEndpoint {
     case moderations
     case embeddings
     case files
+    case deleteFile(String)
+    case retrieveFile(String)
+    case retrieveFileContent(String)
 }
 
 extension ChatGPTAPIEndpoint {
@@ -47,8 +50,10 @@ extension ChatGPTAPIEndpoint {
         case .completion, .chat, .generateImage, .imageEdits, .imageVariations, .translations, .transcriptions, .moderations, .textEdit, .embeddings:
             return "POST"
             
-        case .modelsList, .retrievedModel, .files:
+        case .modelsList, .retrievedModel, .files, .retrieveFile, .retrieveFileContent:
             return "GET"
+        case.deleteFile:
+            return "DELETE"
         }
     }
     
@@ -80,6 +85,12 @@ extension ChatGPTAPIEndpoint {
             return URL(string: ChatGPTAPIEndpoint.baseURL + "/embeddings")!
         case.files:
             return URL(string: ChatGPTAPIEndpoint.baseURL + "/files")!
+        case.deleteFile(let fileID):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/files/\(fileID)")!
+        case.retrieveFile(let fileID):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/files/\(fileID)")!
+        case.retrieveFileContent(let fileID):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/files/\(fileID)/content")!
         }
     }
 }

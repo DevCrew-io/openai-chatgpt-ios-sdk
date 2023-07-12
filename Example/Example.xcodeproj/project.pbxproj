@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6A1BB84B2A5E7EC1008664D8 /* FilesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1BB84A2A5E7EC1008664D8 /* FilesVC.swift */; };
 		6A1BB84D2A5E7FB3008664D8 /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1BB84C2A5E7FB3008664D8 /* FilesViewModel.swift */; };
+		6A1BB84F2A5EBFFD008664D8 /* samplefile.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 6A1BB84E2A5EBFFD008664D8 /* samplefile.rtf */; };
+		6A1BB8512A5EC5B4008664D8 /* mj_test_dataset_2.jsonl in Resources */ = {isa = PBXBuildFile; fileRef = 6A1BB8502A5EC5B4008664D8 /* mj_test_dataset_2.jsonl */; };
 		777D472B2A53EA9D0050C0E7 /* ChatGPTAPIManager in Frameworks */ = {isa = PBXBuildFile; productRef = 777D472A2A53EA9D0050C0E7 /* ChatGPTAPIManager */; };
 		777D472F2A53F7560050C0E7 /* english_song.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 777D472D2A53F7550050C0E7 /* english_song.m4a */; };
 		777D47302A53F7560050C0E7 /* translation_file.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 777D472E2A53F7550050C0E7 /* translation_file.m4a */; };
@@ -66,6 +68,8 @@
 /* Begin PBXFileReference section */
 		6A1BB84A2A5E7EC1008664D8 /* FilesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesVC.swift; sourceTree = "<group>"; };
 		6A1BB84C2A5E7FB3008664D8 /* FilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewModel.swift; sourceTree = "<group>"; };
+		6A1BB84E2A5EBFFD008664D8 /* samplefile.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = samplefile.rtf; sourceTree = "<group>"; };
+		6A1BB8502A5EC5B4008664D8 /* mj_test_dataset_2.jsonl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mj_test_dataset_2.jsonl; sourceTree = "<group>"; };
 		777D47282A53EA8F0050C0E7 /* chatgpt-ios-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "chatgpt-ios-sdk"; path = ..; sourceTree = "<group>"; };
 		777D472D2A53F7550050C0E7 /* english_song.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = english_song.m4a; sourceTree = "<group>"; };
 		777D472E2A53F7550050C0E7 /* translation_file.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = translation_file.m4a; sourceTree = "<group>"; };
@@ -290,6 +294,8 @@
 		A8B860292A440CC0005FBEDE /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				6A1BB8502A5EC5B4008664D8 /* mj_test_dataset_2.jsonl */,
+				6A1BB84E2A5EBFFD008664D8 /* samplefile.rtf */,
 				777D472D2A53F7550050C0E7 /* english_song.m4a */,
 				777D472E2A53F7550050C0E7 /* translation_file.m4a */,
 				A8B85FD52A43131A005FBEDE /* Assets.xcassets */,
@@ -449,12 +455,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A1BB84F2A5EBFFD008664D8 /* samplefile.rtf in Resources */,
 				777D472F2A53F7560050C0E7 /* english_song.m4a in Resources */,
 				A8B8600A2A431AA6005FBEDE /* UserCell.xib in Resources */,
 				A8EA01682A56AB5D007DFADF /* pngwing.com.png in Resources */,
 				777D47302A53F7560050C0E7 /* translation_file.m4a in Resources */,
 				A8B85FD92A43131A005FBEDE /* LaunchScreen.storyboard in Resources */,
 				A8B860132A432135005FBEDE /* openai.svg in Resources */,
+				6A1BB8512A5EC5B4008664D8 /* mj_test_dataset_2.jsonl in Resources */,
 				A8B85FD62A43131A005FBEDE /* Assets.xcassets in Resources */,
 				A8B8600F2A431AA6005FBEDE /* AssistantCell.xib in Resources */,
 				A8B85FD42A431318005FBEDE /* Main.storyboard in Resources */,

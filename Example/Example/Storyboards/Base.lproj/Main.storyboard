@@ -676,18 +676,95 @@
                     <view key="view" contentMode="scaleToFill" id="t1Y-Xc-GtT">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p0c-xu-DsW">
+                                <rect key="frame" x="10" y="109" width="410" height="35"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Upload File">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="uploadFileButtonDidTabWithSender:" destination="Gfy-TW-AXN" eventType="touchUpInside" id="d4C-Zi-1ef"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ka0-87-np4">
+                                <rect key="frame" x="10" y="154" width="410" height="35"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Retrieve File">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="retrievedFileButtonDidTabWithSender:" destination="Gfy-TW-AXN" eventType="touchUpInside" id="cXq-FF-uO8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucB-nu-y7H">
+                                <rect key="frame" x="10" y="199" width="410" height="35"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Reterive File Content">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="retrievedFileContentButtonDidTabWithSender:" destination="Gfy-TW-AXN" eventType="touchUpInside" id="4Cr-ok-zHR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5yd-om-hmo">
+                                <rect key="frame" x="10" y="244" width="410" height="35"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="List Files">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="listFileButtonDidTabWithSender:" destination="Gfy-TW-AXN" eventType="touchUpInside" id="Gcb-tx-KUc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GDI-ZW-IsQ">
+                                <rect key="frame" x="10" y="289" width="410" height="35"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Delete File">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="deleteFileButtonDidTabWithSender:" destination="Gfy-TW-AXN" eventType="touchUpInside" id="qjX-bd-YlV"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Pmj-bW-pa0"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="5yd-om-hmo" firstAttribute="top" secondItem="ucB-nu-y7H" secondAttribute="bottom" constant="10" id="1RZ-gv-H6U"/>
+                            <constraint firstItem="p0c-xu-DsW" firstAttribute="top" secondItem="Pmj-bW-pa0" secondAttribute="top" constant="50" id="1mj-QW-KvY"/>
+                            <constraint firstItem="Pmj-bW-pa0" firstAttribute="trailing" secondItem="p0c-xu-DsW" secondAttribute="trailing" constant="10" id="7PO-oN-Hdg"/>
+                            <constraint firstItem="5yd-om-hmo" firstAttribute="leading" secondItem="Pmj-bW-pa0" secondAttribute="leading" constant="10" id="Nfo-wQ-2rv"/>
+                            <constraint firstItem="Pmj-bW-pa0" firstAttribute="trailing" secondItem="Ka0-87-np4" secondAttribute="trailing" constant="10" id="Nny-50-IYZ"/>
+                            <constraint firstItem="GDI-ZW-IsQ" firstAttribute="top" secondItem="5yd-om-hmo" secondAttribute="bottom" constant="10" id="Ubb-Xc-nL4"/>
+                            <constraint firstItem="ucB-nu-y7H" firstAttribute="top" secondItem="Ka0-87-np4" secondAttribute="bottom" constant="10" id="cgV-Wy-rCf"/>
+                            <constraint firstItem="ucB-nu-y7H" firstAttribute="leading" secondItem="Pmj-bW-pa0" secondAttribute="leading" constant="10" id="fY5-wl-T5c"/>
+                            <constraint firstItem="GDI-ZW-IsQ" firstAttribute="leading" secondItem="Pmj-bW-pa0" secondAttribute="leading" constant="10" id="gwg-4D-Be0"/>
+                            <constraint firstItem="p0c-xu-DsW" firstAttribute="leading" secondItem="Pmj-bW-pa0" secondAttribute="leading" constant="10" id="hRo-bN-pvX"/>
+                            <constraint firstItem="Ka0-87-np4" firstAttribute="top" secondItem="p0c-xu-DsW" secondAttribute="bottom" constant="10" id="iox-De-5e3"/>
+                            <constraint firstItem="Pmj-bW-pa0" firstAttribute="trailing" secondItem="5yd-om-hmo" secondAttribute="trailing" constant="10" id="j1o-gm-DdK"/>
+                            <constraint firstItem="Pmj-bW-pa0" firstAttribute="trailing" secondItem="GDI-ZW-IsQ" secondAttribute="trailing" constant="10" id="mpk-C8-06b"/>
+                            <constraint firstItem="Pmj-bW-pa0" firstAttribute="trailing" secondItem="ucB-nu-y7H" secondAttribute="trailing" constant="10" id="rta-Bo-zdz"/>
+                            <constraint firstItem="Ka0-87-np4" firstAttribute="leading" secondItem="Pmj-bW-pa0" secondAttribute="leading" constant="10" id="wOl-Ck-RbP"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mUi-Ru-M8o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6272" y="4"/>
+            <point key="canvasLocation" x="6270.6976744186049" y="3.8626609442060089"/>
         </scene>
     </scenes>
     <resources>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -179,14 +179,142 @@ final public class ChatGPTAPIManager {
     /// Retrieves a list of files from the OpenAI API.
     ///
     /// - Parameter completion: A closure to be called when the API call is complete. It provides a `Result` object that represents either the retrieved data or an error.
-    public  func getFilesList(completion: @escaping (Result<FielsModel, Error>) -> Void) {
+    public  func getFilesList(completion: @escaping (Result<FilesModel, Error>) -> Void) {
         self.getFiles(endPoint: .files, completion: completion)
     }
     
+    ///    This function is used to make a file request using the provided parameters.
+    
+    ///    - Parameters:
+    ///      - fileUrl: The URL of the file to be requested.
+    ///     - purpose: The purpose or description of the file request.
+    ///      - endPoint: The endpoint or URL where the file request should be sent.
+    ///     - completion: A closure that takes a Result type as input, indicating the success or failure of the file request operation.
     
     
+    public func fileRequest(fileUrl: URL, purpose: String, completion: @escaping (Result<FileModel, Error>) -> Void) {
+        self.sendFileRequest(fileUrl: fileUrl, purpose: purpose, endPoint: .files, completion: completion)
+    }
+    
+   
+    /// Deletes a file with the specified file ID from the OpenAI API.
+
+   ///  - Parameters:
+     ///   - fileID: The ID of the file to delete.
+     ///   - completion: A completion handler called when the deletion is complete. The handler takes a `Result` object as its parameter. If the deletion is successful, the `Result` object will contain `Void`. If an error occurs, the `Result` object will contain the corresponding `Error`.
+
+
+   public func deleteFile(fileID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+       
+       let url = ChatGPTAPIEndpoint.deleteFile(fileID)
+       self.deleteFileRequest(endPoint: url, completion: completion)
+    }
+
+    /// Retrieves   file from the API.
+    ///
+    /// - Parameters:
+    ///   - fileID: file   id to retrieve
+    ///   - completion: A completion handler that receives the result of the API request.
+    ///                 The result will either contain  model of type `FilesModel` on success,
+    ///                 or an error on failure.
+    ///
+    
+    public func retrieveFile(fileID: String, completion: @escaping (Result<FileModel, Error>) -> Void) {
+        self.retrieveFileRequest(endPoint: .retrieveFile(fileID), completion: completion)
+    }
+    
+    /// Retrieves   file content from the API.
+    ///
+    /// - Parameters:
+    ///   - fileID: file   id to retrieve content
+    ///   - completion: A completion handler that receives the result of the API request.
+    ///
+    ///
+    
+    public func retrieveFileContent(fileID: String, completion: @escaping (Result<Data, Error>) -> Void) {
+        self.retrieveFileContentRequest(endPoint: .retrieveFileContent(fileID), completion: completion)
+    }
     // MARK: - Private Functions -
-    private func getFiles(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FielsModel, Error>) -> Void) {
+    private func deleteFileRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FileParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let fileID):
+                        print(fileID)
+                        completion(.success(true))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func retrieveFileContentRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<Data, Error>) -> Void) {
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                completion(.success(data))
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func retrieveFileRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FileModel, Error>) -> Void) {
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FileParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let files):
+                        
+                        completion(.success(files))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func getFiles(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FilesModel, Error>) -> Void) {
         
         let requestBuilder = GetRequestBuilder()
         guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
@@ -218,7 +346,50 @@ final public class ChatGPTAPIManager {
             
         }
     }
-    
+    private func sendFileRequest(fileUrl: URL, purpose: String, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FileModel, Error>) -> Void) {
+        
+        // Define the key-value pairs
+        let parameters: [String: Any] = [
+            "purpose": purpose
+        ]
+
+        let filenName = fileUrl.lastPathComponent
+               let fileData: Data
+               do {
+                   fileData = try Data(contentsOf: fileUrl)
+               } catch {
+                   completion(.failure(NetworkError.invalidURL))
+                   return
+               }
+        
+        guard let request = self.createMultiPartRequest(data: [fileData], fileNames: [filenName], params: parameters, name: "file", contentType: "application/octet-stream", endPoint: endPoint) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                let parser = FileParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let fileObject):
+                        
+                        completion(.success(fileObject))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                    
+                })
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
+    }
     private  func textEditsRequest(endPoint: ChatGPTAPIEndpoint, model: EditGPTModels, input: String?, instruction: String, n: Int, temperature: Double, topP: Double, completion: @escaping (Result<[String],Error>) -> Void) {
         
         var parameters: [String: Any] = [
