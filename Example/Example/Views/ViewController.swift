@@ -53,5 +53,9 @@ class ViewController: UIViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ModerationVC") as! ModerationVC
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    @IBAction func filesDidTab(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FilesVC") as! FilesVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 

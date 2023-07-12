@@ -140,7 +140,7 @@ final public class ChatGPTAPIManager {
     public func audioTranslationRequest(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: AudioGPTModels = .whisper1, completion: @escaping (Result<String, Error>) -> Void) {
         self.audioTranslation(fileUrl: fileUrl,prompt: prompt, temperature: temperature, model: model, endPoint: .translations, completion: completion)
     }
-       
+    
     ///  Endpoint for generating edits.
     ///
     /// - Parameters:
@@ -154,7 +154,7 @@ final public class ChatGPTAPIManager {
     public func createEditsRequest(model: EditGPTModels = .textDavinciEdit001, input: String? = nil, instruction: String, n: Int = 1, temperature: Double = 1.0, topP: Double = 1.0, completion: @escaping (Result<[String],Error>) -> Void) {
         self.textEditsRequest(endPoint: .textEdit, model: model, input: input, instruction: instruction, n: n, temperature: temperature, topP: topP, completion: completion)
     }
-
+    
     /// Requests text moderations based on the provided parameters.
     ///
     /// - Parameters:
@@ -174,47 +174,89 @@ final public class ChatGPTAPIManager {
     public  func createEmbeddingsRequest(input: String, user: String? = nil, model: EmbeddingGPTModels = .textEmbeddingAda002, completion: @escaping (Result<EmbeddingModel,Error>) -> Void) {
         self.embeddingsRequest(input: input, model: model, endPoint: .embeddings, completion: completion)
     }
-
+    
+    
+    /// Retrieves a list of files from the OpenAI API.
+    ///
+    /// - Parameter completion: A closure to be called when the API call is complete. It provides a `Result` object that represents either the retrieved data or an error.
+    public  func getFilesList(completion: @escaping (Result<FielsModel, Error>) -> Void) {
+        self.getFiles(endPoint: .files, completion: completion)
+    }
+    
+    
     
     // MARK: - Private Functions -
+    private func getFiles(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FielsModel, Error>) -> Void) {
+        
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FilesParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let files):
+                        
+                        completion(.success(files))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    
     private  func textEditsRequest(endPoint: ChatGPTAPIEndpoint, model: EditGPTModels, input: String?, instruction: String, n: Int, temperature: Double, topP: Double, completion: @escaping (Result<[String],Error>) -> Void) {
         
-       var parameters: [String: Any] = [
-           "instruction":instruction,
-           "model": model.rawValue,
-           "n":n,
-           "temperature":temperature,
-           "top_p":topP
-       ]
+        var parameters: [String: Any] = [
+            "instruction":instruction,
+            "model": model.rawValue,
+            "n":n,
+            "temperature":temperature,
+            "top_p":topP
+        ]
         if let input = input {
             parameters["input"] = input
         }
-       let requestBuilder = DefaultRequestBuilder()
-       guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
-           completion(.failure(NetworkError.invalidURL))
-           return
-       }
-       
-       self.performDataTask(with: request) { result in
-           
-           switch result {
-           case.success(let data):
-               let parser = TextCompletionResponseParser()
-               parser.parseResponse(data: data, completion: { result in
-                   
-                   switch result {
-                   case.success(let succesString):
-                      
-                       completion(.success(succesString))
-                       
-                   case.failure(let error):
-                       completion(.failure(error))
-                   }
-               })
-           case.failure(let error):
-               completion(.failure(error))
-           }
-       }
+        let requestBuilder = DefaultRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                let parser = TextCompletionResponseParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let succesString):
+                        
+                        completion(.success(succesString))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     private func retrieveSingleModel(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<ChatGPTModel, Error>) -> Void) {
         let requestBuilder = GetRequestBuilder()
@@ -617,43 +659,43 @@ final public class ChatGPTAPIManager {
         }
         
     }
-   private func embeddingsRequest(input: String, user: String? = nil, model: EmbeddingGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<EmbeddingModel,Error>) -> Void) {
-       
-       var parameters: [String: Any] = [
-           "input": input,
-           "model": model.rawValue
-       ]
-       if let user = user {
-           parameters["user"] = user
-       }
-       let requestBuilder = DefaultRequestBuilder()
-       guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
-           completion(.failure(NetworkError.invalidURL))
-           return
-       }
-       
-       self.performDataTask(with: request) { result in
-           
-           switch result {
-           case.success(let data):
-               
-               do {
-                   // Parse the JSON response into an array of type T
-                   let models = try JSONDecoder().decode(EmbeddingModel.self, from: data)
-                   completion(.success(models))
-               } catch {
-                   // Error occurred during decoding, return failure in completion handler
-                   completion(.failure(error))
-               }
-               
-           case.failure(let error):
-               completion(.failure(error))
-           }
-           
-       }
+    private func embeddingsRequest(input: String, user: String? = nil, model: EmbeddingGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<EmbeddingModel,Error>) -> Void) {
+        
+        var parameters: [String: Any] = [
+            "input": input,
+            "model": model.rawValue
+        ]
+        if let user = user {
+            parameters["user"] = user
+        }
+        let requestBuilder = DefaultRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                do {
+                    // Parse the JSON response into an array of type T
+                    let models = try JSONDecoder().decode(EmbeddingModel.self, from: data)
+                    completion(.success(models))
+                } catch {
+                    // Error occurred during decoding, return failure in completion handler
+                    completion(.failure(error))
+                }
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
     }
     private func moderations(input: String, model: ModerationGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<ModerationsModel, Error>) -> Void)  {
-                
+        
         let parameters: [String: Any] = [
             "input": input,
             "model": model.rawValue

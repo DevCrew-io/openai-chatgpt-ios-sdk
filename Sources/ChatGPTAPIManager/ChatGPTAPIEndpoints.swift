@@ -37,6 +37,7 @@ enum ChatGPTAPIEndpoint {
     case retrievedModel(String)
     case moderations
     case embeddings
+    case files
 }
 
 extension ChatGPTAPIEndpoint {
@@ -46,7 +47,7 @@ extension ChatGPTAPIEndpoint {
         case .completion, .chat, .generateImage, .imageEdits, .imageVariations, .translations, .transcriptions, .moderations, .textEdit, .embeddings:
             return "POST"
             
-        case .modelsList, .retrievedModel:
+        case .modelsList, .retrievedModel, .files:
             return "GET"
         }
     }
@@ -77,6 +78,8 @@ extension ChatGPTAPIEndpoint {
             return URL(string: ChatGPTAPIEndpoint.baseURL + "/moderations")!
         case .embeddings:
             return URL(string: ChatGPTAPIEndpoint.baseURL + "/embeddings")!
+        case.files:
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/files")!
         }
     }
 }
