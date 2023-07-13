@@ -37,17 +37,30 @@ enum ChatGPTAPIEndpoint {
     case retrievedModel(String)
     case moderations
     case embeddings
+    case files
+    case deleteFile(String)
+    case retrieveFile(String)
+    case retrieveFileContent(String)
+    case fineTunes
+    case retrieveFineTune(String)
+    case cancelFineTune(String)
+    case listFineTuneEvents(String)
+    case deleteFineTuneModel(String)
+
 }
 
 extension ChatGPTAPIEndpoint {
     
     var method: String {
         switch self {
-        case .completion, .chat, .generateImage, .imageEdits, .imageVariations, .translations, .transcriptions, .moderations, .textEdit, .embeddings:
+        case .completion, .chat, .generateImage, .imageEdits, .imageVariations, .translations, .transcriptions, .moderations, .textEdit, .embeddings, .fineTunes, .cancelFineTune:
             return "POST"
-            
-        case .modelsList, .retrievedModel:
+        
+        case .modelsList, .retrievedModel, .files, .retrieveFile, .retrieveFileContent, .retrieveFineTune, .listFineTuneEvents:
             return "GET"
+        case.deleteFile, .deleteFineTuneModel:
+            return "DELETE"
+
         }
     }
     
@@ -77,6 +90,25 @@ extension ChatGPTAPIEndpoint {
             return URL(string: ChatGPTAPIEndpoint.baseURL + "/moderations")!
         case .embeddings:
             return URL(string: ChatGPTAPIEndpoint.baseURL + "/embeddings")!
+        case.files:
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/files")!
+        case.deleteFile(let fileID):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/files/\(fileID)")!
+        case.retrieveFile(let fileID):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/files/\(fileID)")!
+        case.retrieveFileContent(let fileID):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/files/\(fileID)/content")!
+        case.fineTunes:
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/fine-tunes")!
+        case.retrieveFineTune(let id):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/fine-tunes/\(id)")!
+        case.cancelFineTune(let id):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/fine-tunes/\(id)/cancel")!
+        case.listFineTuneEvents(let id):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/fine-tunes/\(id)/events")!
+        case.deleteFineTuneModel(let model):
+            return URL(string: ChatGPTAPIEndpoint.baseURL + "/models-tunes/\(model)")!
+
         }
     }
 }

@@ -175,8 +175,562 @@ final public class ChatGPTAPIManager {
         self.embeddingsRequest(input: input, model: model, endPoint: .embeddings, completion: completion)
     }
 
+
     
+    /// Retrieves a list of files from the OpenAI API.
+    ///
+    /// - Parameter completion: A closure to be called when the API call is complete. It provides a `Result` object that represents either the retrieved data or an error.
+    public  func getFilesList(completion: @escaping (Result<FilesModel, Error>) -> Void) {
+        self.getFiles(endPoint: .files, completion: completion)
+    }
+    
+    ///    This function is used to make a file request using the provided parameters.
+    
+    ///    - Parameters:
+    ///      - fileUrl: The URL of the file to be requested.
+    ///     - purpose: The purpose or description of the file request.
+    ///      - endPoint: The endpoint or URL where the file request should be sent.
+    ///     - completion: A closure that takes a Result type as input, indicating the success or failure of the file request operation.
+    
+    
+    public func fileRequest(fileUrl: URL, purpose: String, completion: @escaping (Result<FileModel, Error>) -> Void) {
+        self.sendFileRequest(fileUrl: fileUrl, purpose: purpose, endPoint: .files, completion: completion)
+    }
+    
+   
+    /// Deletes a file with the specified file ID from the OpenAI API.
+    
+    ///  - Parameters:
+    ///   - fileID: The ID of the file to delete.
+    ///   - completion: A completion handler called when the deletion is complete. The handler takes a `Result` object as its parameter. If the deletion is successful, the `Result` object will contain `Void`. If an error occurs, the `Result` object will contain the corresponding `Error`.
+    
+    
+    public func deleteFile(fileID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        
+        let url = ChatGPTAPIEndpoint.deleteFile(fileID)
+        self.deleteFileRequest(endPoint: url, completion: completion)
+    }
+
+    /// Retrieves   file from the API.
+    ///
+    /// - Parameters:
+    ///   - fileID: file   id to retrieve
+    ///   - completion: A completion handler that receives the result of the API request.
+    ///                 The result will either contain  model of type `FilesModel` on success,
+    ///                 or an error on failure.
+    ///
+    
+    public func retrieveFile(fileID: String, completion: @escaping (Result<FileModel, Error>) -> Void) {
+        self.retrieveFileRequest(endPoint: .retrieveFile(fileID), completion: completion)
+    }
+    
+    /// Retrieves   file content from the API.
+    ///
+    /// - Parameters:
+    ///   - fileID: file   id to retrieve content
+    ///   - completion: A completion handler that receives the result of the API request.
+    ///
+    ///
+    
+    public func retrieveFileContent(fileID: String, completion: @escaping (Result<Data, Error>) -> Void) {
+        self.retrieveFileContentRequest(endPoint: .retrieveFileContent(fileID), completion: completion)
+    }
+    
+    /**
+     Fine-tunes a model using the specified training and validation files, along with other optional parameters.
+
+     - Parameters:
+        - trainingFileID: The ID of the uploaded file containing the training data.
+        - validationFileID: The ID of the uploaded file containing the validation data (optional).
+        - model: The name of the base model to fine-tune (optional). Defaults to "curie".
+        - nEpochs: The number of epochs to train the model for (optional). Defaults to 4.
+        - batchSize: The batch size to use for training (optional).
+        - learningRateMultiplier: The learning rate multiplier to use for training (optional).
+        - promptLossWeight: The weight to use for loss on the prompt tokens (optional).
+        - computeClassificationMetrics: Specifies whether to calculate classification-specific metrics (optional). Defaults to `false`.
+        - classificationNClasses: The number of classes in a classification task (optional).
+        - classificationPositiveClass: The positive class in binary classification (optional).
+        - classificationBetas: The beta values for calculating F-beta scores (optional).
+        - suffix: A string to be added to the fine-tuned model name (optional).
+        - completion: A completion handler called when the fine-tuning is complete. The handler takes a `Result` object as its parameter. If the fine-tuning is successful, the `Result` object will contain `Void`. If an error occurs, the `Result` object will contain the corresponding `Error`.
+     */
+   public func fineTuneModel(trainingFileID: String,
+                       validationFileID: String?,
+                       model: String?,
+                       nEpochs: Int?,
+                       batchSize: Int?,
+                       learningRateMultiplier: Double?,
+                       promptLossWeight: Double?,
+                       computeClassificationMetrics: Bool?,
+                       classificationNClasses: Int?,
+                       classificationPositiveClass: String?,
+                       classificationBetas: [Double]?,
+                       suffix: String?,
+                       completion: @escaping (Result<FineTuneModel, Error>) -> Void) {
+       self.fineTuneModelRequest(trainingFileID: trainingFileID, validationFileID: validationFileID, model: model, nEpochs: nEpochs, batchSize: batchSize, learningRateMultiplier: learningRateMultiplier, promptLossWeight: promptLossWeight, computeClassificationMetrics: computeClassificationMetrics, classificationNClasses: classificationNClasses, classificationPositiveClass: classificationPositiveClass, classificationBetas: classificationBetas, suffix: suffix, endPoint: .fineTunes, completion: completion)
+    }
+
+    /// Retrieves a list of fine tunes from the OpenAI API.
+    ///
+    /// - Parameter completion: A closure to be called when the API call is complete. It provides a `Result` object that represents either the retrieved data or an error.
+    public  func getFineTunesList(completion: @escaping (Result<FineTuneResponse, Error>) -> Void) {
+        self.getFineTuneListRequest(endPoint: .fineTunes, completion: completion)
+    }
+    
+    /// Retrieves   Fine Tune from the API.
+    ///
+    /// - Parameters:
+    ///   - fineTuneID: Fine-Tune    id to retrieve
+    ///   - completion: A completion handler that receives the result of the API request.
+    ///                 The result will either contain  model of type `FineTuneModel` on success,
+    ///                 or an error on failure.
+    ///
+    
+    public func retrieveFineTune(fineTuneID: String, completion: @escaping (Result<FineTuneModel, Error>) -> Void) {
+        self.retrieveFineTuneRequest(endPoint: .retrieveFineTune(fineTuneID), completion: completion)
+    }
+    
+    /// Immediately cancel a fine-tune job.
+    ///
+    /// - Parameters:
+    ///   - fineTuneID: The ID of the fine-tune job to cancel
+    ///   - completion: A completion handler that receives the result of the API request.
+    ///                 The result will either contain  model of type `FineTuneModel` on success,
+    ///                 or an error on failure.
+    ///
+    
+    public func cancelFineTune(fineTuneID: String, completion: @escaping (Result<FineTuneModel, Error>) -> Void) {
+        self.cancelFineTuneRequest(endPoint: .cancelFineTune(fineTuneID), completion: completion)
+    }
+    
+    
+
+    /// Retrieves fine-tune events for a specific fine-tune job.
+    /// - Parameters:
+    ///   - fineTuneID: The ID of the fine-tune job to get events for.
+    ///   - streaming: Whether to stream events for the fine-tune job. If set to `true`, events will be sent as data-only server-sent events as they become available. The stream will terminate with a `data: [DONE]` message when the job is finished (succeeded, cancelled, or failed). If set to `false`, only events generated so far will be returned. Default is `false`.
+    ///   - completion: The completion handler that is called when the request is complete. It contains a `Result` object that represents either the retrieved data or an error if the request fails.
+  public  func getFineTuneEvents(fineTuneID: String, streaming: Bool = false, completion: @escaping (Result<FineTuneEventsParser, Error>) -> Void) {
+
+    }
+
+    
+    
+    /// Delete a fine-tuned model. You must have the Owner role in your organization
+    
+    ///  - Parameters:
+    ///   - model: The model to delete.
+    ///   - completion: A completion handler called when the deletion is complete. The handler takes a `Result` object as its parameter. If the deletion is successful, the `Result` object will contain `Void`. If an error occurs, the `Result` object will contain the corresponding `Error`.
+    
+    
+    public func deleteFineTune(model: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        
+        self.deleteFineTuneRequest(endPoint: .deleteFineTuneModel(model), completion: completion)
+    }
     // MARK: - Private Functions -
+    
+   private func fineTuneModelRequest(trainingFileID: String,
+                       validationFileID: String?,
+                       model: String?,
+                       nEpochs: Int?,
+                       batchSize: Int?,
+                       learningRateMultiplier: Double?,
+                       promptLossWeight: Double?,
+                       computeClassificationMetrics: Bool?,
+                       classificationNClasses: Int?,
+                       classificationPositiveClass: String?,
+                       classificationBetas: [Double]?,
+                       suffix: String?,
+                       endPoint:ChatGPTAPIEndpoint,
+                       completion: @escaping (Result<FineTuneModel, Error>) -> Void) {
+
+
+        var parameters: [String: Any] = [
+            "training_file": trainingFileID
+        ]
+
+        if let validationFileID = validationFileID {
+            parameters["validation_file"] = validationFileID
+        }
+
+        if let model = model {
+            parameters["model"] = model
+        }
+
+        if let nEpochs = nEpochs {
+            parameters["n_epochs"] = nEpochs
+        }
+
+        if let batchSize = batchSize {
+            parameters["batch_size"] = batchSize
+        }
+
+        if let learningRateMultiplier = learningRateMultiplier {
+            parameters["learning_rate_multiplier"] = learningRateMultiplier
+        }
+
+        if let promptLossWeight = promptLossWeight {
+            parameters["prompt_loss_weight"] = promptLossWeight
+        }
+
+        if let computeClassificationMetrics = computeClassificationMetrics {
+            parameters["compute_classification_metrics"] = computeClassificationMetrics
+        }
+
+        if let classificationNClasses = classificationNClasses {
+            parameters["classification_n_classes"] = classificationNClasses
+        }
+
+        if let classificationPositiveClass = classificationPositiveClass {
+            parameters["classification_positive_class"] = classificationPositiveClass
+        }
+
+        if let classificationBetas = classificationBetas {
+            parameters["classification_betas"] = classificationBetas
+        }
+
+        if let suffix = suffix {
+            parameters["suffix"] = suffix
+        }
+
+       let requestBuilder = DefaultRequestBuilder()
+       guard let request = requestBuilder.buildRequest(params: parameters, endPoint: endPoint, apiKey: apiKey) else {
+           completion(.failure(NetworkError.invalidURL))
+           return
+       }
+       
+       self.performDataTask(with: request) { result in
+           
+           switch result {
+           case.success(let data):
+               let parser = FineTuneParser()
+               parser.parseResponse(data: data, completion: { result in
+                   
+                   switch result {
+                   case.success(let fineTuneObject):
+                       completion(.success(fineTuneObject))
+                       
+                   case.failure(let error):
+                       completion(.failure(error))
+                   }
+                   
+               })
+           case.failure(let error):
+               completion(.failure(error))
+           }
+       }
+    }
+
+    private func getFineTuneListRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FineTuneResponse, Error>) -> Void) {
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FilesParser()
+                
+                parser.parseResponse(data: data, completion: { (result: Result<FineTuneResponse, Error>) in
+                    switch result {
+                    case.success(let files):
+                        completion(.success(files))
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func retrieveFineTuneRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FineTuneModel, Error>) -> Void) {
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FilesParser()
+                parser.parseResponse(data: data, completion: { (result:Result<FineTuneModel,Error>) in
+                    
+                    switch result {
+                    case.success(let files):
+                        
+                        completion(.success(files))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func cancelFineTuneRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FineTuneModel, Error>) -> Void) {
+        let requestBuilder = DefaultRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FilesParser()
+                parser.parseResponse(data: data, completion: { (result:Result<FineTuneModel,Error>) in
+                    
+                    switch result {
+                    case.success(let files):
+                        
+                        completion(.success(files))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func fineTuneEventsRequest(endPoint: ChatGPTAPIEndpoint, streaming: Bool, completion: @escaping (Result<FineTuneEventsParser, Error>) -> Void) {
+
+        let requestBuilder = GetRequestWithQueryParameters()
+        var param: [String:Any] = ["stream":streaming]
+        guard let request = requestBuilder.buildRequest(params: param, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FilesParser()
+                parser.parseResponse(data: data, completion: { (result: Result<FineTuneEventsParser,Error>) in
+                    
+                    switch result {
+                    case.success(let events):
+                        completion(.success(events))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func deleteFineTuneRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let requestBuilder = DeleteRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = DeleteFineTuneParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let fileID):
+                        print(fileID)
+                        completion(.success(true))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    
+    private func deleteFileRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let requestBuilder = DeleteRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FileParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let fileID):
+                        print(fileID)
+                        completion(.success(true))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func retrieveFileContentRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<Data, Error>) -> Void) {
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                completion(.success(data))
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func retrieveFileRequest(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FileModel, Error>) -> Void) {
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FileParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let files):
+                        
+                        completion(.success(files))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func getFiles(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FilesModel, Error>) -> Void) {
+        
+        let requestBuilder = GetRequestBuilder()
+        guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                
+                let parser = FilesParser()
+                
+                parser.parseResponse(data: data, completion: { (result: Result<FilesModel, Error>) in
+                    
+                    switch result {
+                    case.success(let files):
+                        
+                        completion(.success(files))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+                
+                
+            case.failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
+    }
+    private func sendFileRequest(fileUrl: URL, purpose: String, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<FileModel, Error>) -> Void) {
+        
+        // Define the key-value pairs
+        let parameters: [String: Any] = [
+            "purpose": purpose
+        ]
+
+        let filenName = fileUrl.lastPathComponent
+               let fileData: Data
+               do {
+                   fileData = try Data(contentsOf: fileUrl)
+               } catch {
+                   completion(.failure(NetworkError.invalidURL))
+                   return
+               }
+        
+        guard let request = self.createMultiPartRequest(data: [fileData], fileNames: [filenName], params: parameters, name: "file", contentType: "application/octet-stream", endPoint: endPoint) else {
+            completion(.failure(NetworkError.invalidURL))
+            return
+        }
+        
+        self.performDataTask(with: request) { result in
+            
+            switch result {
+            case.success(let data):
+                let parser = FileParser()
+                parser.parseResponse(data: data, completion: { result in
+                    
+                    switch result {
+                    case.success(let fileObject):
+                        
+                        completion(.success(fileObject))
+                        
+                    case.failure(let error):
+                        completion(.failure(error))
+                    }
+                    
+                })
+            case.failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
+    }
+
     private  func textEditsRequest(endPoint: ChatGPTAPIEndpoint, model: EditGPTModels, input: String?, instruction: String, n: Int, temperature: Double, topP: Double, completion: @escaping (Result<[String],Error>) -> Void) {
         
        var parameters: [String: Any] = [

@@ -10,7 +10,7 @@ class AudioParser: APIResponseParcer {
     
     /// Parse the response data for generating an image.
     /// - Parameter data: The response data from the API.
-    /// - Returns: The parsed image URL.
+    /// - Returns: The  text.
     /// - Throws: An error if the response cannot be parsed.
     func parseResponse(data: Data,completion: @escaping(Result<String,Error>)->Void) {
         do {
