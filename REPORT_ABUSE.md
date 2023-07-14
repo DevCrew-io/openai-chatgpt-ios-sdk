@@ -36,7 +36,7 @@ Once a report is received, we will:
 
 ## Code of Conduct
 
-Our repository operates under the guidelines outlined in our Code of Conduct. We expect all contributors to adhere to these guidelines, which promote respect, inclusivity, and professionalism. You can find the Code of Conduct at [link to the Code of Conduct file or external document].
+Our repository operates under the guidelines outlined in our Code of Conduct. We expect all contributors to adhere to these guidelines, which promote respect, inclusivity, and professionalism. You can find the Code of Conduct at [https://github.com/DevCrew-io/chatgpt-ios-sdk/blob/feat/fine-tune/CODE_OF_CONDUCT.md].
 
 ## Support
 
