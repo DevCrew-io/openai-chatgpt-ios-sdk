@@ -10,7 +10,7 @@ To report abuse, please follow these steps:
 
 2. **Choose Reporting Method**:
    - Public Report: If you feel comfortable, you can report the abuse by creating a new issue in this repository. Make sure to use the appropriate issue template and provide as much information as possible.
-   - Private Report: If you prefer to report privately, you can reach out to our designated abuse reporting team via [email address or contact form]. Your report will be handled confidentially.
+   - Private Report: If you prefer to report privately, you can reach out to our designated abuse reporting team via hello@devcrew.io. Your report will be handled confidentially.
 
 3. **Provide Details**: In your report, include the following information:
    - Date and time of the incident.
@@ -36,7 +36,7 @@ Once a report is received, we will:
 
 ## Code of Conduct
 
-Our repository operates under the guidelines outlined in our Code of Conduct. We expect all contributors to adhere to these guidelines, which promote respect, inclusivity, and professionalism. You can find the Code of Conduct at https://github.com/DevCrew-io/chatgpt-ios-sdk/blob/feat/fine-tune/CODE_OF_CONDUCT.md.
+Our repository operates under the guidelines outlined in our Code of Conduct. We expect all contributors to adhere to these guidelines, which promote respect, inclusivity, and professionalism. You can find the Code of Conduct at [CODE_OF_CONDUCT](https://github.com/DevCrew-io/chatgpt-ios-sdk/blob/feat/fine-tune/CODE_OF_CONDUCT.md).
 
 ## Support
 
