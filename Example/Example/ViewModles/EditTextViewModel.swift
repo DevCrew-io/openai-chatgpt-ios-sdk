@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class EditTextViewModelViewModel {
     
@@ -21,7 +21,7 @@ class EditTextViewModelViewModel {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.createEditsRequest(input: inputText,instruction: instructionText) { result in
+        OpenAIAPIManager.shared.createEditsRequest(input: inputText,instruction: instructionText) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

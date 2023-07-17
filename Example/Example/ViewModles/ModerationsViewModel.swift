@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class ModerationsViewModel {
     
@@ -18,7 +18,7 @@ class ModerationsViewModel {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.moderationsRequest(input: inputText) { result in
+        OpenAIAPIManager.shared.moderationsRequest(input: inputText) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

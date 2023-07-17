@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 protocol ChatViewModelProtocols {
     func sendMessage(message: String )
@@ -32,7 +32,7 @@ class ChatViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.sendChatRequest(prompt: message, model: .gptThreePointFiveTurbo) { result in
+        OpenAIAPIManager.shared.sendChatRequest(prompt: message, model: .gptThreePointFiveTurbo) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

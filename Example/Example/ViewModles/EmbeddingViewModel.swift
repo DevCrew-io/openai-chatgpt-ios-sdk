@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class EmbeddingViewModel {
     
@@ -18,7 +18,7 @@ class EmbeddingViewModel {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.createEmbeddingsRequest(input: inputText) { result in
+        OpenAIAPIManager.shared.createEmbeddingsRequest(input: inputText) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

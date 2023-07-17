@@ -11,8 +11,8 @@ The `ChatGPTModels` enum represents different ChatGPT models available for text 
 
 The `ChatGPTImageSize` enum represents different image sizes supported by the image generation API. It includes cases for "512x512" and "1024x1024".
 
-## ChatGPT API Class (ChatGPTAPIManager)
-The `ChatGPTAPIManager` class is responsible for making API requests to ChatGPT. It requires an API key for authentication and provides methods for sending text generation and image generation requests.
+## ChatGPT API Class (OpenAIAPIManager)
+The `OpenAIAPIManager` class is responsible for making API requests to ChatGPT. It requires an API key for authentication and provides methods for sending text generation and image generation requests.
 
 ## Obtaining an API Key
 To use the ChatGPT API, you need to obtain an API key from OpenAI. Follow these steps to get your API key:
@@ -27,7 +27,7 @@ To use the ChatGPT API, you need to obtain an API key from OpenAI. Follow these 
 
 5. Copy the API key, as you will need it to authenticate your API requests.
 
-Now that you have obtained your API key, you can use it to initialize the `ChatGPTAPIManager` in your iOS application as mentioned in the below section.
+Now that you have obtained your API key, you can use it to initialize the `OpenAIAPIManager` in your iOS application as mentioned in the below section.
 
 ## Installation
 
@@ -41,23 +41,23 @@ dependencies: [
 ```
 
 ### Manually
-If you prefer not to use any of the aforementioned dependency managers, you can integrate **ChatGPTAPIManager** into your project manually.
+If you prefer not to use any of the aforementioned dependency managers, you can integrate **OpenAIAPIManager** into your project manually.
 
 1. Download zip file
-2. Open ChatGPTAPIManager/Sources/ChatGPTAPIManager
-3. Drag and drop ChatGPTAPIManager.swift file into project
+2. Open OpenAIAPIManager/Sources/OpenAIAPIManager
+3. Drag and drop OpenAIAPIManager.swift file into project
 
 ### Usage
-To use the **ChatGPTAPIManager** library, follow these steps:
+To use the **OpenAIAPIManager** library, follow these steps:
 
- Import the **ChatGPTAPIManager** module in the file where you want to use it:
+ Import the **OpenAIAPIManager** module in the file where you want to use it:
  
  ```
- import ChatGPTAPIManager
+ import OpenAIAPIManager
   ```
 
 ### Set Api Key
-To set the api key in `ChatGPTAPIManager`, You need to add it in AppDelegate.swift.
+To set the api key in `OpenAIAPIManager`, You need to add it in AppDelegate.swift.
  
 ```swift
 
@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        ChatGPTAPIManager.shared.apiKey = "YOUR_API_KEY"
+        OpenAIAPIManager.shared.apiKey = "YOUR_API_KEY"
 
         return true
     }
@@ -87,7 +87,7 @@ You can send a chat request to generate text based on a prompt using the `sendCh
 ///   - model: The ChatGPT model to use for generating the response. Defaults is .gptThreePointFiveTurbo
 ///   - maxTokens: The maximum number of tokens in the generated response. Defaults to 500.
 ///   - completion: A closure to be called with the result of the request. The result is either a success containing the generated response string or a failure containing an error.
-ChatGPTAPIManager.shared.sendChatRequest(prompt: "Your prompt") { result in
+OpenAIAPIManager.shared.sendChatRequest(prompt: "Your prompt") { result in
     switch result {
     case .success(let generatedChat):
         // Handle the generated chat
@@ -109,7 +109,7 @@ You can send a request to generate text based on a prompt using the `sendTextReq
 ///   - maxTokens: The maximum number of tokens in the generated text. Defaults to 500.
 ///   - numberOfResponse: The number of text samples to generate. Defaults to 1.
 ///   - completion: A completion block that is called with the result of the request. The block receives a Result object containing either the generated text as a String in case of success, or an Error in case of failure.
-ChatGPTAPIManager.shared.sendTextRequest(prompt: "Your prompt") { result in
+OpenAIAPIManager.shared.sendTextRequest(prompt: "Your prompt") { result in
     switch result {
     case .success(let generatedText):
         // Handle the generated text
@@ -132,7 +132,7 @@ You can generate an image based on a prompt using the `generateImage` method.
 ///   - numberOfResponse: The number of images to generate (default is 1).
 ///   - user: (Optional) A unique identifier representing your end-user.
 ///   - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated image as a String in case of success, or an Error in case of failure.
-ChatGPTAPIManager.shared.generateImage(prompt: "Your prompt") { result in
+OpenAIAPIManager.shared.generateImage(prompt: "Your prompt") { result in
     switch result {
     case .success(let imageURL):
         // Handle the generated image URL
@@ -158,7 +158,7 @@ You can generate edited image based on a prompt using the `createImageEditReques
 ///    - user: A unique identifier representing your end-user, which can help OpenAI monitor and detect abuse.
 ///    - imageConversionFormat: (Optional) Convert invalid image type into open ai supported .rgba
 ///    - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated images Array as a String in case of success, or an Error in case of failure.
-ChatGPTAPIManager.shared.createImageEditRequest(image: imageData, prompt: "Your prompt") { result in
+OpenAIAPIManager.shared.createImageEditRequest(image: imageData, prompt: "Your prompt") { result in
     switch result {
     case .success(let imageURL):
         // Handle the generated image URL
@@ -182,7 +182,7 @@ Creates a variation of a given image using the `createImageVariationsRequest` me
 ///    - user: A unique identifier representing your end-user, which can help OpenAI monitor and detect abuse.
 ///    - imageConversionFormat: (Optional) Convert invalid image type into open ai supported .rgba
 ///    - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated images Array as a String in case of success, or an Error in case of failure.
-ChatGPTAPIManager.shared.createImageVariationsRequest(image: imageData) { result in
+OpenAIAPIManager.shared.createImageVariationsRequest(image: imageData) { result in
     switch result {
     case .success(let imageURL):
         // Handle the generated image URL
@@ -193,7 +193,7 @@ ChatGPTAPIManager.shared.createImageVariationsRequest(image: imageData) { result
 ```
 
 ### Audio Translation
-To make an audio translation request using the ChatGPT API, you can use the `audioTranslationRequest` function provided by the `ChatGPTAPIManager`.
+To make an audio translation request using the ChatGPT API, you can use the `audioTranslationRequest` function provided by the `OpenAIAPIManager`.
 
 ```swift
 /// Requests audio transcription based on the provided parameters.
@@ -206,7 +206,7 @@ To make an audio translation request using the ChatGPT API, you can use the `aud
 ///   - model: (Optional) The model to be used for transcription. Defaults is .whisper1
 ///   - completion: A completion handler to be called with the result of the transcription request.
 ///                 The handler takes a Result object, which contains either the transcribed text or an error.
-ChatGPTAPIManager.shared.audioTranslationRequest(fileUrl: url, completion: { result in
+OpenAIAPIManager.shared.audioTranslationRequest(fileUrl: url, completion: { result in
     switch result {
     case .success(let success):
         // Handle successful translation
@@ -219,7 +219,7 @@ ChatGPTAPIManager.shared.audioTranslationRequest(fileUrl: url, completion: { res
 ```
 
 ### Audio Transcription
-To transcribe an audio file into text using the ChatGPT API, you can use the `audioTranscriptionRequest` function provided by the `ChatGPTAPIManager` class. This function allows you to convert audio recordings into written transcripts.
+To transcribe an audio file into text using the ChatGPT API, you can use the `audioTranscriptionRequest` function provided by the `OpenAIAPIManager` class. This function allows you to convert audio recordings into written transcripts.
 
 ```swift
 /// Requests audio translation based on the provided parameters.
@@ -230,7 +230,7 @@ To transcribe an audio file into text using the ChatGPT API, you can use the `au
 ///   - temperature: (Optional) The temperature value for generating diverse translations. Defaults to nil.
 ///   - model: The ChatGPT model to use for translation. Defaults is .whisper1
 ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the translated text as a String in case of success, or an Error in case of failure.
-ChatGPTAPIManager.shared.audioTranscriptionRequest(fileUrl: url, completion: { result in
+OpenAIAPIManager.shared.audioTranscriptionRequest(fileUrl: url, completion: { result in
     switch result {
     case .success(let success):
         // Handle successful transcription
@@ -243,7 +243,7 @@ ChatGPTAPIManager.shared.audioTranscriptionRequest(fileUrl: url, completion: { r
 ```
 
 ### Edits
-Given a prompt and an instruction, the model will return an edited version of the prompt. You can use the `createEditsRequest` function provided by the `ChatGPTAPIManager`.
+Given a prompt and an instruction, the model will return an edited version of the prompt. You can use the `createEditsRequest` function provided by the `OpenAIAPIManager`.
 
 ```swift
 ///  Endpoint for generating edits.
@@ -256,7 +256,7 @@ Given a prompt and an instruction, the model will return an edited version of th
 ///   - temperature: The sampling temperature to use, ranging from 0 to 2. Higher values like 0.8 make the output more random, while lower values like 0.2 make it more focused and deterministic. Optional parameter, defaults to 1.0.
 ///   - topP: An alternative to sampling with temperature, known as nucleus sampling. It considers the results of tokens with top_p probability mass. A value of 0.1 means only tokens comprising the top 10% probability mass are considered. Optional parameter, defaults to 1.0.
 ///   - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated Array of Strings in case of success, or an Error in case of failure.
-ChatGPTAPIManager.shared.createEditsRequest(instruction: "Your_Instruction", completion: { result in
+OpenAIAPIManager.shared.createEditsRequest(instruction: "Your_Instruction", completion: { result in
     switch result {
     case .success(let success):
         // Handle successful transcription
@@ -269,7 +269,7 @@ ChatGPTAPIManager.shared.createEditsRequest(instruction: "Your_Instruction", com
 ```
 
 ### Moderations
-Given a input text, outputs if the model classifies it as violating OpenAI's content policy, You can use the `moderationsRequest` function provided by the `ChatGPTAPIManager`.
+Given a input text, outputs if the model classifies it as violating OpenAI's content policy, You can use the `moderationsRequest` function provided by the `OpenAIAPIManager`.
 
 ```swift
 /// Requests text moderations based on the provided parameters.
@@ -278,7 +278,7 @@ Given a input text, outputs if the model classifies it as violating OpenAI's con
 ///   - input: The input text to classify
 ///   - model: The ChatGPT model to use for moderations. Defaults is .textModerationStable
 ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the 'ModerationsModel'  in case of success, or an Error in case of failure.
-ChatGPTAPIManager.shared.moderationsRequest(input: "Your prompt", completion: { result in
+OpenAIAPIManager.shared.moderationsRequest(input: "Your prompt", completion: { result in
     switch result {
     case .success(let success):
         // Handle successful transcription
@@ -291,7 +291,7 @@ ChatGPTAPIManager.shared.moderationsRequest(input: "Your prompt", completion: { 
 ```
 
 ### Embeddings
-Get a vector representation of a given input that can be easily consumed by machine learning models and algorithms. You can use the `createEmbeddingsRequest` function provided by the `ChatGPTAPIManager`.
+Get a vector representation of a given input that can be easily consumed by machine learning models and algorithms. You can use the `createEmbeddingsRequest` function provided by the `OpenAIAPIManager`.
 
 ```swift
 /// Requests text moderations based on the provided parameters.
@@ -300,7 +300,7 @@ Get a vector representation of a given input that can be easily consumed by mach
 ///   - input: The input text to classify
 ///   - model: The ChatGPT model to use for moderations. Defaults is .textModerationStable
 ///   - completion: The completion block called with the result of the request. The block receives a Result object containing either the 'ModerationsModel'  in case of success, or an Error in case of failure.
-ChatGPTAPIManager.shared.createEmbeddingsRequest(input: "Your prompt", completion: { result in
+OpenAIAPIManager.shared.createEmbeddingsRequest(input: "Your prompt", completion: { result in
     switch result {
     case .success(let success):
         // Handle successful transcription
@@ -330,7 +330,7 @@ By adhering to these guidelines, you can help maintain the security and integrit
 ## Author
 [DevCrew.IO](https://devcrew.io/)
 
-If you have any questions or comments about **ChatGPTAPIManager** , please feel free to contact us at info@devcrew.io.
+If you have any questions or comments about **OpenAIAPIManager** , please feel free to contact us at info@devcrew.io.
 
 <h3 align="left">Connect with Us:</h3>
 <p align="left">

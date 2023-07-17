@@ -8,11 +8,11 @@
 import Foundation
 
 protocol RequestBuilder {
-    func buildRequest(params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest?
+    func buildRequest(params: [String: Any]?, endPoint: OpenAIAPIManagerEndpoints?, apiKey: String) -> URLRequest?
 }
 
 struct DefaultRequestBuilder: RequestBuilder {
-    func buildRequest(params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest? {
+    func buildRequest(params: [String: Any]?, endPoint: OpenAIAPIManagerEndpoints?, apiKey: String) -> URLRequest? {
         guard let endPoint = endPoint else {
             return nil
         }
@@ -35,7 +35,7 @@ struct DefaultRequestBuilder: RequestBuilder {
 }
 
 struct GetRequestBuilder: RequestBuilder {
-    func buildRequest(params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest? {
+    func buildRequest(params: [String: Any]?, endPoint: OpenAIAPIManagerEndpoints?, apiKey: String) -> URLRequest? {
         guard let endPoint = endPoint else {
             return nil
         }
@@ -49,6 +49,6 @@ struct GetRequestBuilder: RequestBuilder {
     }
 }
 
-func createUrlRequest(requestBuilder: RequestBuilder, params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest? {
+func createUrlRequest(requestBuilder: RequestBuilder, params: [String: Any]?, endPoint: OpenAIAPIManagerEndpoints?, apiKey: String) -> URLRequest? {
     return requestBuilder.buildRequest(params: params, endPoint: endPoint, apiKey: apiKey)
 }

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class TextGenerationViewModel: ChatViewModelProtocols {
     
@@ -29,7 +29,7 @@ class TextGenerationViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.sendTextRequest(prompt: message, model: .textDavinci003) { result in
+        OpenAIAPIManager.shared.sendTextRequest(prompt: message, model: .textDavinci003) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

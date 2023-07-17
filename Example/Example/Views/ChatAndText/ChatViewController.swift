@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class ChatViewController: UIViewController {
     
