@@ -330,7 +330,7 @@ By adhering to these guidelines, you can help maintain the security and integrit
 ## Author
 [DevCrew.IO](https://devcrew.io/)
 
-If you have any questions or comments about **OpenAIAPIManager** , please feel free to contact us at hello@devcrew.io.
+If you have any questions or comments about **Open AI ChatGPT iOS SDK** , please feel free to contact us at hello@devcrew.io.
 
 <h3 align="left">Connect with Us:</h3>
 <p align="left">
