@@ -1,7 +1,7 @@
 # Open AI ChatGPT iOS SDK
-[![license](https://img.shields.io/badge/license-MIT-green)](https://github.com/DevCrew-io/chatgpt-ios-sdk/blob/main/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-green)](https://github.com/DevCrew-io/openai-chatgpt-ios-sdk/blob/main/LICENSE)
 ![](https://img.shields.io/badge/Code-Swift-informational?style=flat&logo=swift&color=FFA500)
-[![Github tag](https://img.shields.io/github/v/tag/DevCrew-io/chatgpt-ios-sdk.svg)]()
+[![Github tag](https://img.shields.io/github/v/tag/DevCrew-io/openai-chatgpt-ios-sdk.svg)]()
 
 A comprehensive SDK for integrating Chat GPT APIs into iOS applications. It provides a convenient and easy-to-use interface for making API requests and handling responses.
 
@@ -36,7 +36,7 @@ The [Swift Package Manager](https://www.swift.org/package-manager/) is a tool fo
 
 ```
 dependencies: [
-    .package(url: "https://github.com/DevCrew-io/chatgpt-ios-sdk.git", .upToNextMajor(from: "1.0.5"))
+    .package(url: "https://github.com/DevCrew-io/openai-openai-chatgpt-ios-sdk.git", .upToNextMajor(from: "1.0.5"))
 ]
 ```
 
@@ -341,7 +341,7 @@ If you have any questions or comments about **OpenAIAPIManager** , please feel f
 
 
 ## Contributing 
-Contributions, issues, and feature requests are welcome! See [Contributors](https://github.com/DevCrew-io/chatgpt-ios-sdk/graphs/contributors) for details.
+Contributions, issues, and feature requests are welcome! See [Contributors](https://github.com/DevCrew-io/openai-chatgpt-ios-sdk/graphs/contributors) for details.
 
 ### Contributions
 Any contribution is more than welcome! You can contribute through pull requests and issues on GitHub.
@@ -350,4 +350,4 @@ Any contribution is more than welcome! You can contribute through pull requests 
 Give a star if this project helped you.
 
 ### Copyright & License
-Code copyright 2023 DevCrew I/O. Code released under the [MIT license](https://github.com/DevCrew-io/chatgpt-ios-sdk/blob/main/LICENSE).
+Code copyright 2023 DevCrew I/O. Code released under the [MIT license](https://github.com/DevCrew-io/openai-chatgpt-ios-sdk/blob/main/LICENSE).
