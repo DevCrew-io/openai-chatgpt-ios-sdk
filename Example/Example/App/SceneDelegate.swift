@@ -1,10 +1,9 @@
 //
 //  SceneDelegate.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 21/06/2023.
+//  Copyright © 2023 DevCrew I/O
 //
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {

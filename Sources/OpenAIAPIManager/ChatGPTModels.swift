@@ -1,8 +1,8 @@
 //
 //  ChatGPTAPIModels.swift
-//  
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Najam us Saqib on 7/5/23.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation

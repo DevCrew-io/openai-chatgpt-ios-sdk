@@ -1,10 +1,9 @@
 //
 //  ModerationsModel.swift
-//  
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Najam us Saqib on 7/6/23.
+//  Copyright © 2023 DevCrew I/O
 //
-
 import Foundation
 
 public struct ModerationsModel: Codable, Equatable {

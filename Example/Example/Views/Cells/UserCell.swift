@@ -1,8 +1,8 @@
 //
 //  UserCell.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 19/06/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import UIKit

@@ -3,7 +3,7 @@
 ![](https://img.shields.io/badge/Code-Swift-informational?style=flat&logo=swift&color=FFA500)
 [![Github tag](https://img.shields.io/github/v/tag/DevCrew-io/openai-chatgpt-ios-sdk.svg)]()
 
-A comprehensive SDK for integrating Chat GPT APIs into iOS applications. It provides a convenient and easy-to-use interface for making API requests and handling responses.
+A comprehensive SDK for integrating OpenAI APIs into iOS applications. It provides a convenient and easy-to-use interface for making API requests and handling responses.
 
 
 ## Model Enums (ChatGPTModels, ChatGPTImageSize)
@@ -315,7 +315,7 @@ Note: The code snippets provided in this README assume that you have replaced `"
 
 
 ## Security Disclaimer
-The ChatGPT SDK for iOS provides convenient methods for developers to integrate ChatGPT APIs into their applications. It is essential to ensure the security and confidentiality of your API key while using our SDK. Please note the following disclaimer regarding the management and safekeeping of your API key.
+The Open AI ChatGPT iOS SDK for iOS provides convenient methods for developers to integrate ChatGPT APIs into their applications. It is essential to ensure the security and confidentiality of your API key while using our SDK. Please note the following disclaimer regarding the management and safekeeping of your API key.
 
 ### Responsibility for API Key Security
 As a developer, you are solely responsible for safeguarding your API key. The API key grants access to ChatGPT APIs and must be treated as sensitive information. Any misuse, loss, or unauthorized access to your API key is your responsibility.
@@ -324,7 +324,7 @@ You should treat your API key with the utmost confidentiality. Do not share it w
 ### Secure Storage
 When using our SDK, ensure that you store your API key in a secure location within your application. We recommend utilizing secure storage mechanisms, such as Keychain, to encrypt and protect your API key.
 
-By adhering to these guidelines, you can help maintain the security and integrity of your API key while using the ChatGPT SDK for iOS. Remember, maintaining the confidentiality of your API key is crucial to protect your application and the data it processes. 
+By adhering to these guidelines, you can help maintain the security and integrity of your API key while using the Open AI ChatGPT iOS SDK for iOS. Remember, maintaining the confidentiality of your API key is crucial to protect your application and the data it processes. 
 
  
 ## Author
