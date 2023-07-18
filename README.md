@@ -1,4 +1,4 @@
-# Open-AI-ChatGPT-iOS-SDK
+# Open AI ChatGPT iOS SDK
 [![license](https://img.shields.io/badge/license-MIT-green)](https://github.com/DevCrew-io/chatgpt-ios-sdk/blob/main/LICENSE)
 ![](https://img.shields.io/badge/Code-Swift-informational?style=flat&logo=swift&color=FFA500)
 [![Github tag](https://img.shields.io/github/v/tag/DevCrew-io/chatgpt-ios-sdk.svg)]()
@@ -330,7 +330,7 @@ By adhering to these guidelines, you can help maintain the security and integrit
 ## Author
 [DevCrew.IO](https://devcrew.io/)
 
-If you have any questions or comments about **OpenAIAPIManager** , please feel free to contact us at info@devcrew.io.
+If you have any questions or comments about **OpenAIAPIManager** , please feel free to contact us at hello@devcrew.io.
 
 <h3 align="left">Connect with Us:</h3>
 <p align="left">
