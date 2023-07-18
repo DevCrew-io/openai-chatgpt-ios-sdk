@@ -1,4 +1,4 @@
-# chatgpt-ios-sdk
+# Open-AI-ChatGPT-iOS-SDK
 [![license](https://img.shields.io/badge/license-MIT-green)](https://github.com/DevCrew-io/chatgpt-ios-sdk/blob/main/LICENSE)
 ![](https://img.shields.io/badge/Code-Swift-informational?style=flat&logo=swift&color=FFA500)
 [![Github tag](https://img.shields.io/github/v/tag/DevCrew-io/chatgpt-ios-sdk.svg)]()

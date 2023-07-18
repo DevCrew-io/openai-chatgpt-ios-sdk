@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - ChatGPTModels Enum
 /// Enum representing different ChatGPT models.
-public enum OpenAIAPIModels: String {
+public enum ChatGPTModels: String {
     case gptThreePointFiveTurbo = "gpt-3.5-turbo"
     case engine =  "davinci"
     

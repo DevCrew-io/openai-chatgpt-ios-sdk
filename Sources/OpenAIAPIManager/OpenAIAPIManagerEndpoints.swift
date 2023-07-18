@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - API Enum
 /// Enum defining the base URL for an API.
-enum OpenAIAPIManagerEndpoints {
+enum OpenAIAPIEndpoints {
     enum Domains {
         static let dev = "https://api.openai.com"
         static let production = "https://api.openai.com"
@@ -39,7 +39,7 @@ enum OpenAIAPIManagerEndpoints {
     case embeddings
 }
 
-extension OpenAIAPIManagerEndpoints {
+extension OpenAIAPIEndpoints {
     
     var method: String {
         switch self {
@@ -54,29 +54,29 @@ extension OpenAIAPIManagerEndpoints {
     var url: URL {
         switch self {
         case.completion:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/completions")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/completions")!
         case .chat:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/chat/completions")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/chat/completions")!
         case .textEdit:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/edits")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/edits")!
         case .generateImage:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/images/generations")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/images/generations")!
         case.imageEdits:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/images/edits")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/images/edits")!
         case.imageVariations:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/images/variations")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/images/variations")!
         case.transcriptions:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/audio/transcriptions")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/audio/transcriptions")!
         case.translations:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/audio/translations")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/audio/translations")!
         case.modelsList:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/models")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/models")!
         case.retrievedModel(let modelName):
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/models/\(modelName)")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/models/\(modelName)")!
         case .moderations:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/moderations")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/moderations")!
         case .embeddings:
-            return URL(string: OpenAIAPIManagerEndpoints.baseURL + "/embeddings")!
+            return URL(string: OpenAIAPIEndpoints.baseURL + "/embeddings")!
         }
     }
 }
