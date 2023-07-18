@@ -1,60 +1,38 @@
----
-name: Bug Report
-about: Create a report to help us improve
-title: '[BUG]'
+## Issue Description
 
----
+Please provide a clear and concise description of the issue or feature request.
 
-**Describe the Bug**
-A clear and concise description of what the bug is.
+## Steps to Reproduce
 
-**To Reproduce**
-Steps to reproduce the behavior:
+Please provide detailed steps to reproduce the issue. Include any specific inputs or conditions required.
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+1. Step 1
+2. Step 2
+3. Step 3
 
-**Expected Behavior**
-A clear and concise description of what you expected to happen.
+## Expected Behavior
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+Describe what you expected to happen.
 
-**Additional Context**
-Add any other context about the problem here.
+## Actual Behavior
 
----
+Describe what actually happened.
 
-**Environment (please complete the following information):**
-- OS: [e.g., Windows 10, macOS 11.5.1]
-- Browser [e.g., Chrome, Firefox]
-- Version [e.g., 22]
+## Environment
 
----
+- Operating System: [e.g., Windows 10, macOS Big Sur]
+- Browser: [e.g., Chrome, Firefox]
+- Version: [e.g., 1.2.3]
 
-**Optional: Proposed Solution**
-If you have a solution in mind, please provide a clear and concise description.
+## Additional Information
 
----
+Provide any additional information, screenshots, or error messages related to the issue.
 
-**Optional: Labels**
-Add relevant labels to this issue (e.g., "bug", "high priority", "needs triage").
+## Possible Solution
 
----
+If you have any suggestions or ideas for a possible solution, please mention them here.
 
-**Optional: Assignees**
-Assign this issue to specific users responsible for addressing it.
+## Related Issues
 
----
+If this issue is related to any existing issues, please mention them here.
 
-**Optional: Dependencies**
-List any related issues, pull requests, or external dependencies.
-
----
-
-**Optional: Testing Steps**
-Provide specific steps or instructions to test the fix.
-
----
