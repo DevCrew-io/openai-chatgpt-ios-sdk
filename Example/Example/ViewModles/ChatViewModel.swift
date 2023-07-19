@@ -1,12 +1,12 @@
 //
 //  ChatViewModel.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 22/06/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 protocol ChatViewModelProtocols {
     func sendMessage(message: String )
@@ -32,7 +32,7 @@ class ChatViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.sendChatRequest(prompt: message, model: .gptThreePointFiveTurbo) { result in
+        OpenAIAPIManager.shared.sendChatRequest(prompt: message, model: .gptThreePointFiveTurbo) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

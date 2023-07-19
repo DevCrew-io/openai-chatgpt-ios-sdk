@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  
+//  ImageGenerationResponseParser.swift
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 26/06/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation

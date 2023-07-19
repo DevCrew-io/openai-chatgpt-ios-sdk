@@ -1,12 +1,12 @@
 //
 //  EditTextViewModel.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 06/07/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class EditTextViewModelViewModel {
     
@@ -21,7 +21,7 @@ class EditTextViewModelViewModel {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.createEditsRequest(input: inputText,instruction: instructionText) { result in
+        OpenAIAPIManager.shared.createEditsRequest(input: inputText,instruction: instructionText) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

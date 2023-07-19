@@ -1,12 +1,12 @@
 //
 //  AudioViewModel.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Najam us Saqib on 7/4/23.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 protocol AudioViewModelProtocol {
     func audioTranscriptions(url: URL, completioin: @escaping(Result<String, Error>) -> Void)
@@ -17,7 +17,7 @@ class AudioViewModel: AudioViewModelProtocol {
     
     func audioTranscriptions(url: URL, completioin: @escaping(Result<String, Error>) -> Void) {
         EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.audioTranscriptionRequest(fileUrl: url, prompt: "Translate this audio", language: "en", model: .whisper1, completion: { result in
+        OpenAIAPIManager.shared.audioTranscriptionRequest(fileUrl: url, prompt: "Translate this audio", language: "en", model: .whisper1, completion: { result in
             
             switch result {
             case.success(let text):
@@ -36,7 +36,7 @@ class AudioViewModel: AudioViewModelProtocol {
     
     func audioTranslation(url: URL, completioin: @escaping(Result<String, Error>) -> Void) {
         EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.audioTranslationRequest(fileUrl: url, temperature: 0.8, model: .whisper1, completion: { result in
+        OpenAIAPIManager.shared.audioTranslationRequest(fileUrl: url, temperature: 0.8, model: .whisper1, completion: { result in
             
             switch result {
             case.success(let text):

@@ -1,12 +1,12 @@
 //
 //  ModerationsViewModel.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 07/07/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class ModerationsViewModel {
     
@@ -18,7 +18,7 @@ class ModerationsViewModel {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.moderationsRequest(input: inputText) { result in
+        OpenAIAPIManager.shared.moderationsRequest(input: inputText) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

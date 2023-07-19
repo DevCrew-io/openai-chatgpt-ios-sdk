@@ -1,12 +1,11 @@
 //
 //  ChatViewController.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 16/06/2023.
+//  Copyright © 2023 DevCrew I/O
 //
-
 import UIKit
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class ChatViewController: UIViewController {
     

@@ -1,19 +1,18 @@
 //
 //  AppDelegate.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 21/06/2023.
+//  Copyright © 2023 DevCrew I/O
 //
-
 import UIKit
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        ChatGPTAPIManager.shared.apiKey = "YOUR_API_KEY"
+        OpenAIAPIManager.shared.apiKey = "YOUR_API_KEY"
 
         return true
     }

@@ -1,12 +1,12 @@
 //
 //  TextGenerationViewModel.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 22/06/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class TextGenerationViewModel: ChatViewModelProtocols {
     
@@ -29,7 +29,7 @@ class TextGenerationViewModel: ChatViewModelProtocols {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.sendTextRequest(prompt: message, model: .textDavinci003) { result in
+        OpenAIAPIManager.shared.sendTextRequest(prompt: message, model: .textDavinci003) { result in
             switch result {
             case .success(let response):
                 print("API response: \(response)")

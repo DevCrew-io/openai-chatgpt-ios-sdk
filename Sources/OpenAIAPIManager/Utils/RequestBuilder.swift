@@ -1,18 +1,18 @@
 //
-//  File.swift
-//  
+//  RequestBuilder.swift
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 04/07/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation
 
 protocol RequestBuilder {
-    func buildRequest(params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest?
+    func buildRequest(params: [String: Any]?, endPoint: OpenAIAPIEndpoints?, apiKey: String) -> URLRequest?
 }
 
 struct DefaultRequestBuilder: RequestBuilder {
-    func buildRequest(params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest? {
+    func buildRequest(params: [String: Any]?, endPoint: OpenAIAPIEndpoints?, apiKey: String) -> URLRequest? {
         guard let endPoint = endPoint else {
             return nil
         }
@@ -35,7 +35,7 @@ struct DefaultRequestBuilder: RequestBuilder {
 }
 
 struct GetRequestBuilder: RequestBuilder {
-    func buildRequest(params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest? {
+    func buildRequest(params: [String: Any]?, endPoint: OpenAIAPIEndpoints?, apiKey: String) -> URLRequest? {
         guard let endPoint = endPoint else {
             return nil
         }
@@ -49,6 +49,6 @@ struct GetRequestBuilder: RequestBuilder {
     }
 }
 
-func createUrlRequest(requestBuilder: RequestBuilder, params: [String: Any]?, endPoint: ChatGPTAPIEndpoint?, apiKey: String) -> URLRequest? {
+func createUrlRequest(requestBuilder: RequestBuilder, params: [String: Any]?, endPoint: OpenAIAPIEndpoints?, apiKey: String) -> URLRequest? {
     return requestBuilder.buildRequest(params: params, endPoint: endPoint, apiKey: apiKey)
 }

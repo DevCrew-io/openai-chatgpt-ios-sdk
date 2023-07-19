@@ -1,12 +1,12 @@
 //
 //  ModelsListViewModel.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 04/07/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 protocol ModelsListProtocol {
     func getModelsList(completion: @escaping (Result<Bool, Error>) -> Void)
@@ -20,7 +20,7 @@ class ModelsListViewModel: ModelsListProtocol {
     
     func retrieveModel(modelName: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.retrieveAIModel(model: modelName) { [weak self] result in
+        OpenAIAPIManager.shared.retrieveAIModel(model: modelName) { [weak self] result in
             
             switch result {
             case .success(let model):
@@ -39,7 +39,7 @@ class ModelsListViewModel: ModelsListProtocol {
     
     func getModelsList(completion: @escaping (Result<Bool, Error>) -> Void) {
         EZLoadingActivity.show("Loading...", disableUI: true)
-        ChatGPTAPIManager.shared.getOpenAIModels { [weak self] result in
+        OpenAIAPIManager.shared.getOpenAIModels { [weak self] result in
             
             switch result {
             case .success(let models):

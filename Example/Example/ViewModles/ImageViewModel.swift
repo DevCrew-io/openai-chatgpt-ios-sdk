@@ -1,12 +1,12 @@
 //
 //  ImageViewModel.swift
-//  Example
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 22/06/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation
-import ChatGPTAPIManager
+import OpenAIAPIManager
 
 class ImageGenerationViewModel {
     
@@ -19,7 +19,7 @@ class ImageGenerationViewModel {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.generateImage(prompt: text) { result in
+        OpenAIAPIManager.shared.generateImage(prompt: text) { result in
             switch result {
             case .success(let response):
                 // Handle the response as needed
@@ -46,7 +46,7 @@ class ImageGenerationViewModel {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.createImageEditRequest(image: imageData, prompt: prompt, imageConversionFormat: .rgba) { result in
+        OpenAIAPIManager.shared.createImageEditRequest(image: imageData, prompt: prompt, imageConversionFormat: .rgba) { result in
             switch result {
             case .success(let response):
                 // Handle the response as needed
@@ -73,7 +73,7 @@ class ImageGenerationViewModel {
         
         EZLoadingActivity.show("Loading...", disableUI: true)
         
-        ChatGPTAPIManager.shared.createImageVariationsRequest(image: imageData) { result in
+        OpenAIAPIManager.shared.createImageVariationsRequest(image: imageData) { result in
             switch result {
             case .success(let response):
                 // Handle the response as needed

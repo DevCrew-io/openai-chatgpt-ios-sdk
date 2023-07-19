@@ -1,12 +1,20 @@
 //
-//  File.swift
-//  
+//  TextCompletionResponseParser.swift
+//  Open AI ChatGPT iOS SDK
 //
-//  Created by Ghullam Abbas on 26/06/2023.
+//  Copyright © 2023 DevCrew I/O
 //
 
 import Foundation
-class ChatCompletionResponseParser {
+// MARK: - ChatGPT API Response Parser
+
+/// A parser for ChatGPT API responses.
+protocol APIResponseParcer {
+    func parseResponse(data: Data, completion: @escaping(Result<String,Error>)->Void)
+}
+
+class TextCompletionResponseParser {
+    // Parsing logic for text completion API response...
     
     /// Parse the response data for generating text.
     /// - Parameter data: The response data from the API.
@@ -18,24 +26,16 @@ class ChatCompletionResponseParser {
             let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
             
             guard let output = responseJSON?["choices"] as? [[String: Any]] else {
-                
-                if let error = responseJSON?["error"] as? [String:Any],let message = error["message"]  as? String {
-                    let error = NSError(domain: message, code: 401, userInfo: [ NSLocalizedDescriptionKey: message])
-                    
-                    completion(.failure(error))
-                    return
-                } else {
-                    completion(.failure(NetworkError.invalidResponse))
-                    return
-                }
+                completion(.failure(NetworkError.invalidResponse))
+                return
             }
             var tempArray = [String]()
             for item in output {
-                guard let completionText = item["message"] as? [String: Any] ,let content = completionText["content"] as? String else {
+                guard let completionText = item["text"] as? String else {
                     completion(.failure(NetworkError.invalidResponse))
                     return
                 }
-                tempArray.append(content)
+                tempArray.append(completionText)
                 
             }
             completion(.success(tempArray))
@@ -44,5 +44,4 @@ class ChatCompletionResponseParser {
         }
     }
 }
-
 

@@ -2,15 +2,15 @@ import Foundation
 
 // MARK: - ChatGPT API Class
 /// A class responsible for making API requests to ChatGPT.
-final public class ChatGPTAPIManager {
+final public class OpenAIAPIManager {
     
-    public static let shared = ChatGPTAPIManager()
+    public static let shared = OpenAIAPIManager()
     
     private let systemMessage = NSMutableDictionary()
     private var historyList = [NSDictionary]()
     public  var apiKey: String = ""
     
-    /// Initializes the ChatGPTAPIManager.
+    /// Initializes the OpenAIAPIManager.
     private init() {
         self.systemMessage.setValue("assistant", forKey: "role")
         self.systemMessage.setValue("You are a helpful assistant.", forKey: "content")
@@ -177,7 +177,7 @@ final public class ChatGPTAPIManager {
 
     
     // MARK: - Private Functions -
-    private  func textEditsRequest(endPoint: ChatGPTAPIEndpoint, model: EditGPTModels, input: String?, instruction: String, n: Int, temperature: Double, topP: Double, completion: @escaping (Result<[String],Error>) -> Void) {
+    private  func textEditsRequest(endPoint: OpenAIAPIEndpoints, model: EditGPTModels, input: String?, instruction: String, n: Int, temperature: Double, topP: Double, completion: @escaping (Result<[String],Error>) -> Void) {
         
        var parameters: [String: Any] = [
            "instruction":instruction,
@@ -216,7 +216,7 @@ final public class ChatGPTAPIManager {
            }
        }
     }
-    private func retrieveSingleModel(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<ChatGPTModel, Error>) -> Void) {
+    private func retrieveSingleModel(endPoint: OpenAIAPIEndpoints, completion: @escaping (Result<ChatGPTModel, Error>) -> Void) {
         let requestBuilder = GetRequestBuilder()
         guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
             completion(.failure(NetworkError.invalidURL))
@@ -242,7 +242,7 @@ final public class ChatGPTAPIManager {
         }
     }
     
-    private func getModelsList(endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<ChatGPTModelList, Error>) -> Void) {
+    private func getModelsList(endPoint: OpenAIAPIEndpoints, completion: @escaping (Result<ChatGPTModelList, Error>) -> Void) {
         let requestBuilder = GetRequestBuilder()
         guard let request = requestBuilder.buildRequest(params: nil, endPoint: endPoint, apiKey: apiKey) else {
             completion(.failure(NetworkError.invalidURL))
@@ -269,7 +269,7 @@ final public class ChatGPTAPIManager {
         }
     }
     
-    private func chatRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<[String], Error>) -> Void)  {
+    private func chatRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, endPoint: OpenAIAPIEndpoints, completion: @escaping (Result<[String], Error>) -> Void)  {
         
         let messages = generateMessages(from: prompt)
         
@@ -308,7 +308,7 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, n: Int, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<[String], Error>) -> Void)  {
+    private func sendTextCompletionRequest(prompt: String, model: ChatGPTModels, maxTokens: Int, n: Int, endPoint: OpenAIAPIEndpoints, completion: @escaping (Result<[String], Error>) -> Void)  {
         
         let parameters: [String: Any] = [
             "prompt": prompt,
@@ -346,7 +346,7 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private func generateImageFromText(prompt: String, imageSize: ChatGPTImageSize, responseFormat: ResponseFormat = .url, endPoint: ChatGPTAPIEndpoint, n: Int, user: String?, completion: @escaping (Result<[String], Error>) -> Void)  {
+    private func generateImageFromText(prompt: String, imageSize: ChatGPTImageSize, responseFormat: ResponseFormat = .url, endPoint: OpenAIAPIEndpoints, n: Int, user: String?, completion: @escaping (Result<[String], Error>) -> Void)  {
         
         var parameters: [String: Any] = [
             "prompt": prompt,
@@ -386,7 +386,7 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private  func editImageRequest(endPoint: ChatGPTAPIEndpoint, image: Data, mask: Data? = nil, prompt: String, n: Int?, size: ChatGPTImageSize?, responseFormat: ResponseFormat = .url, user: String?, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
+    private  func editImageRequest(endPoint: OpenAIAPIEndpoints, image: Data, mask: Data? = nil, prompt: String, n: Int?, size: ChatGPTImageSize?, responseFormat: ResponseFormat = .url, user: String?, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
         
         // Define the key-value pairs
         var parameters: [String: Any] = [
@@ -453,7 +453,7 @@ final public class ChatGPTAPIManager {
         
         
     }
-    private func imageVariationsRequest(endPoint: ChatGPTAPIEndpoint, image: Data, n: Int?,size: ChatGPTImageSize?, responseFormat: ResponseFormat, user: String?, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
+    private func imageVariationsRequest(endPoint: OpenAIAPIEndpoints, image: Data, n: Int?,size: ChatGPTImageSize?, responseFormat: ResponseFormat, user: String?, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
         // Define the key-value pairs
         var parameters: [String: Any] = [
             "response_format": responseFormat.rawValue
@@ -511,7 +511,7 @@ final public class ChatGPTAPIManager {
         }
     }
     
-    private func audioTranscription(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: AudioGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<String, Error>) -> Void) {
+    private func audioTranscription(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, language: String? = nil, model: AudioGPTModels, endPoint: OpenAIAPIEndpoints, completion: @escaping (Result<String, Error>) -> Void) {
         
         // Define the key-value pairs
         var parameters: [String: Any] = [
@@ -568,7 +568,7 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private func audioTranslation(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: AudioGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<String, Error>) -> Void) {
+    private func audioTranslation(fileUrl: URL, prompt: String? = nil, temperature: Double? = nil, model: AudioGPTModels, endPoint: OpenAIAPIEndpoints, completion: @escaping (Result<String, Error>) -> Void) {
         
         var parameters: [String: Any] = [
             "model": model.rawValue
@@ -617,7 +617,7 @@ final public class ChatGPTAPIManager {
         }
         
     }
-   private func embeddingsRequest(input: String, user: String? = nil, model: EmbeddingGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<EmbeddingModel,Error>) -> Void) {
+   private func embeddingsRequest(input: String, user: String? = nil, model: EmbeddingGPTModels, endPoint: OpenAIAPIEndpoints, completion: @escaping (Result<EmbeddingModel,Error>) -> Void) {
        
        var parameters: [String: Any] = [
            "input": input,
@@ -652,7 +652,7 @@ final public class ChatGPTAPIManager {
            
        }
     }
-    private func moderations(input: String, model: ModerationGPTModels, endPoint: ChatGPTAPIEndpoint, completion: @escaping (Result<ModerationsModel, Error>) -> Void)  {
+    private func moderations(input: String, model: ModerationGPTModels, endPoint: OpenAIAPIEndpoints, completion: @escaping (Result<ModerationsModel, Error>) -> Void)  {
                 
         let parameters: [String: Any] = [
             "input": input,
@@ -687,7 +687,7 @@ final public class ChatGPTAPIManager {
         
     }
     
-    private func createMultiPartRequest(data: [Data],fileNames: [String], params: [String: Any],name: String, contentType: String , endPoint: ChatGPTAPIEndpoint)-> URLRequest? {
+    private func createMultiPartRequest(data: [Data],fileNames: [String], params: [String: Any],name: String, contentType: String , endPoint: OpenAIAPIEndpoints)-> URLRequest? {
         var request = URLRequest(url: endPoint.url)
         request.httpMethod = "POST"
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
