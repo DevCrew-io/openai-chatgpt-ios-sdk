@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6A5236732A651DFC001183F0 /* OpenAIAPIManager in Frameworks */ = {isa = PBXBuildFile; productRef = 6A5236722A651DFC001183F0 /* OpenAIAPIManager */; };
+		6AA1C1762A67C47A00FA2F6C /* OpenAIAPIManager in Frameworks */ = {isa = PBXBuildFile; productRef = 6AA1C1752A67C47A00FA2F6C /* OpenAIAPIManager */; };
 		777D472F2A53F7560050C0E7 /* english_song.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 777D472D2A53F7550050C0E7 /* english_song.m4a */; };
 		777D47302A53F7560050C0E7 /* translation_file.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 777D472E2A53F7550050C0E7 /* translation_file.m4a */; };
 		777D47322A5419150050C0E7 /* AudioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777D47312A5419150050C0E7 /* AudioViewModel.swift */; };
@@ -62,7 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		777D47282A53EA8F0050C0E7 /* chatgpt-ios-sdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "chatgpt-ios-sdk"; path = ..; sourceTree = "<group>"; };
+		6AA1C1742A67C46700FA2F6C /* OpenAIAPIManager */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = OpenAIAPIManager; path = ..; sourceTree = "<group>"; };
 		777D472D2A53F7550050C0E7 /* english_song.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = english_song.m4a; sourceTree = "<group>"; };
 		777D472E2A53F7550050C0E7 /* translation_file.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = translation_file.m4a; sourceTree = "<group>"; };
 		777D47312A5419150050C0E7 /* AudioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewModel.swift; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A5236732A651DFC001183F0 /* OpenAIAPIManager in Frameworks */,
+				6AA1C1762A67C47A00FA2F6C /* OpenAIAPIManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,7 +155,7 @@
 		A8B85FC02A431318005FBEDE = {
 			isa = PBXGroup;
 			children = (
-				777D47282A53EA8F0050C0E7 /* chatgpt-ios-sdk */,
+				6AA1C1742A67C46700FA2F6C /* OpenAIAPIManager */,
 				A8B85FCB2A431318005FBEDE /* Example */,
 				A8B85FE22A43131A005FBEDE /* ExampleTests */,
 				A8B85FEC2A43131A005FBEDE /* ExampleUITests */,
@@ -343,7 +343,7 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				6A5236722A651DFC001183F0 /* OpenAIAPIManager */,
+				6AA1C1752A67C47A00FA2F6C /* OpenAIAPIManager */,
 			);
 			productName = Example;
 			productReference = A8B85FC92A431318005FBEDE /* Example.app */;
@@ -831,7 +831,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6A5236722A651DFC001183F0 /* OpenAIAPIManager */ = {
+		6AA1C1752A67C47A00FA2F6C /* OpenAIAPIManager */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = OpenAIAPIManager;
 		};
