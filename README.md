@@ -48,8 +48,8 @@ The [Swift Package Manager](https://www.swift.org/package-manager/) is a tool fo
 
 ```
 dependencies: [
-    .package(url: "https://github.com/DevCrew-io/openai-chatgpt-ios-sdk.git", .upToNextMajor(from: "1.0.5"))
-]
+    .package(url: "https://github.com/DevCrew-io/openai-chatgpt-ios-sdk.git", .upToNextMajor(from: "1.0.6"))
+]s
 ```
 
 ### Manually
