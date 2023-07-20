@@ -9,7 +9,7 @@ A comprehensive SDK for integrating OpenAI APIs into iOS applications. It provid
 ## Model Enums (ChatGPTModels, ChatGPTImageSize)
 The `ChatGPTModels` enum represents different ChatGPT models available for text generation. It includes cases for "gpt-3.5-turbo" and "davinci".
 
-The `ChatGPTImageSize` enum represents different image sizes supported by the image generation API. It includes cases for "512x512" and "1024x1024".
+The `ChatGPTImageSize` enum represents different image sizes supported by the image generation API. It includes cases for "256x256", "512x512" and "1024x1024".
 
 ## ChatGPT API Class (OpenAIAPIManager)
 The `OpenAIAPIManager` class is responsible for making API requests to ChatGPT. It requires an API key for authentication and provides methods for sending text generation and image generation requests.
@@ -31,13 +31,25 @@ Now that you have obtained your API key, you can use it to initialize the `OpenA
 
 ## Installation
 
+#### CocoaPods (iOS 11+, OS X 10.13+)
+You can use [CocoaPods](http://cocoapods.org/) to install `OpenAIAPIManager` by adding it to your `Podfile`:
+
+```ruby
+platform :ios, '11.0'
+use_frameworks!
+
+target 'MyApp' do
+    pod 'OpenAIAPIManager', '~> 1.0.6'
+end
+```
+
 ### Swift Package Manager
 The [Swift Package Manager](https://www.swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 
 ```
 dependencies: [
-    .package(url: "https://github.com/DevCrew-io/openai-chatgpt-ios-sdk.git", .upToNextMajor(from: "1.0.5"))
-]
+    .package(url: "https://github.com/DevCrew-io/openai-chatgpt-ios-sdk.git", .upToNextMajor(from: "1.0.6"))
+]s
 ```
 
 ### Manually
