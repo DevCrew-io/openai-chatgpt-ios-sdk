@@ -92,9 +92,9 @@ final public class OpenAIAPIManager {
     ///    - user: A unique identifier representing your end-user, which can help OpenAI monitor and detect abuse.
     ///    - imageConversionFormat: (Optional) Convert invalid image type into open ai supported .rgba
     ///    - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated images Array as a String in case of success, or an Error in case of failure.
-    public func createImageEditRequest(image: Data, mask: Data? = nil, prompt: String, n: Int = 1, size: ChatGPTImageSize = .fiveTwelve, responseFormat: ResponseFormat = .url, user: String? = nil, imageConversionFormat: ImageConversionFormat? = .rgba, completion: @escaping (Result<[String],Error>) -> Void) {
+    public func createImageEditRequest(image: Data, mask: Data? = nil, prompt: String, n: Int = 1, size: ChatGPTImageSize = .fiveTwelve, responseFormat: ResponseFormat = .url, user: String? = nil, completion: @escaping (Result<[String],Error>) -> Void) {
         
-        self.editImageRequest(endPoint: .imageEdits, image: image, prompt: prompt, n: n, size: size, responseFormat: responseFormat, user: user, imageConversionFormat: imageConversionFormat, completion: completion)
+        self.editImageRequest(endPoint: .imageEdits, image: image, prompt: prompt, n: n, size: size, responseFormat: responseFormat, user: user, completion: completion)
     }
     
     
@@ -109,9 +109,9 @@ final public class OpenAIAPIManager {
     ///    - user: A unique identifier representing your end-user, which can help OpenAI monitor and detect abuse.
     ///    - imageConversionFormat: (Optional) Convert invalid image type into open ai supported .rgba
     ///    - completion: The completion block called with the result of the request. The block receives as Result object containing either the generated images Array as a String in case of success, or an Error in case of failure.
-    public  func createImageVariationsRequest(image: Data, n: Int = 1, size: ChatGPTImageSize = .fiveTwelve, response_format: ResponseFormat = .url, user: String? = nil, imageConversionFormat: ImageConversionFormat? = nil, completion: @escaping (Result<[String],Error>) -> Void) {
+    public  func createImageVariationsRequest(image: Data, n: Int = 1, size: ChatGPTImageSize = .fiveTwelve, response_format: ResponseFormat = .url, user: String? = nil, completion: @escaping (Result<[String],Error>) -> Void) {
         
-        self.imageVariationsRequest(endPoint:.imageVariations , image: image, n: n, size: size, responseFormat: response_format, user: user,imageConversionFormat: imageConversionFormat, completion: completion)
+        self.imageVariationsRequest(endPoint:.imageVariations , image: image, n: n, size: size, responseFormat: response_format, user: user, completion: completion)
     }
     
     
@@ -386,7 +386,7 @@ final public class OpenAIAPIManager {
         
     }
     
-    private  func editImageRequest(endPoint: OpenAIAPIEndpoints, image: Data, mask: Data? = nil, prompt: String, n: Int?, size: ChatGPTImageSize?, responseFormat: ResponseFormat = .url, user: String?, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
+    private  func editImageRequest(endPoint: OpenAIAPIEndpoints, image: Data, mask: Data? = nil, prompt: String, n: Int?, size: ChatGPTImageSize?, responseFormat: ResponseFormat = .url, user: String?, completion: @escaping (Result<[String],Error>) -> Void) {
         
         // Define the key-value pairs
         var parameters: [String: Any] = [
@@ -410,15 +410,8 @@ final public class OpenAIAPIManager {
         var dataArray = [Data]()
         var fileNamesArray = [String]()
         fileNamesArray.append("image.png")
-        if imageConversionFormat != nil {
-            let convertedData = ImageFormatConvertor.converImage(with: image, format: .rgba)
-            if let convertedData = convertedData {
-                dataArray.append(convertedData)
-                
-            }
-        } else {
-            dataArray.append(image)
-        }
+        dataArray.append(image)
+
         
         if let mask = mask {
             dataArray.append(mask)
@@ -453,7 +446,7 @@ final public class OpenAIAPIManager {
         
         
     }
-    private func imageVariationsRequest(endPoint: OpenAIAPIEndpoints, image: Data, n: Int?,size: ChatGPTImageSize?, responseFormat: ResponseFormat, user: String?, imageConversionFormat: ImageConversionFormat?, completion: @escaping (Result<[String],Error>) -> Void) {
+    private func imageVariationsRequest(endPoint: OpenAIAPIEndpoints, image: Data, n: Int?,size: ChatGPTImageSize?, responseFormat: ResponseFormat, user: String?, completion: @escaping (Result<[String],Error>) -> Void) {
         // Define the key-value pairs
         var parameters: [String: Any] = [
             "response_format": responseFormat.rawValue
@@ -474,14 +467,8 @@ final public class OpenAIAPIManager {
         var dataArray = [Data]()
         var fileNamesArray = [String]()
         fileNamesArray.append("image.png")
-        if imageConversionFormat != nil {
-            let convertedData = ImageFormatConvertor.converImage(with: image, format: .rgba)
-            if let convertedData = convertedData {
-                dataArray.append(convertedData)
-            }
-        } else {
-            dataArray.append(image)
-        }
+        dataArray.append(image)
+
         
         guard let request = self.createMultiPartRequest(data: dataArray, fileNames: fileNamesArray, params: parameters, name: "image", contentType: "image/png", endPoint: endPoint) else {
             completion(.failure(NetworkError.invalidURL))
